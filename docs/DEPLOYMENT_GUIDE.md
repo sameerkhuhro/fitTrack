@@ -172,3 +172,4 @@ docker compose build
 docker compose up -d --no-deps server client
 docker system prune -f
 ```
+

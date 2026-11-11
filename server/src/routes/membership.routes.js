@@ -18,3 +18,4 @@ router.patch('/:id/activate', protect, authorize(ROLES.ADMIN), membershipControl
 router.get('/:id', protect, membershipController.getMembershipById);
 
 module.exports = router;
+

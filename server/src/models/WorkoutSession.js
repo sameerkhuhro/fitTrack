@@ -50,3 +50,4 @@ const workoutSessionSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('WorkoutSession', workoutSessionSchema);
+

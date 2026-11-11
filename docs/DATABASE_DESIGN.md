@@ -162,3 +162,4 @@ erDiagram
 4. **Receipt Number Uniqueness**:
    - Index: `{ receiptNumber: 1 }` with `{ unique: true, sparse: true }`
    - Purpose: Guarantees every verified payment receipt is globally distinct.
+

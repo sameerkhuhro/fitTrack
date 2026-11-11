@@ -53,3 +53,4 @@ const progressRecordSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('ProgressRecord', progressRecordSchema);
+

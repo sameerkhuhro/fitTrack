@@ -18,3 +18,4 @@ router.get('/member/:id', protect, authorize(ROLES.ADMIN, ROLES.TRAINER), progre
 router.delete('/:id', protect, progressController.deleteProgress);
 
 module.exports = router;
+

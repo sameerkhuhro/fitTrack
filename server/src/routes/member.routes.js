@@ -18,3 +18,4 @@ router.delete('/:id', protect, authorize(ROLES.ADMIN), memberController.deleteMe
 router.patch('/:id/assign-trainer', protect, authorize(ROLES.ADMIN), memberController.assignTrainer);
 
 module.exports = router;
+

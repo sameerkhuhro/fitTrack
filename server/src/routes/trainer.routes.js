@@ -15,3 +15,4 @@ router.put('/:id', protect, authorize(ROLES.ADMIN), trainerController.updateTrai
 router.delete('/:id', protect, authorize(ROLES.ADMIN), trainerController.deleteTrainer);
 
 module.exports = router;
+

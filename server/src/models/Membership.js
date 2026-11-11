@@ -60,3 +60,4 @@ const membershipSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('Membership', membershipSchema);
+

@@ -337,9 +337,9 @@ graph LR
 
 ## 24. Testing Methodology & Actual Results
 The project underwent testing across cryptographic, logic, and interface layers:
-- **Backend Test Runner**: Node.js native test runner executed `server/src/tests/api.test.js`.
-- **Pass Rate**: 9 / 9 test suites passed with 0 failures (1,480 ms execution duration).
-- **Frontend Rollup**: Vite transformed 2,121 modules into optimized production chunks with 0 errors.
+- **Backend Test Runner**: Node.js native test runner executed all unit and workflow integration tests (`server/src/tests/**/*.test.js`).
+- **Pass Rate**: 27 / 27 test cases passed across 15 test suites with 0 failures (1,562 ms execution duration).
+- **Frontend Rollup**: Vite 6 transformed 2,121 modules into optimized production chunks (`vendor-react`, `vendor-charts`, `vendor-icons`, `index.js`) with 0 errors.
 
 ---
 
@@ -367,3 +367,4 @@ The project underwent testing across cryptographic, logic, and interface layers:
 
 ## 28. Conclusion
 **FitTrack Pro** delivers a complete, professional, and production-minded gym management web application. By successfully solving real-world operational challenges—including payment verification leakages, unrecorded cash transactions, disputed trainer compensations, turnstile fraud, and subscription lapses—the platform demonstrates mastery of full-stack engineering, database architecture, UI/UX design, and containerized DevOps. It stands as an exemplary university PBL project and a production-grade portfolio achievement.
+

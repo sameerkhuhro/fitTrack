@@ -15,3 +15,4 @@ const verifyToken = (token) => {
 };
 
 module.exports = { signToken, verifyToken };
+

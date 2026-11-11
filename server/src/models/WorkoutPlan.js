@@ -75,3 +75,4 @@ const workoutPlanSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('WorkoutPlan', workoutPlanSchema);
+

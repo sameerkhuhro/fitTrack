@@ -10,3 +10,4 @@ router.post('/', protect, authorize(ROLES.TRAINER, ROLES.ADMIN), sessionControll
 router.patch('/:id/status', protect, sessionController.updateSessionStatus);
 
 module.exports = router;
+

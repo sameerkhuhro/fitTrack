@@ -8,13 +8,13 @@ WORKDIR /app
 
 # Install dependencies first for efficient layer caching
 COPY package*.json ./
-RUN npm ci --only=production --no-audit
+RUN npm ci --omit=dev --no-audit
 
 # Copy application source code
 COPY . .
 
-# Set non-root user for security
-RUN chown -R node:node /app
+# Create uploads directory and set non-root user permissions
+RUN mkdir -p /app/uploads && chown -R node:node /app
 USER node
 
 EXPOSE 5000
@@ -26,3 +26,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
   CMD curl -f http://localhost:5000/api/v1/health || exit 1
 
 CMD ["node", "src/server.js"]
+

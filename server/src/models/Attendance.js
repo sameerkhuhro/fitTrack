@@ -45,3 +45,4 @@ const attendanceSchema = new mongoose.Schema(
 attendanceSchema.index({ member: 1, dateString: 1 }, { unique: true });
 
 module.exports = mongoose.model('Attendance', attendanceSchema);
+

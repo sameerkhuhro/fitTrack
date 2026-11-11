@@ -8,8 +8,11 @@ services:
     restart: always
     environment:
       MONGO_INITDB_DATABASE: fittrack_pro
-    ports:
-      - "27017:27017"
+    # Port 27017 is NOT exposed publicly in production to prevent external database attacks.
+    # Node.js communicates via internal Docker network (mongodb://mongo:27017/fittrack_pro).
+    # Uncomment 127.0.0.1 mapping below ONLY for local GUI client inspection (e.g. MongoDB Compass).
+    # ports:
+    #   - "127.0.0.1:27017:27017"
     volumes:
       - mongo-data:/data/db
     networks:
@@ -86,3 +89,4 @@ volumes:
     driver: local
   uploads-data:
     driver: local
+

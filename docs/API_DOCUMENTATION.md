@@ -229,3 +229,4 @@ All protected endpoints require an HTTP `Authorization` header formatted as:
   }
 }
 ```
+

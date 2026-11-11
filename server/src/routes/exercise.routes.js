@@ -14,3 +14,4 @@ router.put('/:id', protect, authorize(ROLES.ADMIN, ROLES.TRAINER), exerciseContr
 router.delete('/:id', protect, authorize(ROLES.ADMIN), exerciseController.deleteExercise);
 
 module.exports = router;
+

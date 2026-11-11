@@ -23,3 +23,4 @@ router.patch('/:id/reject', protect, authorize(ROLES.ADMIN), paymentController.r
 router.get('/:id', protect, paymentController.getPaymentById);
 
 module.exports = router;
+

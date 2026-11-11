@@ -19,3 +19,4 @@ router.patch('/:id/mark-paid', protect, authorize(ROLES.ADMIN), salaryController
 router.get('/:id', protect, salaryController.getSalaryById);
 
 module.exports = router;
+

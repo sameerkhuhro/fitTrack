@@ -88,3 +88,4 @@ FitTrack Pro supports dual payment channels:
 - On the **Daily Attendance** screen, record athlete check-ins.
 - The system automatically blocks duplicate check-in entries on the same day for the same member.
 - Click **Check-Out** when the member completes their workout.
+

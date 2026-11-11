@@ -13,3 +13,4 @@ router.patch('/:id/read', protect, notificationController.markAsRead);
 router.post('/send', protect, authorize(ROLES.ADMIN), notificationController.sendAnnouncement);
 
 module.exports = router;
+

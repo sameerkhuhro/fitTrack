@@ -18,3 +18,4 @@ router.delete('/:id', protect, authorize(ROLES.TRAINER, ROLES.ADMIN), workoutCon
 router.get('/:id', protect, workoutController.getWorkoutPlanById);
 
 module.exports = router;
+

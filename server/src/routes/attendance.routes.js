@@ -17,3 +17,4 @@ router.get('/', protect, authorize(ROLES.ADMIN), attendanceController.getAllAtte
 router.get('/member/:id', protect, authorize(ROLES.ADMIN, ROLES.TRAINER), attendanceController.getMemberAttendance);
 
 module.exports = router;
+

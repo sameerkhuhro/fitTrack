@@ -15,3 +15,4 @@ router.put('/:id', protect, authorize(ROLES.ADMIN), planController.updatePlan);
 router.delete('/:id', protect, authorize(ROLES.ADMIN), planController.deletePlan);
 
 module.exports = router;
+

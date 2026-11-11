@@ -113,3 +113,4 @@ The platform incorporates `node-cron` running an automated maintenance daemon:
   - Automatically identifies memberships reaching their expiration date and transitions status from `active` to `expired`.
   - Dispatches automated in-app alerts at **7 days**, **3 days**, **1 day**, and **day of expiry**.
   - Employs a composite deduplication key (`dedupKey = "expiry-${days}d-${id}-${date}"`) to prevent duplicate notification spam.
+

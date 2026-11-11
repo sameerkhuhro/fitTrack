@@ -13,3 +13,4 @@ router.get('/contact', protect, authorize(ROLES.ADMIN), contactController.getAll
 router.patch('/contact/:id', protect, authorize(ROLES.ADMIN), contactController.updateContactStatus);
 
 module.exports = router;
+

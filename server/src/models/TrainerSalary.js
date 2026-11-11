@@ -76,3 +76,4 @@ const trainerSalarySchema = new mongoose.Schema(
 trainerSalarySchema.index({ trainer: 1, month: 1, year: 1 }, { unique: true });
 
 module.exports = mongoose.model('TrainerSalary', trainerSalarySchema);
+

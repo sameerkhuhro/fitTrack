@@ -165,3 +165,4 @@ module.exports = {
   updateTrainer,
   deleteTrainer,
 };
+

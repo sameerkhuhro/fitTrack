@@ -16,3 +16,4 @@ router.get('/trainer-summary', protect, authorize(ROLES.TRAINER), dashboardContr
 router.get('/member-summary', protect, authorize(ROLES.MEMBER), dashboardController.getMemberSummary);
 
 module.exports = router;
+

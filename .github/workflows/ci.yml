@@ -69,3 +69,4 @@ jobs:
           context: ./client
           push: false
           tags: fittrack-client:ci
+
