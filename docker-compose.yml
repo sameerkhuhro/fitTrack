@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  # 1. MongoDB Database Service
+  mongo:
+    image: mongo:7.0
+    container_name: fittrack-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: fittrack_pro
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - fittrack-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # 2. Node.js Backend API Service
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: fittrack-server
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      MONGODB_URI: mongodb://mongo:27017/fittrack_pro
+      JWT_SECRET: fittrack_production_jwt_secret_key_2026_secure
+      JWT_EXPIRES_IN: 7d
+      CLIENT_URL: http://localhost
+      INITIAL_ADMIN_EMAIL: admin@fittrack.com
+      INITIAL_ADMIN_PASSWORD: Admin@FitTrack2026!
+      INITIAL_ADMIN_NAME: "System Administrator"
+      INITIAL_ADMIN_PHONE: "+923001234567"
+      UPLOAD_PATH: uploads
+      MAX_FILE_SIZE_MB: 5
+    ports:
+      - "5000:5000"
+    volumes:
+      - uploads-data:/app/uploads
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - fittrack-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/v1/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # 3. React Frontend Nginx Production Service
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: fittrack-client
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    networks:
+      - fittrack-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost/nginx-health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+networks:
+  fittrack-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
+  uploads-data:
+    driver: local
