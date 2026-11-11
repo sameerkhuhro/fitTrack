@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "FitTrack Pro - Smart Gym Management & Membership Subscription Platform",
   "scripts": {
+    "start": "node scripts/dev.js",
+    "dev": "node scripts/dev.js",
     "server": "npm run dev --prefix server",
     "client": "npm run dev --prefix client",
     "seed": "npm run seed --prefix server",
@@ -21,3 +23,4 @@
   "author": "FitTrack Pro Engineering Team",
   "license": "MIT"
 }
+

@@ -239,3 +239,4 @@ docker compose down
 | **Gym Admin / Owner** | `admin@fittrack.com` | `Admin@FitTrack2026!` | Full gym oversight, 17 management modules, revenue analytics, payment verification, cash receipts |
 | **Certified Trainer** | `hamza.trainer@fittrack.com` | `Trainer@FitTrack2026!` | Trainee management, workout programming, schedule sessions, salary confirmation & dispute |
 | **Gym Member / Athlete** | `ali.member@fittrack.com` | `Member@FitTrack2026!` | Active subscription, dues payment (online transfer / cash intent), workout logs, progress charts |
+
