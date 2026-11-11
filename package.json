@@ -1,0 +1,23 @@
+{
+  "name": "fittrack-pro",
+  "version": "1.0.0",
+  "description": "FitTrack Pro - Smart Gym Management & Membership Subscription Platform",
+  "scripts": {
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "seed": "npm run seed --prefix server",
+    "test": "npm test --prefix server",
+    "build": "npm run build --prefix client"
+  },
+  "keywords": [
+    "gym-management",
+    "mern",
+    "react",
+    "express",
+    "mongodb",
+    "fitness",
+    "pbl"
+  ],
+  "author": "FitTrack Pro Engineering Team",
+  "license": "MIT"
+}
