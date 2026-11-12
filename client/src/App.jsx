@@ -84,6 +84,7 @@ export default function App() {
             }
           >
             <Route index element={<AdminDashboard />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="members" element={<AdminMembers />} />
             <Route path="trainers" element={<AdminTrainers />} />
             <Route path="plans" element={<AdminPlans />} />
@@ -112,6 +113,7 @@ export default function App() {
             }
           >
             <Route index element={<TrainerDashboard />} />
+            <Route path="dashboard" element={<TrainerDashboard />} />
             <Route path="members" element={<TrainerMembers />} />
             <Route path="workouts" element={<TrainerWorkouts />} />
             <Route path="schedule" element={<TrainerSchedule />} />
@@ -130,7 +132,9 @@ export default function App() {
             }
           >
             <Route index element={<MemberDashboard />} />
+            <Route path="dashboard" element={<MemberDashboard />} />
             <Route path="membership" element={<MemberMembership />} />
+            <Route path="memberships" element={<MemberMembership />} />
             <Route path="payments" element={<MemberPayments />} />
             <Route path="workouts" element={<MemberWorkouts />} />
             <Route path="calendar" element={<MemberCalendar />} />

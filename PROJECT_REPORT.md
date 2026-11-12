@@ -336,10 +336,11 @@ graph LR
 ---
 
 ## 24. Testing Methodology & Actual Results
-The project underwent testing across cryptographic, logic, and interface layers:
+The project underwent testing across cryptographic, logic, database, and interface layers:
 - **Backend Test Runner**: Node.js native test runner executed all unit and workflow integration tests (`server/src/tests/**/*.test.js`).
-- **Pass Rate**: 27 / 27 test cases passed across 15 test suites with 0 failures (1,562 ms execution duration).
-- **Frontend Rollup**: Vite 6 transformed 2,121 modules into optimized production chunks (`vendor-react`, `vendor-charts`, `vendor-icons`, `index.js`) with 0 errors.
+- **Pass Rate**: 27 / 27 test cases passed across 15 test suites with 0 failures (827 ms execution duration).
+- **Live MongoDB Atlas Verification**: Verified live connectivity, real-time data persistence, and cross-session retrieval against cluster `uptimewatchdb.mpayexl.mongodb.net`, database `fittrack` (`test_atlas_connection.js`, `test_live_auth.js`, `test_live_workflows.js`).
+- **Frontend Rollup**: Vite 6 transformed 2,121 modules into optimized production chunks (`vendor-react`, `vendor-charts`, `vendor-icons`, `index.js`) with 0 errors in 24.20s.
 
 ---
 

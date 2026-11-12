@@ -112,22 +112,25 @@ const getMe = async (req, res, next) => {
     const user = await User.findById(req.user._id)
       .populate('assignedTrainer', 'name email phone specialization profileImage');
 
+    const userProfile = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
+      profileImage: user.profileImage,
+      specialization: user.specialization,
+      monthlySalary: user.role === ROLES.TRAINER ? user.monthlySalary : undefined,
+      assignedTrainer: user.assignedTrainer,
+      emergencyContact: user.emergencyContact,
+      mustChangePassword: user.mustChangePassword,
+      createdAt: user.createdAt,
+    };
+
     res.status(200).json({
       success: true,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
-        profileImage: user.profileImage,
-        specialization: user.specialization,
-        monthlySalary: user.role === ROLES.TRAINER ? user.monthlySalary : undefined,
-        assignedTrainer: user.assignedTrainer,
-        emergencyContact: user.emergencyContact,
-        mustChangePassword: user.mustChangePassword,
-        createdAt: user.createdAt,
-      },
+      user: userProfile,
+      data: userProfile,
     });
   } catch (error) {
     next(error);

@@ -154,3 +154,4 @@
 | **User Interface & Experience** | Luxury dark aesthetic, Recharts progress graphs, 1-click fast login, responsive sidebar layouts. | 40 React views across `client/src/pages/` |
 | **DevOps & CI/CD** | Multi-stage Dockerfiles, Docker Compose, automated GitHub Actions workflow (`ci.yml`). | Root `docker-compose.yml` & `.github/` |
 | **Automated Testing & QA** | 27 automated unit, business rule, and integration test cases with 100% pass rate. | [docs/TESTING_REPORT.md](file:///c:/projects/FitTrack/docs/TESTING_REPORT.md) |
+

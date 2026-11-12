@@ -20,9 +20,9 @@ export default function ProtectedRoute({ children, allowedRoles }) {
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     // Redirect to the appropriate portal for their role
-    if (user.role === 'admin') return <Navigate to="/admin" replace />;
-    if (user.role === 'trainer') return <Navigate to="/trainer" replace />;
-    return <Navigate to="/member" replace />;
+    if (user.role === 'admin') return <Navigate to="/admin/dashboard" replace />;
+    if (user.role === 'trainer') return <Navigate to="/trainer/dashboard" replace />;
+    return <Navigate to="/member/dashboard" replace />;
   }
 
   return children;

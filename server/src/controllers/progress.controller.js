@@ -7,7 +7,25 @@ const { ROLES } = require('../config/constants');
 // @access  Member, Trainer, Admin
 const logProgress = async (req, res, next) => {
   try {
-    const { memberId, weightKg, heightCm, waistCm, chestCm, armsCm, hipsCm, bodyFatPercentage, notes, recordedDate } = req.body;
+    const {
+      memberId,
+      weightKg,
+      heightCm,
+      waistCm,
+      chestCm,
+      armsCm,
+      hipsCm,
+      bodyFatPercentage,
+      notes,
+      recordedDate,
+    } = req.body;
+
+    const rawWeight = weightKg !== undefined ? weightKg : req.body.weight;
+    const rawHeight = heightCm !== undefined ? heightCm : req.body.height;
+    const rawWaist = waistCm !== undefined ? waistCm : req.body.waist;
+    const rawChest = chestCm !== undefined ? chestCm : req.body.chest;
+    const rawArms = armsCm !== undefined ? armsCm : req.body.arms;
+    const rawHips = hipsCm !== undefined ? hipsCm : req.body.hips;
 
     const targetMemberId = req.user.role === ROLES.MEMBER ? req.user._id : memberId;
 
@@ -15,6 +33,13 @@ const logProgress = async (req, res, next) => {
       return res.status(400).json({
         success: false,
         message: 'Member ID is required.',
+      });
+    }
+
+    if (!rawWeight || isNaN(Number(rawWeight))) {
+      return res.status(400).json({
+        success: false,
+        message: 'Valid weight is required.',
       });
     }
 
@@ -31,12 +56,12 @@ const logProgress = async (req, res, next) => {
 
     const progress = await ProgressRecord.create({
       member: targetMemberId,
-      weightKg: Number(weightKg),
-      heightCm: heightCm ? Number(heightCm) : null,
-      waistCm: waistCm ? Number(waistCm) : null,
-      chestCm: chestCm ? Number(chestCm) : null,
-      armsCm: armsCm ? Number(armsCm) : null,
-      hipsCm: hipsCm ? Number(hipsCm) : null,
+      weightKg: Number(rawWeight),
+      heightCm: rawHeight ? Number(rawHeight) : null,
+      waistCm: rawWaist ? Number(rawWaist) : null,
+      chestCm: rawChest ? Number(rawChest) : null,
+      armsCm: rawArms ? Number(rawArms) : null,
+      hipsCm: rawHips ? Number(rawHips) : null,
       bodyFatPercentage: bodyFatPercentage ? Number(bodyFatPercentage) : null,
       notes: notes || '',
       recordedDate: recordedDate || Date.now(),

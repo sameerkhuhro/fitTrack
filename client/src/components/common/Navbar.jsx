@@ -20,9 +20,9 @@ export default function Navbar() {
 
   const getDashboardPath = () => {
     if (!user) return '/login';
-    if (user.role === 'admin') return '/admin';
-    if (user.role === 'trainer') return '/trainer';
-    return '/member';
+    if (user.role === 'admin') return '/admin/dashboard';
+    if (user.role === 'trainer') return '/trainer/dashboard';
+    return '/member/dashboard';
   };
 
   return (
