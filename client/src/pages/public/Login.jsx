@@ -137,7 +137,7 @@ export default function Login() {
 
           {/* Center Motivational Copy */}
           <div className="relative z-10 my-auto py-8">
-            <h2 className="text-2xl font-black text-gym-text tracking-tight uppercase leading-tight">
+            <h2 className="font-display text-3xl font-black text-gym-text tracking-tight uppercase leading-tight">
               Elevate Your <span className="text-gym-primary">Strength</span> & Operations
             </h2>
             <p className="mt-3 text-xs leading-relaxed text-gym-muted">
@@ -189,7 +189,7 @@ export default function Login() {
           </div>
 
           <div className="mb-6">
-            <h3 className="text-2xl font-black text-gym-text tracking-tight uppercase">
+            <h3 className="font-display text-3xl font-black text-gym-text tracking-tight uppercase">
               Portal Access
             </h3>
             <p className="text-xs text-gym-muted mt-1">

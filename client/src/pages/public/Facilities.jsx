@@ -1,9 +1,6 @@
 import React from 'react';
-import { ShieldCheck, Dumbbell, Activity, Flame, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Dumbbell, Activity, Flame, CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Card from '../../components/common/Card';
-import Badge from '../../components/common/Badge';
-import Button from '../../components/common/Button';
 
 export default function Facilities() {
   const facilityZones = [
@@ -52,78 +49,106 @@ export default function Facilities() {
   ];
 
   return (
-    <div className="bg-gym-bg text-gym-text">
+    <div className="bg-gym-bg text-gym-text overflow-hidden">
       {/* 1. HERO HEADER */}
-      <section className="relative py-20 lg:py-28 overflow-hidden border-b border-gym-border">
+      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden border-b border-gym-border/80">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=1920&q=80"
+            src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=2000&auto=format&fit=crop"
             alt="FitTrack Pro Facilities"
-            className="w-full h-full object-cover filter brightness-[0.25]"
+            className="w-full h-full object-cover filter brightness-[0.22] contrast-[1.25]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gym-bg via-gym-bg/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge variant="primary" className="mb-4">15,000 Sq. Ft Sanctuary</Badge>
-          <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tight text-gym-text">
-            Engineered For Pure Performance
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+          <span className="font-display text-xs sm:text-sm font-black uppercase tracking-[0.25em] text-emerald-400">
+            Engineered Training Spaces
+          </span>
+          <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-8xl uppercase tracking-tight text-white leading-[0.9]">
+            Architected for <br />
+            <span className="text-gym-primary">Maximum Power.</span>
           </h1>
-          <p className="mt-6 text-base sm:text-lg text-gym-muted max-w-2xl mx-auto leading-relaxed">
-            Every piece of iron, machine, and recovery suite has been selected with zero compromises on quality, safety, and hygiene.
+          <p className="mt-6 text-sm sm:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            Spanning 15,000 square feet, FitTrack Pro is segmented into dedicated training arenas fitted with Eleiko, Hammer Strength, and Concept2 fleets.
           </p>
         </div>
+
+        <div className="absolute bottom-0 left-0 w-1/2 h-1 bg-gradient-to-r from-lime-400 via-emerald-400 to-transparent z-20" />
       </section>
 
-      {/* 2. FACILITY ZONES GRID */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 2. SIX FACILITY ZONES */}
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {facilityZones.map((zone, idx) => (
             <div
               key={idx}
-              className="rounded-2xl overflow-hidden bg-gym-surface border border-gym-border hover:border-gym-primary/50 transition-all duration-300 flex flex-col justify-between group"
+              className="group rounded-3xl overflow-hidden bg-gym-surface border border-gym-border hover:border-gym-primary/50 transition-all duration-300 flex flex-col justify-between"
             >
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={zone.image}
-                  alt={zone.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 filter brightness-95"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gym-surface via-transparent to-transparent" />
-                <div className="absolute top-4 left-4">
-                  <Badge variant="primary">{zone.category}</Badge>
+              <div>
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={zone.image}
+                    alt={zone.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gym-surface via-transparent to-transparent" />
+                  <span className="absolute top-4 left-4 px-3 py-1 rounded-md bg-black/85 backdrop-blur-md text-[10px] font-bold text-gym-primary border border-gym-primary/30 uppercase tracking-wider">
+                    {zone.category}
+                  </span>
                 </div>
-              </div>
 
-              <div className="p-8 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-gym-text group-hover:text-gym-primary transition-colors">
+                <div className="p-7">
+                  <h3 className="font-display text-xl font-black uppercase text-white group-hover:text-gym-primary transition-colors">
                     {zone.title}
                   </h3>
-                  <p className="mt-2 text-xs text-gym-muted leading-relaxed">
-                    {zone.desc}
-                  </p>
+                  <p className="text-xs text-gray-400 mt-2.5 leading-relaxed">{zone.desc}</p>
 
-                  <div className="mt-6 space-y-2 border-t border-gym-border pt-4">
-                    {zone.specs.map((spec, sIdx) => (
-                      <div key={sIdx} className="flex items-center gap-2.5 text-xs text-gym-text">
+                  <div className="mt-6 pt-5 border-t border-gym-border/60 space-y-2">
+                    <span className="font-display text-[11px] font-bold uppercase tracking-wider text-emerald-400 block">
+                      Equipment Specifications:
+                    </span>
+                    {zone.specs.map((sp, sIdx) => (
+                      <div key={sIdx} className="flex items-center gap-2 text-xs text-gray-300">
                         <CheckCircle2 className="w-3.5 h-3.5 text-gym-primary shrink-0" />
-                        <span>{spec}</span>
+                        <span>{sp}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
+
+              <div className="px-7 pb-7">
+                <Link to="/plans">
+                  <button className="w-full py-2.5 px-4 rounded-xl bg-gym-bg border border-gym-border hover:border-gym-primary font-display text-xs font-black uppercase tracking-wider text-white hover:text-gym-primary transition-all flex items-center justify-center gap-1.5">
+                    Access via Membership
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>
+      </section>
 
-        <div className="mt-16 text-center">
-          <Link to="/register">
-            <Button size="lg" variant="primary" icon={ArrowRight}>
-              Schedule Your Free Facility Tour & Workout
-            </Button>
-          </Link>
+      {/* 3. CTA */}
+      <section className="py-20 bg-gym-surface/40 border-t border-gym-border">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-5">
+          <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white">
+            Experience the Arena in Person
+          </h2>
+          <p className="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto">
+            Book a complimentary club walkthrough. Our master coaches will guide you through our training zones and assess your goals.
+          </p>
+          <div className="pt-2">
+            <Link to="/contact">
+              <button className="bg-white hover:bg-neutral-200 text-black font-display font-black text-sm uppercase tracking-wider px-8 py-4 inline-flex items-center gap-2 shadow-xl transition-all">
+                Book a Private Facility Tour
+                <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+              </button>
+            </Link>
+          </div>
         </div>
       </section>
     </div>

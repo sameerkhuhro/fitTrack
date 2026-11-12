@@ -1,111 +1,147 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Dumbbell, MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { Dumbbell, MapPin, Phone, Mail, Clock, ArrowUpRight, ShieldCheck } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-gym-surface border-t border-gym-border text-gym-muted pt-16 pb-12">
+    <footer className="bg-gym-bg border-t border-gym-border/80 text-gray-400 pt-16 pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          
           {/* Brand Info */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary">
-                <Dumbbell className="w-5 h-5 -rotate-45" />
+          <div className="space-y-4">
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-300 flex items-center justify-center text-black font-black font-display shadow-lg shadow-emerald-500/20">
+                <Dumbbell className="w-5 h-5 -rotate-45 text-black stroke-[2.5]" />
               </div>
-              <span className="text-xl font-bold text-gym-text">
-                FitTrack <span className="text-gym-primary">Pro</span>
-              </span>
-            </div>
-            <p className="text-sm text-gym-muted leading-relaxed">
-              Manage Your Gym. Empower Your Fitness. State-of-the-art strength zones, expert personal trainers, and comprehensive digital progress tracking.
+              <div className="flex flex-col">
+                <span className="font-display text-2xl font-black uppercase tracking-tight text-white leading-none">
+                  FitTrack <span className="text-gym-primary font-bold">Pro</span>
+                </span>
+                <span className="text-[10px] tracking-widest uppercase font-semibold text-gym-muted">
+                  Fitness Club
+                </span>
+              </div>
+            </Link>
+
+            <p className="text-xs text-gray-400 leading-relaxed">
+              Manage Your Gym. Empower Your Fitness. State-of-the-art strength arenas, certified personal coaches, automated turnstiles, and comprehensive digital progress tracking.
             </p>
+
+            <div className="pt-2 flex items-center gap-2 text-xs text-emerald-400 font-semibold">
+              <ShieldCheck className="w-4 h-4" />
+              <span>PBL University Edition & Enterprise Stack</span>
+            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold text-gym-text uppercase tracking-wider mb-4">
-              Quick Navigation
+            <h4 className="font-display text-sm font-black uppercase tracking-wider text-white mb-4">
+              Club Navigation
             </h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <Link to="/" className="hover:text-gym-primary transition-colors">Home</Link>
+                <Link to="/" className="hover:text-gym-primary transition-colors flex items-center justify-between">
+                  <span>Home</span>
+                  <ArrowUpRight className="w-3 h-3 text-gray-600" />
+                </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-gym-primary transition-colors">About the Gym</Link>
+                <Link to="/about" className="hover:text-gym-primary transition-colors flex items-center justify-between">
+                  <span>About Our Club</span>
+                  <ArrowUpRight className="w-3 h-3 text-gray-600" />
+                </Link>
               </li>
               <li>
-                <Link to="/plans" className="hover:text-gym-primary transition-colors">Membership Plans</Link>
+                <Link to="/facilities" className="hover:text-gym-primary transition-colors flex items-center justify-between">
+                  <span>Training Facilities</span>
+                  <ArrowUpRight className="w-3 h-3 text-gray-600" />
+                </Link>
               </li>
               <li>
-                <Link to="/trainers" className="hover:text-gym-primary transition-colors">Certified Trainers</Link>
+                <Link to="/trainers" className="hover:text-gym-primary transition-colors flex items-center justify-between">
+                  <span>Coaching Staff</span>
+                  <ArrowUpRight className="w-3 h-3 text-gray-600" />
+                </Link>
               </li>
               <li>
-                <Link to="/facilities" className="hover:text-gym-primary transition-colors">Gym Facilities</Link>
+                <Link to="/plans" className="hover:text-gym-primary transition-colors flex items-center justify-between">
+                  <span>Membership Tiers</span>
+                  <ArrowUpRight className="w-3 h-3 text-gray-600" />
+                </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-gym-primary transition-colors">Contact & Support</Link>
+                <Link to="/contact" className="hover:text-gym-primary transition-colors flex items-center justify-between">
+                  <span>Contact Front Desk</span>
+                  <ArrowUpRight className="w-3 h-3 text-gray-600" />
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Opening Hours */}
+          {/* Operating Hours */}
           <div>
-            <h4 className="text-sm font-semibold text-gym-text uppercase tracking-wider mb-4">
-              Operating Hours
+            <h4 className="font-display text-sm font-black uppercase tracking-wider text-white mb-4">
+              Hours of Operation
             </h4>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-gym-primary" />
-                <span>Monday – Friday: 06:00 AM – 11:00 PM</span>
+            <ul className="space-y-3 text-xs">
+              <li className="flex items-start gap-2.5">
+                <Clock className="w-4 h-4 text-gym-primary shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-semibold text-white block">Monday – Saturday</span>
+                  <span className="text-gray-400">06:00 AM – 11:30 PM</span>
+                </div>
               </li>
-              <li className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-gym-primary" />
-                <span>Saturday: 07:00 AM – 10:00 PM</span>
+              <li className="flex items-start gap-2.5">
+                <Clock className="w-4 h-4 text-gym-primary shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-semibold text-white block">Sunday</span>
+                  <span className="text-gray-400">08:00 AM – 08:00 PM</span>
+                </div>
               </li>
-              <li className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-gym-primary" />
-                <span>Sunday: 08:00 AM – 08:00 PM</span>
-              </li>
-              <li className="text-xs text-gym-accent font-medium mt-2">
-                VIP / Premium Members enjoy 24/7 RFID biometric access.
+              <li className="text-[11px] text-emerald-400 font-semibold pt-1">
+                * Turnstiles operate on automated holiday schedules.
               </li>
             </ul>
           </div>
 
-          {/* Contact Details */}
+          {/* Direct Coordinates */}
           <div>
-            <h4 className="text-sm font-semibold text-gym-text uppercase tracking-wider mb-4">
+            <h4 className="font-display text-sm font-black uppercase tracking-wider text-white mb-4">
               Club Location
             </h4>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-gym-primary mt-1 shrink-0" />
-                <span>Sector F-7/2, Jinnah Super Avenue, Islamabad, Pakistan</span>
+            <ul className="space-y-3 text-xs">
+              <li className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 text-gym-primary shrink-0 mt-0.5" />
+                <span className="text-gray-400">Plot 44-C, Sector 5, Phase 6, DHA, Karachi, Pakistan</span>
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-gym-primary shrink-0" />
-                <span>+92 51 1234567 / +92 300 1234567</span>
+                <span className="text-gray-400">+92 (21) 3584-9021</span>
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-gym-primary shrink-0" />
-                <span>contact@fittrack.com</span>
+                <span className="text-gray-400">info@fittrackpro.com</span>
               </li>
             </ul>
           </div>
+
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gym-border flex flex-col sm:flex-row items-center justify-between text-xs text-gym-muted gap-4">
-          <p>© {new Date().getFullYear()} FitTrack Pro. All rights reserved. University PBL & Professional Portfolio Showcase.</p>
-          <div className="flex items-center gap-6">
-            <span>Production MERN Stack</span>
-            <span>Docker & Nginx Integrated</span>
-            <span className="text-gym-primary font-medium">Role-Based Security</span>
+        {/* Bottom Sub-bar */}
+        <div className="pt-8 border-t border-gym-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+          <p className="text-gray-500">
+            &copy; {new Date().getFullYear()} FitTrack Pro Fitness Club. All Rights Reserved.
+          </p>
+          <div className="flex items-center gap-4 text-gray-400">
+            <Link to="/login" className="hover:text-gym-primary transition-colors">Staff Portal</Link>
+            <span>•</span>
+            <Link to="/register" className="hover:text-gym-primary transition-colors">Athlete Enrollment</Link>
+            <span>•</span>
+            <span className="text-emerald-400">Production Build v2.4</span>
           </div>
         </div>
       </div>
     </footer>
   );
 }
-

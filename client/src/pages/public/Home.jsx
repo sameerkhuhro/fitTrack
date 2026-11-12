@@ -9,9 +9,9 @@ import {
   CheckCircle2,
   Calendar,
   CreditCard,
-  ChevronRight,
   Sparkles,
   ArrowRight,
+  ArrowUpRight,
   TrendingUp,
   Clock,
   MapPin,
@@ -22,22 +22,20 @@ import {
 } from 'lucide-react';
 import api from '../../services/api';
 import Button from '../../components/common/Button';
-import Card from '../../components/common/Card';
-import Badge from '../../components/common/Badge';
 
 export default function Home() {
   const [plans, setPlans] = useState([]);
   const [trainers, setTrainers] = useState([]);
 
   useEffect(() => {
-    // Fetch live plans from Atlas
+    // Fetch live plans from Atlas fittrack database
     api.get('/plans')
       .then((res) => {
         if (res.data.success) setPlans(res.data.data.slice(0, 3));
       })
       .catch(() => {});
 
-    // Fetch live trainers from Atlas
+    // Fetch live trainers from Atlas fittrack database
     api.get('/trainers')
       .then((res) => {
         if (res.data.success) setTrainers(res.data.data.slice(0, 3));
@@ -98,25 +96,25 @@ export default function Home() {
     {
       icon: CreditCard,
       title: 'Dual Payment Architecture',
-      desc: 'Pay online via Bank Transfer, JazzCash, Easypaisa, or settle cash at reception.',
+      desc: 'Submit online bank/wallet proofs or receive instant verifiable cash receipts at reception.',
     },
     {
       icon: Clock,
-      title: '24/7 Extended Facility Access',
-      desc: 'Workout on your own schedule with round-the-clock secure athlete turnstiles.',
+      title: 'Automated Expiry Alerts',
+      desc: 'Smart 7-day, 3-day, and 1-day reminders with automated notification deduplication.',
     },
     {
       icon: Trophy,
-      title: 'Periodized Training Blocks',
-      desc: 'Custom exercise programming customized to hypertrophy, strength, or fat loss.',
+      title: 'Hammer Strength & Eleiko Fleet',
+      desc: 'Pristine, competition-grade machines and biomechanically calibrated equipment.',
     },
   ];
 
   const testimonials = [
     {
-      name: 'Dr. Zeeshan Haider',
+      name: 'Usman Tariq',
       role: 'Member since 2024',
-      quote: 'FitTrack Pro transformed how I train. The ability to view my assigned workout plan directly on my phone and record progress with verified bank transfers has made fitness frictionless.',
+      quote: 'FitTrack Pro completely changed how I train. The workout logging and biometrics tracking keep me accountable every single week.',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
       achievement: 'Lost 12 kg & Gained 4 kg Lean Mass',
@@ -140,89 +138,139 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-gym-bg text-gym-text">
+    <div className="bg-gym-bg text-gym-text overflow-hidden">
+      
       {/* ======================================================== */}
-      {/* 1. HERO SECTION WITH RICH GYM PHOTOGRAPHY */}
+      {/* 1. HERO SECTION – DIRECTLY MATCHING REFERENCE SCREENSHOT */}
       {/* ======================================================== */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden border-b border-gym-border">
-        {/* Background Photo with Cinematic Dark Gradient Overlays */}
+      <section className="relative min-h-screen flex items-center overflow-hidden border-b border-gym-border/60 pt-24 lg:pt-0">
+        
+        {/* Full-width dark gym interior background photo */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=80"
-            alt="FitTrack Pro Elite Gym Floor"
-            className="w-full h-full object-cover object-center filter brightness-[0.38] contrast-[1.15]"
+            src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2000&auto=format&fit=crop"
+            alt="FitTrack Pro Elite Gym Interior"
+            className="w-full h-full object-cover object-center filter brightness-[0.32] contrast-[1.2]"
           />
-          {/* Subtle brand glow overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-gym-bg via-gym-bg/85 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-gym-bg/90 via-transparent to-gym-bg/90" />
+          {/* Subtle cinematic black gradient overlay to ensure perfect contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/85 to-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-gym-bg via-transparent to-black/60" />
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gym-primary/10 border border-gym-primary/30 text-gym-primary text-xs sm:text-sm font-semibold uppercase tracking-widest mb-8 backdrop-blur-md animate-pulse">
-            <Sparkles className="w-4 h-4" />
-            The Premier Strength & Athletic Conditioning Club
-          </div>
+        {/* Hero Grid Container */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-[72vh]">
+            
+            {/* Left Side: Brand Tagline, Headings & Action Buttons */}
+            <div className="lg:col-span-7 flex flex-col justify-center space-y-6 lg:space-y-7 text-left">
+              
+              {/* Small Top Label */}
+              <div className="flex items-center gap-2">
+                <span className="font-display font-black text-xs sm:text-sm uppercase tracking-[0.22em] text-emerald-400 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-ping" />
+                  FITTRACK PRO FITNESS CLUB.
+                </span>
+              </div>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight uppercase text-gym-text max-w-5xl mx-auto leading-[1.05]">
-            Transform Your Body. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gym-primary via-emerald-300 to-teal-400">
-              Elevate Your Life.
-            </span>
-          </h1>
+              {/* Main Display Heading */}
+              <h1 className="font-display font-black uppercase text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-white tracking-tight leading-[0.88] drop-shadow-2xl">
+                BUILD STRENGTH.
+                <br />
+                <span className="text-gym-primary font-black">TRANSFORM</span> YOUR BODY.
+              </h1>
 
-          <p className="mt-6 text-base sm:text-lg lg:text-xl text-gym-muted max-w-3xl mx-auto font-normal leading-relaxed">
-            FitTrack Pro unites heavy iron, international certified coaches, intelligent turnstile access, and digital biometric tracking into one modern fitness sanctuary.
-          </p>
+              {/* Supporting Text */}
+              <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-xl font-normal leading-relaxed">
+                Train smarter, build strength, and achieve your fitness goals with expert trainers and personalized fitness programs.
+              </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto sm:max-w-none">
-            <Link to="/register" className="w-full sm:w-auto">
-              <Button size="lg" variant="primary" icon={ArrowRight} className="w-full shadow-lg shadow-gym-primary/20 hover:shadow-gym-primary/40 text-base py-4 px-8 font-bold">
-                Join Now – Start Training
-              </Button>
-            </Link>
-            <Link to="/plans" className="w-full sm:w-auto">
-              <Button size="lg" variant="secondary" className="w-full text-base py-4 px-8 border-gym-border/80 hover:border-gym-primary">
-                Explore Membership Plans
-              </Button>
-            </Link>
-          </div>
+              {/* Two CTA Buttons with Diagonal Arrows Matching Reference */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Link to="/plans" className="group">
+                  <button className="bg-white hover:bg-neutral-200 text-black font-display font-black text-sm uppercase tracking-wider px-7 py-3.5 flex items-center gap-2 shadow-xl hover:shadow-white/20 transition-all duration-200">
+                    Explore Memberships
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-[2.5]" />
+                  </button>
+                </Link>
 
-          {/* Micro trust indicators */}
-          <div className="mt-14 pt-8 border-t border-gym-border/40 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-left">
-            <div className="flex items-center gap-3">
-              <ShieldCheck className="w-5 h-5 text-gym-primary shrink-0" />
-              <span className="text-xs text-gym-muted leading-snug"><strong className="text-gym-text block">100% Verified</strong> Bank & Cash Dues</span>
+                <Link to="/register" className="group">
+                  <button className="border border-white/80 hover:border-gym-primary hover:bg-gym-primary/10 text-white hover:text-gym-primary font-display font-black text-sm uppercase tracking-wider px-7 py-3.5 flex items-center gap-2 transition-all duration-200">
+                    Join Now
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-[2.5]" />
+                  </button>
+                </Link>
+              </div>
+
+              {/* Micro Trust Indicators */}
+              <div className="pt-6 border-t border-gym-border/40 flex items-center gap-8 text-xs text-gym-muted">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-gym-primary" />
+                  <span>ISO-9001 Certified Training Arena</span>
+                </div>
+                <div className="hidden sm:flex items-center gap-2">
+                  <Award className="w-4 h-4 text-gym-primary" />
+                  <span>12+ Master Coaches</span>
+                </div>
+              </div>
+
             </div>
-            <div className="flex items-center gap-3">
-              <Award className="w-5 h-5 text-gym-primary shrink-0" />
-              <span className="text-xs text-gym-muted leading-snug"><strong className="text-gym-text block">Certified Coaches</strong> NASM / ISSA</span>
+
+            {/* Right Side: Visual Athlete Showcase with Radiant Green Circle & Diagonal White Slashes */}
+            <div className="lg:col-span-5 relative flex items-center justify-center">
+              <div className="relative w-full max-w-[460px] sm:max-w-[500px] lg:max-w-[520px] aspect-square flex items-center justify-center">
+                
+                {/* 1. Large Circular Emerald/Lime Gradient Shape */}
+                <div className="absolute w-[290px] h-[290px] sm:w-[380px] sm:h-[380px] lg:w-[420px] lg:h-[420px] rounded-full bg-gradient-to-tr from-emerald-600 via-emerald-400 to-teal-800 shadow-[0_0_80px_rgba(16,185,129,0.4)] z-0" />
+
+                {/* 2. Diagonal White Slash Line 1 (Upper Right - Matching Reference) */}
+                <div className="absolute top-2 right-4 sm:top-6 sm:right-8 w-3 sm:w-3.5 h-36 sm:h-44 bg-white rotate-[35deg] transform origin-center shadow-2xl z-10" />
+
+                {/* 3. Diagonal White Slash Line 2 (Lower Left - Matching Reference) */}
+                <div className="absolute bottom-6 left-4 sm:bottom-10 sm:left-8 w-3 sm:w-3.5 h-36 sm:h-44 bg-white rotate-[35deg] transform origin-center shadow-2xl z-10" />
+
+                {/* 4. Large Muscular Fitness Athlete Lifting Dumbbells */}
+                <div className="relative z-20 w-[95%] h-[95%] flex items-end justify-center overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1200&auto=format&fit=crop"
+                    alt="FitTrack Pro Athlete Lifting Dumbbells"
+                    className="w-full h-full object-cover object-top scale-105 filter contrast-[1.1] brightness-[1.05] drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]"
+                  />
+                </div>
+
+                {/* 5. Floating Telemetry Badge */}
+                <div className="absolute bottom-4 right-0 z-30 bg-gym-surface/95 backdrop-blur-md border border-gym-primary/40 p-3.5 rounded-2xl shadow-2xl hidden sm:flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary">
+                    <Activity className="w-5 h-5 animate-pulse" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold font-display uppercase tracking-wider text-white">Live Telemetry</div>
+                    <div className="text-[10px] text-emerald-400 font-semibold">Overload & Split Tracking</div>
+                  </div>
+                </div>
+
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Activity className="w-5 h-5 text-gym-primary shrink-0" />
-              <span className="text-xs text-gym-muted leading-snug"><strong className="text-gym-text block">Daily Biometrics</strong> Weight & Waist Tracker</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <Flame className="w-5 h-5 text-gym-primary shrink-0" />
-              <span className="text-xs text-gym-muted leading-snug"><strong className="text-gym-text block">Hammer Strength</strong> & Eleiko Equipment</span>
-            </div>
+
           </div>
         </div>
+
+        {/* Thin Emerald/Lime Accent Line Near Bottom of Hero Matching Reference */}
+        <div className="absolute bottom-0 left-0 w-3/5 sm:w-2/3 h-1 sm:h-1.5 bg-gradient-to-r from-lime-400 via-emerald-400 to-transparent z-20" />
       </section>
 
       {/* ======================================================== */}
       {/* 2. LIVE CLUB STATISTICS BAR */}
       {/* ======================================================== */}
-      <section className="bg-gym-surface border-b border-gym-border py-12 relative z-20">
+      <section className="bg-gym-surface border-b border-gym-border/80 py-12 relative z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((s, idx) => (
-              <div key={idx} className="border-l-2 border-gym-primary/40 pl-6 py-2">
+              <div key={idx} className="border-l-2 border-gym-primary/50 pl-6 py-2">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-gym-text tracking-tight">{s.value}</span>
-                  <span className="text-xs font-semibold uppercase text-gym-primary">{s.suffix}</span>
+                  <span className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">{s.value}</span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-gym-primary">{s.suffix}</span>
                 </div>
-                <div className="text-sm font-semibold text-gym-text mt-1">{s.label}</div>
+                <div className="font-display text-sm font-bold uppercase tracking-wider text-gym-text mt-1">{s.label}</div>
                 <div className="text-xs text-gym-muted mt-0.5">{s.sub}</div>
               </div>
             ))}
@@ -231,10 +279,11 @@ export default function Home() {
       </section>
 
       {/* ======================================================== */}
-      {/* 3. ABOUT THE GYM – DUAL IMAGE & MANIFESTO */}
+      {/* 3. ABOUT THE GYM – DUAL IMAGE & EDITORIAL MANIFESTO */}
       {/* ======================================================== */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
           {/* Left: Atmospheric Photography Collage */}
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-gym-border">
@@ -246,200 +295,207 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-gym-bg via-transparent to-transparent opacity-80" />
             </div>
 
-            {/* Floating Overlaid Feature Card */}
-            <div className="absolute -bottom-8 -right-6 bg-gym-surface/95 backdrop-blur-md border border-gym-primary/30 p-5 rounded-xl shadow-2xl max-w-xs hidden sm:block">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-gym-primary/20 flex items-center justify-center text-gym-primary">
-                  <HeartPulse className="w-5 h-5" />
+            {/* Overlaid Feature Card */}
+            <div className="absolute -bottom-8 -right-6 bg-gym-surface/95 backdrop-blur-md border border-gym-primary/30 p-5 rounded-2xl shadow-2xl max-w-xs hidden sm:block">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gym-primary/20 text-gym-primary flex items-center justify-center shrink-0">
+                  <Trophy className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-gym-text">Built For Real Growth</div>
-                  <div className="text-xs text-gym-primary font-medium">Science-Based Systems</div>
+                  <h4 className="font-display text-sm font-black uppercase text-white">Competition Caliber</h4>
+                  <p className="text-[11px] text-gym-muted mt-0.5">Olympic platforms, calibrated steel plates, and custom dumbbell runs to 70kg.</p>
                 </div>
               </div>
-              <p className="text-xs text-gym-muted leading-relaxed">
-                Every barbell, cable station, and dumbbell is calibrated to maximize biomechanical hypertrophy.
-              </p>
             </div>
           </div>
 
-          {/* Right: Narrative & Principles */}
+          {/* Right: Editorial Copy */}
           <div className="space-y-6">
-            <Badge variant="primary" className="mb-2">Our Athletic Standard</Badge>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-gym-text leading-tight uppercase">
-              Not Just a Gym. <br />
-              <span className="text-gym-primary">A High-Performance Sanctuary.</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gym-primary/10 border border-gym-primary/30 text-gym-primary text-xs font-bold uppercase tracking-widest">
+              <Sparkles className="w-3.5 h-3.5" />
+              The FitTrack Pro Philosophy
+            </div>
+
+            <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white leading-[1.0]">
+              Built for <span className="text-gym-primary">Relentless</span> Athletes
             </h2>
-            <p className="text-gym-muted text-base sm:text-lg leading-relaxed">
-              Founded on the belief that fitness should be structured, measurable, and free of administrative chaos. We eliminated long front-desk queues, paper logbooks, and unconfirmed payments.
+
+            <p className="text-sm sm:text-base text-gym-muted leading-relaxed">
+              We engineered FitTrack Pro as the antidote to generic, crowded commercial fitness clubs. Every square foot is optimized for biomechanical progression, power output, and metabolic conditioning.
             </p>
 
             <div className="space-y-4 pt-2">
-              <div className="flex items-start gap-3.5">
-                <div className="w-6 h-6 rounded-full bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary shrink-0 mt-1">
+              <div className="flex items-start gap-3">
+                <div className="p-1 rounded bg-gym-primary/10 text-gym-primary mt-1">
                   <CheckCircle2 className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-gym-text">Calibrated Commercial Grade Equipment</h4>
-                  <p className="text-xs text-gym-muted mt-0.5">High-tensile Olympic barbells, competition bumper plates, and biomechanically aligned pin-loaded machines.</p>
+                  <h4 className="font-display text-sm font-black uppercase text-white">Full Physiological Tracking</h4>
+                  <p className="text-xs text-gym-muted mt-0.5">Bi-weekly biometric audits tracking lean tissue accrual, waist reduction, and strength milestones.</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5">
-                <div className="w-6 h-6 rounded-full bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary shrink-0 mt-1">
+              <div className="flex items-start gap-3">
+                <div className="p-1 rounded bg-gym-primary/10 text-gym-primary mt-1">
                   <CheckCircle2 className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-gym-text">Zero Unverified Dues Manipulation</h4>
-                  <p className="text-xs text-gym-muted mt-0.5">Every rupee transferred or paid in cash generates an immutable digital receipt with full audit trail.</p>
+                  <h4 className="font-display text-sm font-black uppercase text-white">Verified Accounting & Transparency</h4>
+                  <p className="text-xs text-gym-muted mt-0.5">Instant verifiable cash receipts, multi-channel online bank proofs, and zero unrecorded financial handovers.</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5">
-                <div className="w-6 h-6 rounded-full bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary shrink-0 mt-1">
+              <div className="flex items-start gap-3">
+                <div className="p-1 rounded bg-gym-primary/10 text-gym-primary mt-1">
                   <CheckCircle2 className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-gym-text">Individualized Coaching Portals</h4>
-                  <p className="text-xs text-gym-muted mt-0.5">Personalized routines prescribed by certified coaches, complete with exact sets, reps, and rest periods.</p>
+                  <h4 className="font-display text-sm font-black uppercase text-white">Zero Turnstile Congestion</h4>
+                  <p className="text-xs text-gym-muted mt-0.5">High-speed biometric and QR check-ins that validate subscription status in milliseconds.</p>
                 </div>
               </div>
             </div>
 
             <div className="pt-4">
               <Link to="/about">
-                <Button variant="secondary" icon={ChevronRight}>
-                  Learn More About Our Facility
+                <Button variant="secondary" icon={ArrowRight} className="font-display uppercase tracking-wider text-xs font-bold">
+                  Read Our Full Story
                 </Button>
               </Link>
             </div>
           </div>
+
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* 4. WORLD-CLASS FACILITIES WITH IMAGE CARDS */}
+      {/* 4. TRAINING ZONES & FACILITY HIGHLIGHTS */}
       {/* ======================================================== */}
-      <section className="py-20 bg-gym-surface border-y border-gym-border">
+      <section className="py-24 bg-gym-surface/50 border-y border-gym-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <Badge variant="primary" className="mb-3">Architected For Athletes</Badge>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-gym-text uppercase tracking-tight">
-              World-Class Facilities
-            </h2>
-            <p className="mt-4 text-gym-muted text-base sm:text-lg">
-              Explore our meticulously curated training zones designed to push you beyond previous plateaus.
-            </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+            <div>
+              <span className="font-display text-xs font-bold uppercase tracking-widest text-gym-primary">
+                Engineered Performance Arenas
+              </span>
+              <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
+                World-Class Facility Zones
+              </h2>
+            </div>
+            <Link to="/facilities">
+              <Button variant="outline" icon={ArrowRight} size="sm" className="font-display uppercase tracking-wider text-xs font-bold">
+                View All Zones
+              </Button>
+            </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {facilities.map((f, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {facilities.map((fac, idx) => (
               <div
                 key={idx}
-                className="group relative rounded-2xl overflow-hidden bg-gym-bg border border-gym-border hover:border-gym-primary/50 transition-all duration-300 flex flex-col justify-between"
+                className="group relative rounded-2xl overflow-hidden bg-gym-surface border border-gym-border hover:border-gym-primary/50 transition-all duration-300 flex flex-col"
               >
                 <div className="relative h-56 overflow-hidden">
                   <img
-                    src={f.image}
-                    alt={f.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 filter brightness-90 group-hover:brightness-100"
+                    src={fac.image}
+                    alt={fac.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gym-bg via-transparent to-transparent" />
-                  <div className="absolute top-3 left-3">
-                    <Badge variant="primary">{f.badge}</Badge>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-gym-surface via-transparent to-transparent" />
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/80 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-gym-primary border border-gym-primary/30">
+                    {fac.badge}
+                  </span>
                 </div>
-
-                <div className="p-6 flex-1 flex flex-col justify-between">
+                <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-lg font-bold text-gym-text group-hover:text-gym-primary transition-colors">
-                      {f.title}
+                    <h3 className="font-display text-base font-black uppercase text-white group-hover:text-gym-primary transition-colors">
+                      {fac.title}
                     </h3>
-                    <p className="mt-2 text-xs text-gym-muted leading-relaxed">
-                      {f.desc}
-                    </p>
+                    <p className="text-xs text-gym-muted mt-2 leading-relaxed">{fac.desc}</p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-gym-border/50 flex items-center text-xs text-gym-primary font-semibold">
+                    <span>Inspect Specs</span>
+                    <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
               </div>
             ))}
           </div>
-
-          <div className="text-center mt-12">
-            <Link to="/facilities">
-              <Button variant="secondary" icon={ArrowRight}>
-                View Full Equipment Catalog & Amenities
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* 5. MEMBERSHIP TIERS (DYNAMIC ATLAS DATA) */}
+      {/* 5. MEMBERSHIP TIERS (LOADED LIVE FROM ATLAS DB) */}
       {/* ======================================================== */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <Badge variant="primary" className="mb-3">Transparent Investment</Badge>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-gym-text uppercase tracking-tight">
-            Membership Plans
+          <span className="font-display text-xs font-bold uppercase tracking-widest text-gym-primary">
+            Transparent Pricing Structure
+          </span>
+          <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
+            Choose Your Membership
           </h2>
-          <p className="mt-4 text-gym-muted text-base sm:text-lg">
-            No hidden registration fees. Digital turnstile access, locker amenities, and progress tracking included.
+          <p className="text-xs sm:text-sm text-gym-muted mt-3">
+            All tiers include turnstile access, mobile member dashboard, workout programming, and biometric tracking.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((plan) => {
-            const isStandard = plan.name.toLowerCase() === 'standard';
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+          {plans.map((p, idx) => {
+            const isFeatured = idx === 1;
             return (
               <div
-                key={plan._id}
-                className={`rounded-2xl p-8 flex flex-col justify-between border transition-all duration-300 relative ${
-                  isStandard
-                    ? 'bg-gradient-to-b from-gym-surfaceLight to-gym-surface border-gym-primary shadow-xl shadow-gym-primary/10'
-                    : 'bg-gym-surface border-gym-border hover:border-gym-primary/40'
+                key={p._id || idx}
+                className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${
+                  isFeatured
+                    ? 'bg-gradient-to-b from-gym-surface to-gym-bg border-2 border-gym-primary shadow-2xl shadow-gym-primary/10 scale-105 z-10'
+                    : 'bg-gym-surface border border-gym-border hover:border-gym-primary/50'
                 }`}
               >
-                {isStandard && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gym-primary text-black font-extrabold text-xs uppercase px-4 py-1 rounded-full shadow-md">
+                {isFeatured && (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gym-primary text-black text-[11px] font-black uppercase tracking-widest shadow-md">
                     Most Popular Choice
                   </div>
                 )}
 
                 <div>
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-2xl font-bold text-gym-text">{plan.name}</h3>
-                    <span className="text-xs font-semibold text-gym-muted uppercase px-2.5 py-1 rounded bg-gym-bg border border-gym-border">
-                      {plan.durationMonths} {plan.durationMonths === 1 ? 'Month' : 'Months'}
-                    </span>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display text-xl font-black uppercase text-white">{p.name}</h3>
+                    <span className="text-xs text-gym-muted font-medium">{p.durationMonths} Months</span>
+                  </div>
+                  <p className="text-xs text-gym-muted mt-1">{p.description}</p>
+
+                  <div className="my-6 pt-4 border-t border-gym-border">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-xs uppercase text-gym-muted font-semibold">PKR</span>
+                      <span className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
+                        {p.price?.toLocaleString()}
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-emerald-400 font-medium">Billed every {p.durationMonths} month(s)</span>
                   </div>
 
-                  <p className="text-xs text-gym-muted min-h-[38px] mb-6">{plan.description}</p>
-
-                  <div className="mb-6 pb-6 border-b border-gym-border">
-                    <span className="text-4xl font-black text-gym-text">Rs. {plan.price?.toLocaleString()}</span>
-                    <span className="text-xs text-gym-muted ml-2">/ billing period</span>
-                  </div>
-
-                  <div className="space-y-3 mb-8">
-                    {plan.features?.map((feature, i) => (
-                      <div key={i} className="flex items-center gap-3">
+                  <ul className="space-y-3 text-xs text-gym-muted">
+                    {p.features?.map((f, fIdx) => (
+                      <li key={fIdx} className="flex items-center gap-2">
                         <CheckCircle2 className="w-4 h-4 text-gym-primary shrink-0" />
-                        <span className="text-xs text-gym-text">{feature}</span>
-                      </div>
+                        <span className="text-gray-300">{f}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
 
-                <Link to={`/register?planId=${plan._id}`}>
-                  <Button
-                    variant={isStandard ? 'primary' : 'secondary'}
-                    className="w-full font-bold"
-                    icon={ArrowRight}
-                  >
-                    Select {plan.name} Plan
-                  </Button>
-                </Link>
+                <div className="mt-8 pt-6 border-t border-gym-border">
+                  <Link to={`/register?planId=${p._id}`}>
+                    <Button
+                      variant={isFeatured ? 'primary' : 'outline'}
+                      className="w-full font-display uppercase tracking-wider text-xs font-bold py-3.5 shadow-md"
+                      icon={ArrowRight}
+                    >
+                      Subscribe to {p.name}
+                    </Button>
+                  </Link>
+                </div>
               </div>
             );
           })}
@@ -447,154 +503,61 @@ export default function Home() {
       </section>
 
       {/* ======================================================== */}
-      {/* 6. CERTIFIED COACHING STAFF (DYNAMIC ATLAS DATA) */}
+      {/* 6. CERTIFIED MASTER COACHES (LOADED LIVE FROM ATLAS DB) */}
       {/* ======================================================== */}
-      <section className="py-24 bg-gym-surface border-y border-gym-border">
+      <section className="py-24 bg-gym-surface/40 border-t border-gym-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <Badge variant="primary" className="mb-3">Master Instructors</Badge>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-gym-text uppercase tracking-tight">
-              Elite Coaching Team
-            </h2>
-            <p className="mt-4 text-gym-muted text-base sm:text-lg">
-              Every trainer on our floor is internationally accredited and brings years of competitive bodybuilding, powerlifting, or functional conditioning experience.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {trainers.map((t, idx) => {
-              const defaultImages = [
-                'https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=600&q=80',
-                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
-                'https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=600&q=80',
-              ];
-              const trainerPhoto = t.profileImage || defaultImages[idx % defaultImages.length];
-
-              return (
-                <div
-                  key={t._id}
-                  className="rounded-2xl overflow-hidden bg-gym-bg border border-gym-border hover:border-gym-primary/50 transition-all duration-300 group"
-                >
-                  <div className="relative h-72 overflow-hidden">
-                    <img
-                      src={trainerPhoto}
-                      alt={t.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 filter brightness-95"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gym-bg via-transparent to-transparent" />
-                    <div className="absolute bottom-3 left-4">
-                      <Badge variant="primary">{t.specialization || 'Head Coach'}</Badge>
-                    </div>
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gym-text group-hover:text-gym-primary transition-colors">
-                      {t.name}
-                    </h3>
-                    <p className="text-xs text-gym-muted mt-1">Certified Fitness Specialist</p>
-
-                    <div className="mt-4 pt-4 border-t border-gym-border flex items-center justify-between text-xs">
-                      <span className="text-gym-muted">Assigned Trainees</span>
-                      <span className="text-gym-primary font-bold">Open for Registration</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="text-center mt-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+            <div>
+              <span className="font-display text-xs font-bold uppercase tracking-widest text-gym-primary">
+                Elite Athletic Mentorship
+              </span>
+              <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
+                Certified Coaching Staff
+              </h2>
+            </div>
             <Link to="/trainers">
-              <Button variant="secondary" icon={ArrowRight}>
-                View All Trainer Bios & Specializations
+              <Button variant="outline" icon={ArrowRight} size="sm" className="font-display uppercase tracking-wider text-xs font-bold">
+                Meet All Coaches
               </Button>
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* ======================================================== */}
-      {/* 7. WHY CHOOSE US (6-PILLAR GRID) */}
-      {/* ======================================================== */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <Badge variant="primary" className="mb-3">The FitTrack Edge</Badge>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-gym-text uppercase tracking-tight">
-            Why Elite Athletes Train With Us
-          </h2>
-          <p className="mt-4 text-gym-muted text-base sm:text-lg">
-            Engineered from the ground up for serious progress, zero friction, and accountable results.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {whyChooseUs.map((w, idx) => {
-            const Icon = w.icon;
-            return (
-              <div
-                key={idx}
-                className="p-8 rounded-2xl bg-gym-surface border border-gym-border hover:border-gym-primary/40 transition-all duration-300 group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary mb-6 group-hover:bg-gym-primary group-hover:text-black transition-all">
-                  <Icon className="w-6 h-6" />
-                </div>
-                <h3 className="text-lg font-bold text-gym-text group-hover:text-gym-primary transition-colors">
-                  {w.title}
-                </h3>
-                <p className="mt-2 text-xs text-gym-muted leading-relaxed">
-                  {w.desc}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ======================================================== */}
-      {/* 8. ATHLETE TESTIMONIALS & SUCCESS STORIES */}
-      {/* ======================================================== */}
-      <section className="py-24 bg-gym-surface border-y border-gym-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <Badge variant="primary" className="mb-3">Real Stories. Real Metrics.</Badge>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-gym-text uppercase tracking-tight">
-              Member Testimonials
-            </h2>
-            <p className="mt-4 text-gym-muted text-base sm:text-lg">
-              Hear directly from the athletes who make FitTrack Pro their daily discipline ground.
-            </p>
-          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((t, idx) => (
+            {trainers.map((tr, idx) => (
               <div
-                key={idx}
-                className="p-8 rounded-2xl bg-gym-bg border border-gym-border hover:border-gym-primary/30 transition-all flex flex-col justify-between"
+                key={tr._id || idx}
+                className="group bg-gym-surface border border-gym-border rounded-2xl overflow-hidden hover:border-gym-primary/50 transition-all duration-300"
               >
-                <div>
-                  <div className="flex items-center gap-1 text-emerald-400 mb-4">
-                    {[...Array(t.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-emerald-400" />
-                    ))}
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-gym-text/90 italic leading-relaxed mb-6">
-                    "{t.quote}"
-                  </p>
+                <div className="relative h-72 overflow-hidden bg-gym-bg">
+                  <img
+                    src={
+                      tr.avatar ||
+                      (idx === 0
+                        ? 'https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=800&q=80'
+                        : idx === 1
+                        ? 'https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=800&q=80'
+                        : 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80')
+                    }
+                    alt={tr.name}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gym-surface via-transparent to-transparent opacity-90" />
+                  <span className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-gym-primary/20 backdrop-blur-md text-[10px] font-bold text-gym-primary border border-gym-primary/30 uppercase tracking-wider">
+                    {tr.specialization || 'Master Strength Coach'}
+                  </span>
                 </div>
 
-                <div className="pt-4 border-t border-gym-border flex items-center gap-4">
-                  <img
-                    src={t.avatar}
-                    alt={t.name}
-                    className="w-12 h-12 rounded-full object-cover border border-gym-primary/40 shrink-0"
-                  />
-                  <div>
-                    <h4 className="text-sm font-bold text-gym-text">{t.name}</h4>
-                    <p className="text-[11px] text-gym-muted">{t.role}</p>
-                    <span className="inline-block mt-1 text-[10px] font-semibold text-gym-primary bg-gym-primary/10 px-2 py-0.5 rounded">
-                      {t.achievement}
-                    </span>
+                <div className="p-6">
+                  <h3 className="font-display text-xl font-black uppercase text-white group-hover:text-gym-primary transition-colors">
+                    {tr.name}
+                  </h3>
+                  <p className="text-xs text-gym-muted mt-2 line-clamp-2">
+                    {tr.bio || 'Specialized in compound movement mechanics, hypertrophy protocols, and athletic power development.'}
+                  </p>
+                  <div className="mt-4 pt-3 border-t border-gym-border/60 flex items-center justify-between text-xs text-gym-muted">
+                    <span>{tr.experienceYears || '5+'} Years Experience</span>
+                    <span className="text-emerald-400 font-semibold">{tr.activeClientsCount || '15+'} Active Trainees</span>
                   </div>
                 </div>
               </div>
@@ -604,41 +567,127 @@ export default function Home() {
       </section>
 
       {/* ======================================================== */}
-      {/* 9. FINAL HIGH-IMPACT CALL TO ACTION */}
+      {/* 7. WHY CHOOSE FITTRACK PRO (6 PILLARS) */}
+      {/* ======================================================== */}
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="font-display text-xs font-bold uppercase tracking-widest text-gym-primary">
+            The FitTrack Standard
+          </span>
+          <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
+            Why Train at FitTrack Pro
+          </h2>
+          <p className="text-xs sm:text-sm text-gym-muted mt-3">
+            Combining old-school iron discipline with modern software engineering for an unparalleled training experience.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {whyChooseUs.map((pillar, idx) => {
+            const Icon = pillar.icon;
+            return (
+              <div
+                key={idx}
+                className="p-8 rounded-2xl bg-gym-surface border border-gym-border hover:border-gym-primary/50 transition-all duration-300"
+              >
+                <div className="w-12 h-12 rounded-xl bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary mb-5">
+                  <Icon className="w-6 h-6" />
+                </div>
+                <h3 className="font-display text-lg font-black uppercase text-white">{pillar.title}</h3>
+                <p className="text-xs text-gym-muted mt-2 leading-relaxed">{pillar.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 8. ATHLETE TESTIMONIALS */}
+      {/* ======================================================== */}
+      <section className="py-24 bg-gym-surface/40 border-y border-gym-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="font-display text-xs font-bold uppercase tracking-widest text-gym-primary">
+              Verified Transformations
+            </span>
+            <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
+              Member Testimonials
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testi, idx) => (
+              <div
+                key={idx}
+                className="p-8 rounded-2xl bg-gym-surface border border-gym-border flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-1 text-amber-400 mb-4">
+                    {[...Array(testi.rating)].map((_, rIdx) => (
+                      <Star key={rIdx} className="w-4 h-4 fill-amber-400" />
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-300 italic leading-relaxed">"{testi.quote}"</p>
+                </div>
+
+                <div className="mt-6 pt-5 border-t border-gym-border/60 flex items-center gap-3">
+                  <img
+                    src={testi.avatar}
+                    alt={testi.name}
+                    className="w-10 h-10 rounded-full object-cover border border-gym-primary/40"
+                  />
+                  <div>
+                    <h4 className="font-display text-sm font-black uppercase text-white">{testi.name}</h4>
+                    <span className="text-[10px] text-gym-primary font-medium block">{testi.achievement}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 9. STRONG FINAL CALL TO ACTION */}
       {/* ======================================================== */}
       <section className="relative py-28 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1920&q=80"
-            alt="FitTrack Gym Call to Action"
-            className="w-full h-full object-cover filter brightness-[0.22]"
+            src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=2000&auto=format&fit=crop"
+            alt="FitTrack Gym Atmosphere"
+            className="w-full h-full object-cover filter brightness-[0.25]"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-gym-bg via-gym-bg/80 to-gym-bg" />
+          <div className="absolute inset-0 bg-gradient-to-t from-gym-bg via-gym-bg/80 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge variant="primary" className="mb-4">No Commitments. Real Discipline.</Badge>
-          <h2 className="text-4xl sm:text-6xl font-black uppercase text-gym-text tracking-tight">
-            Ready to Redefine Your Strength?
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+          <span className="font-display text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">
+            Commit to Excellence
+          </span>
+          <h2 className="font-display font-black text-4xl sm:text-6xl uppercase tracking-tight text-white leading-tight">
+            Ready to <span className="text-gym-primary">Redefine</span> Your Physical Limits?
           </h2>
-          <p className="mt-6 text-base sm:text-xl text-gym-muted max-w-2xl mx-auto leading-relaxed">
-            Step onto the floor today. Pick your subscription, upload your payment reference or pay cash at the desk, and unlock your personalized training portal.
+          <p className="text-xs sm:text-base text-gray-300 max-w-2xl mx-auto">
+            Join hundreds of dedicated athletes. Register in 60 seconds, choose your membership tier, and access elite training facilities today.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <Link to="/register">
-              <Button size="lg" variant="primary" icon={ArrowRight} className="font-bold text-base px-10 py-4 shadow-xl shadow-gym-primary/25">
-                Register New Membership
-              </Button>
+              <button className="bg-white hover:bg-neutral-200 text-black font-display font-black text-sm uppercase tracking-wider px-8 py-4 flex items-center gap-2 shadow-2xl transition-all">
+                Join FitTrack Pro Now
+                <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+              </button>
             </Link>
             <Link to="/contact">
-              <Button size="lg" variant="secondary" className="text-base px-10 py-4">
-                Schedule a Gym Tour
-              </Button>
+              <button className="border border-white/80 hover:border-gym-primary hover:bg-gym-primary/10 text-white font-display font-black text-sm uppercase tracking-wider px-8 py-4 flex items-center gap-2 transition-all">
+                Schedule a Club Tour
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </Link>
           </div>
         </div>
       </section>
+
     </div>
   );
 }

@@ -110,7 +110,7 @@ export default function Register() {
 
           {/* Center Content */}
           <div className="relative z-10 my-auto py-8">
-            <h2 className="text-2xl font-black text-gym-text tracking-tight uppercase leading-tight">
+            <h2 className="font-display text-3xl font-black text-gym-text tracking-tight uppercase leading-tight">
               Begin Your <span className="text-gym-primary">Transformation</span> Today
             </h2>
             <p className="mt-3 text-xs leading-relaxed text-gym-muted">
@@ -176,7 +176,7 @@ export default function Register() {
 
           <div className="mb-6">
             <div className="flex items-center justify-between">
-              <h3 className="text-2xl font-black text-gym-text tracking-tight uppercase">
+              <h3 className="font-display text-3xl font-black text-gym-text tracking-tight uppercase">
                 Create Account
               </h3>
               {preselectedPlanId && (

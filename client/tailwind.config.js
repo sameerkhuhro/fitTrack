@@ -32,6 +32,12 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['"Barlow Condensed"', '"Oswald"', 'sans-serif'],
+        heading: ['"Oswald"', '"Barlow Condensed"', 'sans-serif'],
+      },
+      boxShadow: {
+        'emerald-glow': '0 0 35px rgba(16, 185, 129, 0.35)',
+        'lime-glow': '0 0 25px rgba(52, 211, 153, 0.3)',
       }
     },
   },
