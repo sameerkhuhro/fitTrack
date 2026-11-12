@@ -49,33 +49,34 @@ export default function Facilities() {
   ];
 
   return (
-    <div className="bg-gym-bg text-gym-text overflow-hidden">
+    <div className="bg-[#111413] text-white overflow-hidden">
       {/* 1. HERO HEADER */}
-      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden border-b border-gym-border/80">
+      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden border-b border-[#243426]">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=2000&auto=format&fit=crop"
             alt="FitTrack Pro Facilities"
             className="w-full h-full object-cover filter brightness-[0.22] contrast-[1.25]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-gym-bg via-gym-bg/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111413] via-[#111413]/85 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <span className="font-display text-xs sm:text-sm font-black uppercase tracking-[0.25em] text-emerald-400">
-            Engineered Training Spaces
-          </span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#172017] border border-neon/30 text-neon text-xs font-bold uppercase tracking-widest">
+            <span className="font-black text-neon">++</span>
+            <span>Engineered Training Spaces</span>
+          </div>
           <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-8xl uppercase tracking-tight text-white leading-[0.9]">
             Architected for <br />
-            <span className="text-gym-primary">Maximum Power.</span>
+            <span className="text-neon text-neon-glow">Maximum Power.</span>
           </h1>
           <p className="mt-6 text-sm sm:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Spanning 15,000 square feet, FitTrack Pro is segmented into dedicated training arenas fitted with Eleiko, Hammer Strength, and Concept2 fleets.
           </p>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-1/2 h-1 bg-gradient-to-r from-lime-400 via-emerald-400 to-transparent z-20" />
+        <div className="absolute bottom-0 left-0 w-1/2 h-1 bg-gradient-to-r from-neon via-emerald-400 to-transparent z-20" />
       </section>
 
       {/* 2. SIX FACILITY ZONES */}
@@ -84,7 +85,7 @@ export default function Facilities() {
           {facilityZones.map((zone, idx) => (
             <div
               key={idx}
-              className="group rounded-3xl overflow-hidden bg-gym-surface border border-gym-border hover:border-gym-primary/50 transition-all duration-300 flex flex-col justify-between"
+              className="group rounded-3xl overflow-hidden bg-[#172017] border border-[#243426] hover:border-neon/50 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 <div className="relative h-64 overflow-hidden">
@@ -93,25 +94,25 @@ export default function Facilities() {
                     alt={zone.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gym-surface via-transparent to-transparent" />
-                  <span className="absolute top-4 left-4 px-3 py-1 rounded-md bg-black/85 backdrop-blur-md text-[10px] font-bold text-gym-primary border border-gym-primary/30 uppercase tracking-wider">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#172017] via-transparent to-transparent" />
+                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/85 backdrop-blur-md text-[10px] font-bold text-neon border border-neon/30 uppercase tracking-wider">
                     {zone.category}
                   </span>
                 </div>
 
                 <div className="p-7">
-                  <h3 className="font-display text-xl font-black uppercase text-white group-hover:text-gym-primary transition-colors">
+                  <h3 className="font-display text-xl font-black uppercase text-white group-hover:text-neon transition-colors">
                     {zone.title}
                   </h3>
                   <p className="text-xs text-gray-400 mt-2.5 leading-relaxed">{zone.desc}</p>
 
-                  <div className="mt-6 pt-5 border-t border-gym-border/60 space-y-2">
-                    <span className="font-display text-[11px] font-bold uppercase tracking-wider text-emerald-400 block">
+                  <div className="mt-6 pt-5 border-t border-[#243426] space-y-2">
+                    <span className="font-display text-[11px] font-bold uppercase tracking-wider text-neon block">
                       Equipment Specifications:
                     </span>
                     {zone.specs.map((sp, sIdx) => (
                       <div key={sIdx} className="flex items-center gap-2 text-xs text-gray-300">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-gym-primary shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-neon shrink-0" />
                         <span>{sp}</span>
                       </div>
                     ))}
@@ -121,7 +122,7 @@ export default function Facilities() {
 
               <div className="px-7 pb-7">
                 <Link to="/plans">
-                  <button className="w-full py-2.5 px-4 rounded-xl bg-gym-bg border border-gym-border hover:border-gym-primary font-display text-xs font-black uppercase tracking-wider text-white hover:text-gym-primary transition-all flex items-center justify-center gap-1.5">
+                  <button className="w-full py-3 px-4 rounded-full bg-[#111413] border border-[#243426] hover:border-neon font-display text-xs font-black uppercase tracking-wider text-white hover:text-neon transition-all flex items-center justify-center gap-1.5">
                     Access via Membership
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
@@ -133,7 +134,7 @@ export default function Facilities() {
       </section>
 
       {/* 3. CTA */}
-      <section className="py-20 bg-gym-surface/40 border-t border-gym-border">
+      <section className="py-20 bg-[#172017]/40 border-t border-[#243426]">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-5">
           <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white">
             Experience the Arena in Person
@@ -143,9 +144,9 @@ export default function Facilities() {
           </p>
           <div className="pt-2">
             <Link to="/contact">
-              <button className="bg-white hover:bg-neutral-200 text-black font-display font-black text-sm uppercase tracking-wider px-8 py-4 inline-flex items-center gap-2 shadow-xl transition-all">
+              <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs sm:text-sm uppercase tracking-wider px-8 py-4 rounded-full inline-flex items-center gap-2 shadow-neon-glow transition-all">
                 Book a Private Facility Tour
-                <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                <ArrowUpRight className="w-4 h-4 stroke-[2.8]" />
               </button>
             </Link>
           </div>

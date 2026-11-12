@@ -39,33 +39,34 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-gym-bg text-gym-text overflow-hidden">
+    <div className="bg-[#111413] text-white overflow-hidden">
       {/* 1. HERO HEADER */}
-      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden border-b border-gym-border/80">
+      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden border-b border-[#243426]">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1590487988256-9ed24133863e?q=80&w=2000&auto=format&fit=crop"
             alt="FitTrack Front Desk Reception"
             className="w-full h-full object-cover filter brightness-[0.22] contrast-[1.25]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-gym-bg via-gym-bg/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111413] via-[#111413]/85 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <span className="font-display text-xs sm:text-sm font-black uppercase tracking-[0.25em] text-emerald-400">
-            Front Desk & Concierge
-          </span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#172017] border border-neon/30 text-neon text-xs font-bold uppercase tracking-widest">
+            <span className="font-black text-neon">++</span>
+            <span>Front Desk & Concierge</span>
+          </div>
           <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-8xl uppercase tracking-tight text-white leading-[0.9]">
             Connect with <br />
-            <span className="text-gym-primary">FitTrack Pro.</span>
+            <span className="text-neon text-neon-glow">FitTrack Pro.</span>
           </h1>
           <p className="mt-6 text-sm sm:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Have questions regarding membership tiers, corporate packages, or private coaching? Contact our front desk reception directly.
           </p>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-1/2 h-1 bg-gradient-to-r from-lime-400 via-emerald-400 to-transparent z-20" />
+        <div className="absolute bottom-0 left-0 w-1/2 h-1 bg-gradient-to-r from-neon via-emerald-400 to-transparent z-20" />
       </section>
 
       {/* 2. CONTACT CARDS & INTERACTIVE FORM */}
@@ -74,8 +75,8 @@ export default function Contact() {
           
           {/* Left Column: Direct Info Cards */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="p-8 rounded-3xl bg-gym-surface border border-gym-border flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary shrink-0">
+            <div className="p-8 rounded-3xl bg-[#172017] border border-[#243426] flex items-start gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-neon/10 border border-neon/30 flex items-center justify-center text-neon shrink-0 shadow-neon-glow">
                 <MapPin className="w-6 h-6" />
               </div>
               <div>
@@ -85,8 +86,8 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="p-8 rounded-3xl bg-gym-surface border border-gym-border flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary shrink-0">
+            <div className="p-8 rounded-3xl bg-[#172017] border border-[#243426] flex items-start gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-neon/10 border border-neon/30 flex items-center justify-center text-neon shrink-0 shadow-neon-glow">
                 <Phone className="w-6 h-6" />
               </div>
               <div>
@@ -96,8 +97,8 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="p-8 rounded-3xl bg-gym-surface border border-gym-border flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-gym-primary/10 border border-gym-primary/30 flex items-center justify-center text-gym-primary shrink-0">
+            <div className="p-8 rounded-3xl bg-[#172017] border border-[#243426] flex items-start gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-neon/10 border border-neon/30 flex items-center justify-center text-neon shrink-0 shadow-neon-glow">
                 <Clock className="w-6 h-6" />
               </div>
               <div>
@@ -109,7 +110,7 @@ export default function Contact() {
           </div>
 
           {/* Right Column: Direct Inquiry Form */}
-          <div className="lg:col-span-7 p-8 sm:p-12 rounded-3xl bg-gym-surface border border-gym-border">
+          <div className="lg:col-span-7 p-8 sm:p-12 rounded-3xl bg-[#172017] border border-[#243426]">
             <h3 className="font-display text-2xl font-black uppercase text-white mb-2">
               Send Direct Message
             </h3>
@@ -121,7 +122,7 @@ export default function Contact() {
               <div
                 className={`mb-6 p-4 rounded-2xl flex items-center gap-3 text-xs ${
                   status.type === 'success'
-                    ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'
+                    ? 'bg-neon/10 border border-neon/30 text-neon'
                     : 'bg-rose-500/10 border border-rose-500/30 text-rose-400'
                 }`}
               >
@@ -146,7 +147,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Bilal Hussain"
-                    className="w-full px-4 py-3 bg-gym-bg border border-gym-border rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gym-primary transition-all"
+                    className="w-full px-4 py-3 bg-[#111413] border border-[#243426] rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-neon transition-all"
                   />
                 </div>
 
@@ -160,7 +161,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="bilal@example.com"
-                    className="w-full px-4 py-3 bg-gym-bg border border-gym-border rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gym-primary transition-all"
+                    className="w-full px-4 py-3 bg-[#111413] border border-[#243426] rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-neon transition-all"
                   />
                 </div>
               </div>
@@ -175,7 +176,7 @@ export default function Contact() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+92 (300) 1234567"
-                    className="w-full px-4 py-3 bg-gym-bg border border-gym-border rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gym-primary transition-all"
+                    className="w-full px-4 py-3 bg-[#111413] border border-[#243426] rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-neon transition-all"
                   />
                 </div>
 
@@ -188,7 +189,7 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     placeholder="e.g. VIP Plan or Corporate Pass"
-                    className="w-full px-4 py-3 bg-gym-bg border border-gym-border rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gym-primary transition-all"
+                    className="w-full px-4 py-3 bg-[#111413] border border-[#243426] rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-neon transition-all"
                   />
                 </div>
               </div>
@@ -203,17 +204,17 @@ export default function Contact() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Share details regarding your fitness goals or questions..."
-                  className="w-full px-4 py-3 bg-gym-bg border border-gym-border rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gym-primary transition-all resize-none"
+                  className="w-full px-4 py-3 bg-[#111413] border border-[#243426] rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-neon transition-all resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-4 bg-gym-primary hover:bg-emerald-400 text-black font-display font-black text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 bg-neon hover:bg-neon-hover text-black font-display font-black text-xs sm:text-sm uppercase tracking-wider shadow-neon-glow rounded-full transition-all flex items-center justify-center gap-2"
               >
                 {submitting ? 'Transmitting to Front Desk...' : 'Transmit Message to Reception'}
-                <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                <ArrowUpRight className="w-4 h-4 stroke-[2.8]" />
               </button>
             </form>
           </div>

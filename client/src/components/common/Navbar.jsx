@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Dumbbell, Menu, X, ArrowUpRight, LogIn } from 'lucide-react';
+import { Dumbbell, Menu, X, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import Button from './Button';
 
@@ -42,75 +42,78 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-gym-bg/95 backdrop-blur-md border-b border-gym-border/80 shadow-2xl py-3'
+          ? 'bg-[#111413]/95 backdrop-blur-md border-b border-[#243426] shadow-2xl py-3.5'
           : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Brand Logo matching the reference aesthetic */}
+          {/* Brand Logo with Neon-Lime Accent */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-300 flex items-center justify-center text-black font-black font-display text-sm tracking-tighter shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-                <Dumbbell className="w-5 h-5 -rotate-45 text-black stroke-[2.5]" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display text-2xl font-black uppercase tracking-tight text-white leading-none">
-                  FitTrack <span className="text-gym-primary font-bold">Pro</span>
-                </span>
-                <span className="text-[10px] tracking-widest uppercase font-semibold text-gym-muted -mt-0.5">
-                  Fitness Club
-                </span>
-              </div>
+            <div className="w-10 h-10 rounded-xl bg-neon flex items-center justify-center text-black font-black font-display shadow-neon-glow group-hover:scale-105 transition-transform">
+              <Dumbbell className="w-5 h-5 -rotate-45 stroke-[2.8]" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-display text-2xl font-black uppercase tracking-tight text-white leading-none">
+                FitTrack <span className="text-neon font-black">Pro</span>
+              </span>
+              <span className="text-[9px] tracking-[0.25em] uppercase font-bold text-gym-muted -mt-0.5">
+                Fitness Club
+              </span>
             </div>
           </Link>
 
-          {/* Desktop Nav Links with Reference-Style Active Outline */}
-          <div className="hidden lg:flex items-center space-x-2">
+          {/* Centered Navigation Links with Small Neon-Green Active Indicator */}
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
                 to={link.path}
                 className={({ isActive }) =>
-                  `px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
+                  `relative px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors duration-200 flex items-center gap-1.5 ${
                     isActive
-                      ? 'border border-white text-white bg-white/5 shadow-sm'
-                      : 'border border-transparent text-gray-300 hover:text-white hover:border-white/30'
+                      ? 'text-neon font-bold'
+                      : 'text-gray-300 hover:text-white'
                   }`
                 }
               >
-                {link.name}
+                {({ isActive }) => (
+                  <>
+                    <span>{link.name}</span>
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-neon shadow-[0_0_8px_#B7FF00] inline-block" />
+                    )}
+                  </>
+                )}
               </NavLink>
             ))}
           </div>
 
-          {/* Right Action Buttons */}
+          {/* Right Action: Login / Dashboard Neon Button */}
           <div className="hidden md:flex items-center gap-3">
             {isAuthenticated ? (
-              <Button
-                variant="primary"
-                size="sm"
+              <button
                 onClick={() => navigate(getDashboardPath())}
-                icon={ArrowUpRight}
-                className="font-display uppercase tracking-wider text-xs font-bold"
+                className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs uppercase tracking-wider px-5 py-2.5 rounded-full shadow-neon-glow flex items-center gap-1.5 transition-all"
               >
                 Dashboard
-              </Button>
+                <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+              </button>
             ) : (
               <>
                 <Link
                   to="/login"
-                  className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 hover:text-white transition-colors"
+                  className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-neon transition-colors"
                 >
                   Log In
                 </Link>
                 <Link
                   to="/register"
-                  className="px-5 py-2 text-xs font-black uppercase tracking-wider bg-gym-primary text-black hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/20 flex items-center gap-1.5"
+                  className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs uppercase tracking-wider px-5 py-2.5 rounded-full shadow-neon-glow flex items-center gap-1.5 transition-all"
                 >
                   Join Now
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                  <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
                 </Link>
               </>
             )}
@@ -129,9 +132,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile dropdown menu */}
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-gym-surface/98 backdrop-blur-xl border-b border-gym-border px-6 pt-4 pb-8 space-y-3 mt-3 animate-in slide-in-from-top-4">
+        <div className="lg:hidden bg-[#172017]/98 backdrop-blur-xl border-b border-[#243426] px-6 pt-4 pb-8 space-y-3 mt-3 animate-in slide-in-from-top-4">
           {navLinks.map((link) => (
             <NavLink
               key={link.name}
@@ -140,7 +143,7 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `block px-4 py-2.5 text-sm font-bold uppercase tracking-wider transition-colors ${
                   isActive
-                    ? 'border-l-2 border-gym-primary text-gym-primary bg-gym-primary/10'
+                    ? 'border-l-2 border-neon text-neon bg-neon/10'
                     : 'text-gray-300 hover:text-white'
                 }`
               }
@@ -149,29 +152,30 @@ export default function Navbar() {
             </NavLink>
           ))}
 
-          <div className="pt-4 border-t border-gym-border/80 flex flex-col gap-2.5">
+          <div className="pt-4 border-t border-[#243426] flex flex-col gap-2.5">
             {isAuthenticated ? (
-              <Button
-                variant="primary"
-                className="w-full uppercase font-display tracking-wider font-bold"
+              <button
+                className="w-full bg-neon text-black py-3 rounded-full font-display font-black uppercase tracking-wider text-xs shadow-neon-glow flex items-center justify-center gap-2"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   navigate(getDashboardPath());
                 }}
               >
                 Go to Dashboard
-              </Button>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             ) : (
               <>
                 <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="secondary" className="w-full uppercase tracking-wider text-xs">
+                  <button className="w-full py-2.5 rounded-full border border-gray-600 font-display font-bold uppercase tracking-wider text-xs text-white">
                     Log In
-                  </Button>
+                  </button>
                 </Link>
                 <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="primary" className="w-full uppercase tracking-wider text-xs">
+                  <button className="w-full py-3 rounded-full bg-neon text-black font-display font-black uppercase tracking-wider text-xs shadow-neon-glow flex items-center justify-center gap-2">
                     Join Now
-                  </Button>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
                 </Link>
               </>
             )}
