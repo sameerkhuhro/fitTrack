@@ -2,7 +2,7 @@
 
 ## 1. Architectural Overview
 
-FitTrack Pro is architected as a modular, decoupled, single-gym management web platform engineered to satisfy both enterprise software engineering standards and university Problem-Based Learning (PBL) criteria.
+FitTrack Pro is architected as a modular, decoupled, single-gym management web platform engineered to satisfy high-reliability commercial software engineering standards.
 
 The application follows a strict tiered flow:
 ```

@@ -163,3 +163,25 @@ erDiagram
    - Index: `{ receiptNumber: 1 }` with `{ unique: true, sparse: true }`
    - Purpose: Guarantees every verified payment receipt is globally distinct.
 
+---
+
+## 4. MongoDB Atlas Multi-Node Cluster Architecture
+
+FitTrack Pro is fully compatible with both local Dockerized MongoDB instances and cloud-hosted **MongoDB Atlas Multi-Node Replica Sets**.
+
+### 4.1 Cloud Infrastructure Specification
+* **Topology**: MongoDB Atlas 3-node Replica Set with automated failover and zero-downtime shard rebalancing.
+* **Target Database**: `fittrack` (dedicated and isolated from neighboring databases).
+* **Connection Security**: TLS 1.3 encryption in transit with SCRAM-SHA-256 authentication via `authSource=admin`.
+* **Connection String Format**:
+  ```text
+  mongodb+srv://<db_user>:<password>@<cluster_host>/fittrack?retryWrites=true&w=majority&authSource=admin
+  ```
+
+### 4.2 Database Verification Script
+The platform includes an automated Atlas connection probe at `server/scripts/test_atlas_connection.js` which verifies connection health, replica set host topology, and collection indexing without exposing credentials. Run via:
+```bash
+npm run test:atlas
+```
+
+

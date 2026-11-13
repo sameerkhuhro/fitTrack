@@ -1,24 +1,43 @@
-# FitTrack Pro – Smart Gym Management & Membership Subscription Platform
+# FitTrack Pro — Smart Gym Management & Membership Subscription Platform
 
-> **Manage Your Gym. Empower Your Fitness.**  
-> A full-stack, production-minded gym management web application built with React, Node.js, Express, MongoDB Atlas, and Docker. Developed for academic Problem-Based Learning (PBL) excellence and professional portfolio demonstration.
+[![CI/CD Pipeline](https://github.com/sameer-khuhro/FitTrack/actions/workflows/ci.yml/badge.svg)](https://github.com/sameer-khuhro/FitTrack/actions/workflows/ci.yml)
+[![Tests Passing](https://img.shields.io/badge/Tests-27%2F27%20Passing-brightgreen.svg)](docs/TESTING_GUIDE.md)
+[![Node.js Version](https://img.shields.io/badge/Node.js-v20%2B-blue.svg)](https://nodejs.org)
+[![MongoDB Atlas](https://img.shields.io/badge/Database-MongoDB%20Atlas-green.svg)](docs/DATABASE_DESIGN.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+> **Manage Your Gym. Empower Your Athletes.**  
+> A production-grade, full-stack gym management web application built with React 18, Vite 6, Tailwind CSS, Express.js, MongoDB Atlas, and Docker. Engineered for high-reliability commercial fitness operations, verifiable financial audit trails, and automated subscription lifecycles.
 
 ---
 
-## 🚀 Key Platform Capabilities
+## 🌟 Key Platform Capabilities
 
-1. **Multi-Role Portals & RBAC**: Dedicated, secured interfaces for **Admin / Gym Owner** (`/admin/dashboard`), **Certified Personal Trainer** (`/trainer/dashboard`), and **Gym Member / Athlete** (`/member/dashboard`).
-2. **Luxury Public-Facing Website**: Editorial gym web experience featuring high-resolution fitness imagery, dynamic facility spec sheets, live membership tiers, coach profiles, interactive contact messaging, and athlete onboarding.
-3. **Dual Payment Workflows**:
-   - **Method A (Manual Online)**: Direct transfers via Bank (Meezan/SCB), JazzCash, or Easypaisa with transaction references and screenshot proof uploads.
-   - **Method B (Cash Desk)**: In-person cash collection at gym reception with immediate digital receipt generation (`REC-...`).
-4. **Subscription Activation & Renewal Lifecycle**: Admin payment auditing, activation date calculation, and non-destructive historical renewals.
-5. **Trainer Salary Confirmation Workflow**: Admin records monthly payroll → Trainer receives in-app push alert → Trainer audits account and clicks **"Confirm Received"** (or disputes with reason) with timestamped audit logs.
-6. **Workout & Movement Management**: Exercise encyclopedia across 8 muscle categories, custom sets/reps programming, and training appointment scheduling.
-7. **Attendance & Biometric Tracking**: Anti-duplicate turnstile check-in enforcement, historical attendance streaks, and interactive Recharts biometrics trajectory tracking.
-8. **Automated Cron Jobs**: Background membership expiry reminders (7 days, 3 days, 1 day, and on expiry) powered by `node-cron` with built-in alert deduplication.
-9. **MongoDB Atlas Cloud Integration**: Real-time cloud persistence connected directly to MongoDB Atlas (`fittrack` database).
-10. **DevOps & Containerization**: Multi-stage Dockerfiles for backend and frontend (Nginx reverse proxy), Docker Compose, GitHub Actions CI/CD pipeline, and Linux deployment guides.
+1. **Multi-Role Portals & Strict RBAC**:
+   - **Admin / Gym Owner Portal** (`/admin/dashboard`): 17 operational modules including real-time revenue analytics, member rosters, trainer contracts, payment verification, cash receipts, and attendance telemetry.
+   - **Certified Personal Trainer Portal** (`/trainer/dashboard`): Assigned athlete rosters, custom periodized workout programming, training calendar, and a 4-stage salary review/confirmation workflow.
+   - **Gym Member / Athlete Portal** (`/member/dashboard`): Tiered membership management, online payment proof uploads, assigned workouts, interactive Recharts biometrics trajectory, and attendance check-in history.
+   - **Public Discovery Website**: High-energy athletic editorial website with dynamic membership plans, facility spec sheets, coach rosters, and front desk inquiry routing.
+
+2. **Dual-Channel Payment Architecture**:
+   - **Method A (Manual Online Transfers)**: Direct wire/wallet transfers via Bank, JazzCash, or Easypaisa with transaction references and screenshot proof uploads processed via Multer.
+   - **Method B (Reception Cash Desk)**: Immediate in-person cash collection at gym reception with digital voucher generation (`REC-YYYYMMDD-XXXX`).
+   - **Financial Invariant**: Only verified payments reduce dues; unverified submissions and rejected payments never decrement balance.
+
+3. **Non-Destructive Subscription Lifecycle**:
+   - Automated expiry calculation, pro-rated renewals, and status transitions (`pending` &rarr; `active` &rarr; `expired` &rarr; `cancelled`).
+
+4. **Audited Trainer Payroll Workflow**:
+   - State machine preventing duplicate salary payments (`PENDING` &rarr; `PAID_AWAITING_CONFIRMATION` &rarr; `CONFIRMED` / `DISPUTED`).
+
+5. **Automated Cron Jobs & Alert Deduplication**:
+   - Daily subscription expiration scanning (7-day, 3-day, 1-day, and on-expiry notifications) powered by `node-cron` with a sparse unique `dedupKey` constraint preventing duplicate alerts.
+
+6. **MongoDB Atlas Cloud Persistence**:
+   - Multi-node replica set integration with TLS 1.3 encryption and automated shard failover.
+
+7. **DevOps & Containerization**:
+   - Multi-stage Dockerfiles for backend and frontend (Nginx reverse proxy), Docker Compose orchestration, and automated GitHub Actions CI/CD pipeline.
 
 ---
 
@@ -26,62 +45,62 @@
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Frontend** | React 18, Vite, Tailwind CSS, React Router DOM, Axios, Recharts, Lucide React |
-| **Backend** | Node.js, Express.js, JWT, bcryptjs, Helmet, Express Rate Limit, CORS, node-cron, Multer, Morgan |
-| **Database** | MongoDB Atlas (Multi-node replica set, database `fittrack`), Mongoose 8 (Indexes, Compound Constraints, Schemas) |
-| **DevOps** | Docker, Docker Compose, Nginx (Alpine), GitHub Actions CI/CD |
+| **Frontend** | React 18, Vite 6, Tailwind CSS, React Router DOM v6, Axios, Recharts, Lucide Icons |
+| **Backend** | Node.js (v20+ / v24), Express.js, JWT, bcryptjs, Helmet, Express Rate Limit, CORS, node-cron, Multer, Morgan |
+| **Database** | MongoDB Atlas (Multi-Node Replica Set, database `fittrack`), Mongoose 8 (Indexes, Compound Constraints) |
+| **DevOps & Tools** | Docker, Docker Compose, Nginx Alpine, GitHub Actions CI/CD |
 
 ---
 
-## 📂 Repository Folder Structure
+## 📂 Repository Structure
 
 ```text
-fitTrack/
-├── client/                     # React Vite Frontend SPA
+FitTrack/
+├── .github/
+│   └── workflows/
+│       └── ci.yml               # Automated CI test, build, and Docker validation
+├── client/                      # React Vite Frontend SPA
 │   ├── src/
-│   │   ├── components/         # Reusable UI (Button, Modal, Card, Badge, StatCard)
-│   │   ├── context/            # AuthContext (JWT auth state & role helpers)
-│   │   ├── layouts/            # PublicLayout, AdminLayout, TrainerLayout, MemberLayout
+│   │   ├── components/          # Reusable UI widgets, badges, modals, and navbar/footer
+│   │   ├── context/             # AuthContext (JWT auth state & role helpers)
+│   │   ├── layouts/             # PublicLayout, AdminLayout, TrainerLayout, MemberLayout
 │   │   ├── pages/
-│   │   │   ├── public/         # Home, About, Plans, Trainers, Facilities, Contact, Login, Register
-│   │   │   ├── admin/          # 17 Modules (Dashboard, Members, Trainers, Plans, Payments, etc.)
-│   │   │   ├── trainer/        # Dashboard, Assigned Members, Workouts, Schedule, Salaries, Profile
-│   │   │   └── member/         # Dashboard, Membership, Payments, Workouts, Calendar, Progress, Attendance
-│   │   ├── services/           # Axios central API instance
-│   │   └── App.jsx             # React Router route registry
-│   ├── nginx.conf              # Production Nginx SPA & reverse proxy configuration
-│   └── Dockerfile              # Multi-stage production build
-│
-├── server/                     # Express.js REST API Backend
+│   │   │   ├── public/          # Home, About, Plans, Trainers, Facilities, Contact, Login, Register
+│   │   │   ├── admin/           # 17 Modules (Dashboard, Members, Trainers, Plans, Payments, etc.)
+│   │   │   ├── trainer/         # Dashboard, Assigned Members, Workouts, Schedule, Salaries, Profile
+│   │   │   └── member/          # Dashboard, Membership, Payments, Workouts, Calendar, Progress, Attendance
+│   │   ├── services/            # Central Axios API client
+│   │   └── App.jsx              # Application router registry
+│   ├── nginx.conf               # Production Nginx reverse proxy configuration
+│   └── Dockerfile               # Multi-stage production container build
+├── server/                      # Express.js REST API Backend
 │   ├── src/
-│   │   ├── config/             # MongoDB connection & domain constants
-│   │   ├── controllers/        # Feature controllers (auth, member, payment, salary, etc.)
-│   │   ├── jobs/               # node-cron scheduled background tasks
-│   │   ├── middleware/         # auth (JWT), role (RBAC), upload (Multer), validator
-│   │   ├── models/             # 12 Mongoose Schemas (User, Payment, Salary, Attendance, etc.)
-│   │   ├── routes/             # Versioned REST route handlers (/api/v1)
-│   │   ├── tests/              # Automated unit and business logic test suite
-│   │   ├── utils/              # Seed script & token utilities
-│   │   ├── app.js              # Express app configuration & middleware pipeline
-│   │   └── server.js           # Server bootstrap & process lifecycle
-│   ├── scripts/                # Live Atlas verification scripts (auth, workflows, connectivity)
-│   └── Dockerfile              # Optimized Node.js production image
-│
-├── docs/                       # Technical Documentation
-│   ├── ARCHITECTURE.md         # System architecture & Mermaid flow diagrams
-│   ├── DATABASE_DESIGN.md      # Schemas, indexes & Mermaid ER diagram
-│   ├── API_DOCUMENTATION.md    # Complete REST API reference
-│   ├── USER_GUIDE.md           # Role-by-role user manual
-│   ├── DEPLOYMENT_GUIDE.md     # Linux / Ubuntu / RHEL server setup & backups
-│   └── TESTING_REPORT.md       # Quality assurance results & security audit
-│
-├── DATABASE_VERIFICATION_REPORT.md # Atlas cluster integration & persistence proof
-├── AUDIT_REPORT.md             # Technical verification & remediation log
-├── .github/workflows/ci.yml    # GitHub Actions automated CI/CD pipeline
-├── docker-compose.yml          # Container orchestration (Mongo, Server, Client)
-├── .env.example                # Global configuration environment template
-├── README.md                   # Quick start & documentation index
-└── PROJECT_REPORT.md           # Master academic thesis report
+│   │   ├── config/              # MongoDB connection & domain constants
+│   │   ├── controllers/         # REST feature controllers
+│   │   ├── jobs/                # node-cron scheduled background alerts
+│   │   ├── middleware/          # auth (JWT), role (RBAC), upload (Multer), validator
+│   │   ├── models/              # 12 Mongoose Schemas (User, Payment, Salary, Attendance, etc.)
+│   │   ├── routes/              # Versioned REST endpoints (/api/v1)
+│   │   ├── tests/               # 27 automated unit & end-to-end workflow tests
+│   │   ├── utils/               # Database seeder & JWT token utilities
+│   │   ├── app.js               # Express application configuration & middleware pipeline
+│   │   └── server.js            # Server bootstrap & process lifecycle
+│   ├── scripts/                 # Live Atlas test utilities & connectivity probes
+│   └── Dockerfile               # Production Node.js container build
+├── docs/                        # Complete Technical Documentation
+│   ├── ARCHITECTURE.md          # Architecture overview & Mermaid flow diagrams
+│   ├── DATABASE_DESIGN.md       # Schemas, compound indexes & Atlas cloud specs
+│   ├── API_DOCUMENTATION.md     # Complete REST API reference
+│   ├── DEPLOYMENT_GUIDE.md      # Linux VM, Docker & Nginx production setup
+│   ├── USER_GUIDE.md            # Role walkthroughs (Admin, Trainer, Member, Public)
+│   └── TESTING_GUIDE.md         # QA methodology, workflows A-G & security audit
+├── scripts/
+│   └── dev.js                   # Dual-service concurrent runner
+├── .env.example                 # Sanitized environment template
+├── .gitignore                   # Production git ignore rules
+├── docker-compose.yml           # Container orchestration
+├── package.json                 # Monorepo scripts & metadata
+└── README.md                    # Project documentation
 ```
 
 ---
@@ -89,100 +108,120 @@ fitTrack/
 ## ⚡ Quick Start (Local Development)
 
 ### 1. Prerequisites
-- **Node.js** v18+ or v20+
+- **Node.js** v20+ LTS
 - **npm** v9+
-- **MongoDB Atlas** or Local MongoDB
+- **MongoDB Atlas** account or local MongoDB instance
 
-### 2. Configure Environment Files
-In `server/.env`:
+### 2. Clone and Configure Environment
+```bash
+git clone https://github.com/sameer-khuhro/FitTrack.git
+cd FitTrack
+
+# Copy environment template
+cp .env.example server/.env
+```
+
+Edit `server/.env` with your MongoDB connection string and JWT secret:
 ```env
 PORT=5000
 NODE_ENV=development
-MONGODB_URI=mongodb+srv://<username>:<password>@uptimewatchdb.mpayexl.mongodb.net/fittrack?retryWrites=true&w=majority&authSource=admin
-JWT_SECRET=super_secret_jwt_key_2026
-JWT_EXPIRES_IN=7d
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/fittrack?retryWrites=true&w=majority&authSource=admin
+JWT_SECRET=your_secure_random_jwt_secret_here
 CLIENT_URL=http://localhost:5173
 ```
 
-### 3. Database Seeding (Demo Accounts & Plans)
-From the `server` directory, seed default administrators, plans, and exercises into Atlas:
+### 3. Install Dependencies
 ```bash
-cd server
+# Install server dependencies
+cd server && npm install
+
+# Install client dependencies
+cd ../client && npm install
+
+# Return to root
+cd ..
+```
+
+### 4. Seed Initial Data
+Populate the database with initial plans, trainers, and an administrator account:
+```bash
 npm run seed
 ```
 
-### 4. Running the Application
-Open two terminal windows:
+*Default Seed Credentials:*
+- **Admin**: `admin@fittrack.com` / `Admin@FitTrack2026!`
+- **Trainer**: `ahmed@fittrack.com` / `Trainer@FitTrack2026!`
+- **Member**: `ali@example.com` / `Member@FitTrack2026!`
 
-**Terminal 1 (Backend Server)**:
+### 5. Start Development Servers
+From the root directory, start both the Express API and Vite frontend concurrently:
 ```bash
-cd server
 npm run dev
-# Server listens at http://localhost:5000
-# Health check available at http://localhost:5000/api/v1/health
 ```
-
-**Terminal 2 (Frontend Client)**:
-```bash
-cd client
-npm run dev
-# Client starts at http://localhost:5173
-```
+- **Frontend**: [http://localhost:5173](http://localhost:5173)
+- **Backend API**: [http://localhost:5000/api/v1](http://localhost:5000/api/v1)
 
 ---
 
-## 🔑 Demonstration Credentials (1-Click Login Enabled)
+## 🐳 Running with Docker
 
-For academic evaluation and quick testing, the login page (`/login`) includes **1-Click Demo Fast-Login Cards**:
-
-| Role | Email | Password | Access Scope |
-| :--- | :--- | :--- | :--- |
-| **Admin** | `admin@fittrack.com` | `Admin@FitTrack2026!` | Full Gym Administration (17 Modules, Verification, Payroll) |
-| **Trainer** | `hamza.trainer@fittrack.com` | `Trainer@FitTrack2026!` | Assigned Athletes, Custom Workouts, Salary Confirmation |
-| **Member** | `ali.member@fittrack.com` | `Member@FitTrack2026!` | Personal Workouts, Biometrics, Payment Proofs, Dues |
-
----
-
-## 🐳 Docker Compose Deployment
-
-To run the complete production stack (MongoDB 7.0 + Node Backend + Nginx Client) with a single command:
-
+Run the entire stack (MongoDB, Express Server, and Nginx Client) with a single command:
 ```bash
 docker compose up -d --build
 ```
-- Web Application: `http://localhost`
-- Backend API: `http://localhost:5000/api/v1/health`
-- MongoDB: `localhost:27017`
+- Web Application: [http://localhost](http://localhost)
+- Backend API Health: [http://localhost:5000/api/v1/health](http://localhost:5000/api/v1/health)
 
----
-
-## 🧪 Automated Testing & Atlas Verification
-
+To view service logs:
 ```bash
-# 1. Run full backend unit and workflow test suite (27 tests, 100% pass rate)
-cd server
-npm test
+docker compose logs -f
+```
 
-# 2. Run live Atlas cluster connectivity check
-node scripts/test_atlas_connection.js
-
-# 3. Run live Atlas authentication and role boundary verification
-node scripts/test_live_auth.js
-
-# 4. Run live Atlas business workflow lifecycle verification
-node scripts/test_live_workflows.js
+To stop containers:
+```bash
+docker compose down
 ```
 
 ---
 
-## 📖 In-Depth Documentation Links
+## 🧪 Testing & Verification
 
-- **[Database Verification Report](DATABASE_VERIFICATION_REPORT.md)** (MongoDB Atlas Integration & Proof)
-- **[System Architecture](docs/ARCHITECTURE.md)**
-- **[Database Schemas & ER Diagram](docs/DATABASE_DESIGN.md)**
-- **[REST API Reference](docs/API_DOCUMENTATION.md)**
-- **[User & Operations Guide](docs/USER_GUIDE.md)**
-- **[Production Linux Deployment](docs/DEPLOYMENT_GUIDE.md)**
-- **[QA Testing & Security Audit](docs/TESTING_REPORT.md)**
-- **[Technical Audit Report](AUDIT_REPORT.md)**
-- **[Master Academic Project Report](PROJECT_REPORT.md)**
+FitTrack Pro includes an automated test suite executed via the native Node.js test runner:
+
+```bash
+# Run backend test suite (27 tests across 15 suites)
+npm test
+
+# Verify remote MongoDB Atlas connectivity
+npm run test:atlas
+
+# Run live Atlas end-to-end workflow verification
+npm run test:workflows
+
+# Build frontend production bundle
+npm run build
+```
+
+---
+
+## 📚 Technical Documentation Index
+
+For in-depth specifications, refer to the documentation in [`docs/`](docs/):
+- **[System Architecture](docs/ARCHITECTURE.md)** — Architectural tiers, security layers, and Mermaid sequence diagrams.
+- **[Database Design](docs/DATABASE_DESIGN.md)** — Mongoose schemas, compound unique constraints, ER diagram, and Atlas replica set specifications.
+- **[REST API Reference](docs/API_DOCUMENTATION.md)** — Complete endpoint catalog with request/response schemas.
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** — Linux virtual machine, firewall, SSL/TLS, and Docker deployment guide.
+- **[User & Operations Manual](docs/USER_GUIDE.md)** — Step-by-step persona walkthroughs.
+- **[Testing & QA Guide](docs/TESTING_GUIDE.md)** — Business workflows A–G and BOLA/IDOR security audit.
+
+---
+
+## 👨‍💻 Developer & Attribution
+
+Developed by **[Sameer Khuhro](https://www.linkedin.com/in/sameer-khuhro)**.
+
+---
+
+## 📄 License
+
+This project is open-source and licensed under the [MIT License](LICENSE).

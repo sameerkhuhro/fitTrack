@@ -9,6 +9,8 @@
     "client": "npm run dev --prefix client",
     "seed": "npm run seed --prefix server",
     "test": "npm test --prefix server",
+    "test:atlas": "node server/scripts/test_atlas_connection.js",
+    "test:workflows": "node server/scripts/test_live_workflows.js",
     "build": "npm run build --prefix client"
   },
   "keywords": [
@@ -18,9 +20,10 @@
     "express",
     "mongodb",
     "fitness",
-    "pbl"
+    "fitness-management",
+    "gym-subscription"
   ],
-  "author": "FitTrack Pro Engineering Team",
+  "author": "Sameer Khuhro",
   "license": "MIT"
 }
 
