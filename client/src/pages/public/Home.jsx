@@ -8,267 +8,296 @@ import {
   Flame,
   CheckCircle2,
   Calendar,
-  CreditCard,
   Sparkles,
   ArrowRight,
   ArrowUpRight,
   TrendingUp,
   Clock,
-  MapPin,
-  Star,
-  Activity,
   HeartPulse,
   Trophy,
   Zap,
+  Play,
+  ChevronLeft,
+  ChevronRight,
+  Star,
 } from 'lucide-react';
 import api from '../../services/api';
-import Button from '../../components/common/Button';
 
 export default function Home() {
   const [plans, setPlans] = useState([]);
   const [trainers, setTrainers] = useState([]);
+  const [testimonialIdx, setTestimonialIdx] = useState(0);
 
   useEffect(() => {
     // Fetch live plans from Atlas fittrack database
     api.get('/plans')
       .then((res) => {
-        if (res.data.success) setPlans(res.data.data.slice(0, 3));
+        if (res.data.success && res.data.data.length > 0) {
+          setPlans(res.data.data.slice(0, 3));
+        }
       })
       .catch(() => {});
 
     // Fetch live trainers from Atlas fittrack database
     api.get('/trainers')
       .then((res) => {
-        if (res.data.success) setTrainers(res.data.data.slice(0, 3));
+        if (res.data.success && res.data.data.length > 0) {
+          setTrainers(res.data.data.slice(0, 4));
+        }
       })
       .catch(() => {});
   }, []);
 
-  const stats = [
-    { label: 'Active Members', value: '1,200+', suffix: 'Athletes' },
-    { label: 'Certified Coaches', value: '12+', suffix: 'Master Staff' },
-    { label: 'Facility Space', value: '15,000+', suffix: 'Sq. Ft' },
-    { label: 'Verified Integrity', value: '100%', suffix: 'Digital Dues' },
+  // Fallback plans if database plans are loading or empty
+  const defaultPlans = [
+    {
+      _id: 'basic-plan',
+      name: 'Basic',
+      price: 29,
+      durationMonths: 1,
+      description: 'Get started with essential gym access.',
+      features: ['Full gym access', 'Basic equipment', 'Locker facility', 'Mobile member portal'],
+    },
+    {
+      _id: 'pro-plan',
+      name: 'Pro',
+      price: 49,
+      durationMonths: 1,
+      popular: true,
+      description: 'Our most popular plan for serious results.',
+      features: ['Full gym access', 'All training zones', 'Group classes included', '1x Trainer consultation', 'Biometric progress tracking'],
+    },
+    {
+      _id: 'elite-plan',
+      name: 'Elite',
+      price: 79,
+      durationMonths: 1,
+      description: 'Maximum support for your fitness journey.',
+      features: ['Everything in Pro', 'Personal training (2x/month)', 'Custom workout plan', 'Trainer progress tracking', 'Full hydro-recovery & sauna'],
+    },
   ];
 
+  const displayPlans = plans.length > 0 ? plans : defaultPlans;
+
+  // Facilities from Blueprint
   const facilities = [
     {
-      title: 'Olympic Power & Heavy Free Weights',
-      desc: 'Calibrated Eleiko plates, Texas power bars, dual-pulley cable towers, and 8 dedicated power cages.',
+      id: 'strength',
+      title: 'Strength Zone',
+      desc: 'Build muscle and power with Olympic calibrated plates and power racks.',
       image: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=800&q=80',
-      badge: 'Strength Arena',
+      icon: Dumbbell,
     },
     {
-      title: 'Cardio & Endurance Studio',
-      desc: 'Commercial curved treadmills, Concept2 rowing ergs, assault bikes, and heart rate telemetry monitors.',
+      id: 'cardio',
+      title: 'Cardio Zone',
+      desc: 'Improve stamina and heart health on curved treadmills and Concept2 rowers.',
       image: 'https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&w=800&q=80',
-      badge: 'Conditioning',
+      icon: Zap,
     },
     {
-      title: 'Functional Turf & Movement Zone',
-      desc: 'Sled tracks, battle ropes, plyometric boxes, kettlebell racks, and open mobility areas.',
+      id: 'functional',
+      title: 'Functional Training',
+      desc: 'Full-body, real-world fitness on turf sled tracks with kettlebells & ropes.',
       image: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=800&q=80',
-      badge: 'Agility & Speed',
+      icon: Flame,
     },
     {
-      title: 'Luxury Hydro-Recovery & Sauna',
-      desc: 'Post-workout cedar wood sauna, steam rooms, and contrast shower suites for fast muscle recovery.',
+      id: 'recovery',
+      title: 'Recovery Zone',
+      desc: 'Relax and recharge in cedar wood saunas and contrast shower suites.',
       image: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80',
-      badge: 'Recovery Lab',
+      icon: HeartPulse,
     },
   ];
 
-  const whyChooseUs = [
-    {
-      icon: ShieldCheck,
-      title: 'Smart Turnstile Check-In',
-      desc: 'Instant QR and biometric check-ins with anti-duplicate daily turnstile constraints.',
-    },
-    {
-      icon: Users,
-      title: 'Assigned Personal Coaching',
-      desc: 'Direct 1-on-1 oversight from certified trainers with weekly workout updates.',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Digital Biometric Tracking',
-      desc: 'Interactive weight, waist, and body fat trajectory graphs to visualize real results.',
-    },
-    {
-      icon: CreditCard,
-      title: 'Dual Payment Architecture',
-      desc: 'Submit online bank/wallet proofs or receive instant verifiable cash receipts at reception.',
-    },
-    {
-      icon: Clock,
-      title: 'Automated Expiry Alerts',
-      desc: 'Smart 7-day, 3-day, and 1-day reminders with automated notification deduplication.',
-    },
-    {
-      icon: Trophy,
-      title: 'Hammer Strength & Eleiko Fleet',
-      desc: 'Pristine, competition-grade machines and biomechanically calibrated equipment.',
-    },
-  ];
-
+  // Testimonials from Blueprint
   const testimonials = [
     {
-      name: 'Usman Tariq',
+      name: 'Ali Khan',
       role: 'Member since 2024',
-      quote: 'FitTrack Pro completely changed how I train. The workout logging and biometrics tracking keep me accountable every single week.',
-      rating: 5,
+      quote: 'FitTrack Pro completely transformed my fitness journey. Amazing trainers and world-class equipment!',
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
       achievement: 'Lost 12 kg & Gained 4 kg Lean Mass',
     },
     {
-      name: 'Ayesha Siddiqui',
+      name: 'Sara Ahmed',
       role: 'Member since 2025',
-      quote: 'The facility is immaculate and the coaching staff is truly world-class. Having real-time salary confirmations and receipts verified in minutes gives immense trust.',
-      rating: 5,
+      quote: 'The environment is motivating and the staff is super supportive. Clean, modern and result-oriented.',
       avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
       achievement: 'Consistent 5-day Weekly Streak',
     },
     {
-      name: 'Farhan Malik',
-      role: 'Competitive Powerlifter',
-      quote: 'The Eleiko equipment, dedicated lifting platforms, and structured workout sessions are better than any commercial gym in the city.',
-      rating: 5,
+      name: 'Hamza Raza',
+      role: 'Competitive Athlete',
+      quote: 'Best gym in the city! Clean, modern and result-oriented with authentic competition lifting platforms.',
       avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80',
       achievement: '210 kg Deadlift Verified PR',
     },
   ];
 
-  // Marquee repeated keywords
+  // Marquee repeated brand keywords from reference blueprint
   const marqueeItems = [
     'STRENGTH TRAINING',
     'CARDIO',
-    'PERSONAL TRAINING',
+    '➔ PERSONAL TRAINING',
     'BODY BUILDING',
     'FITNESS',
-    'ATHLETIC PERFORMANCE',
-    'RECOVERY LAB',
-    'POWERLIFTING',
-    'HYPERTROPHY',
-    'METABOLIC CONDITIONING',
+    'PERFORMANCE',
+    'RECOVERY',
   ];
 
   return (
-    <div className="bg-[#111413] text-white overflow-hidden selection:bg-neon selection:text-black">
+    <div className="bg-[#191D20] text-white overflow-hidden selection:bg-neon selection:text-black">
       
       {/* ======================================================== */}
-      {/* 1. HERO SECTION (REFERENCE 1 + REFERENCE 2 COHESION) */}
+      {/* 1. HERO SECTION (STRICT BLUEPRINT REPRODUCTION) */}
       {/* ======================================================== */}
-      <section className="relative min-h-[94vh] lg:min-h-screen flex items-center overflow-hidden pt-24 lg:pt-16 pb-12 lg:pb-8">
+      <section className="relative min-h-[92vh] lg:min-h-screen flex items-center overflow-hidden pt-28 lg:pt-20 pb-8 lg:pb-0 bg-[#191D20]">
         
-        {/* Cinematic dark gym interior background photo */}
+        {/* Subtle Dark Gym Background Texture */}
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2000&auto=format&fit=crop"
-            alt="FitTrack Pro Elite Gym Interior"
-            className="w-full h-full object-cover object-center filter brightness-[0.25] contrast-[1.25]"
+            alt="FitTrack Pro Elite Gym Atmosphere"
+            className="w-full h-full object-cover object-center filter brightness-[0.15] contrast-[1.2]"
           />
-          {/* Subtle multi-stop gradient overlay preserving gym visibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#111413] via-[#111413]/85 to-[#172017]/45" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111413] via-transparent to-black/60" />
+          {/* Graphite Charcoal Overlay with Radial Depth */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#191D20] via-[#191D20]/90 to-[#191D20]/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#191D20] via-transparent to-[#191D20]/60" />
         </div>
 
-        {/* Concentric Decorative Radial Rings from Reference 2 */}
-        <div className="absolute right-0 lg:right-16 top-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none z-0 opacity-20">
-          <svg className="w-full h-full" viewBox="0 0 700 700" fill="none">
-            <circle cx="350" cy="350" r="140" stroke="#B7FF00" strokeWidth="1" strokeDasharray="6 6" />
-            <circle cx="350" cy="350" r="220" stroke="#B7FF00" strokeWidth="1" />
-            <circle cx="350" cy="350" r="300" stroke="#B7FF00" strokeWidth="1" strokeDasharray="10 10" />
-            <circle cx="350" cy="350" r="340" stroke="#B7FF00" strokeWidth="0.75" />
+        {/* Ambient Warm-Green Radial Glow Centered Behind Athlete */}
+        <div className="absolute right-0 lg:right-24 top-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(198,255,0,0.14)_0%,_rgba(34,41,42,0.5)_45%,_transparent_72%)] pointer-events-none z-0" />
+
+        {/* Concentric Circular Background Rings */}
+        <div className="absolute right-0 lg:right-12 top-1/2 -translate-y-1/2 w-[720px] h-[720px] pointer-events-none z-0 opacity-25">
+          <svg className="w-full h-full" viewBox="0 0 720 720" fill="none">
+            <circle cx="390" cy="360" r="130" stroke="#C6FF00" strokeWidth="1" strokeDasharray="5 5" />
+            <circle cx="390" cy="360" r="210" stroke="#C6FF00" strokeWidth="1" />
+            <circle cx="390" cy="360" r="290" stroke="#C6FF00" strokeWidth="1" strokeDasharray="8 8" />
+            <circle cx="390" cy="360" r="360" stroke="#C6FF00" strokeWidth="0.75" />
+            <circle cx="390" cy="360" r="430" stroke="#C6FF00" strokeWidth="0.5" strokeDasharray="12 12" />
           </svg>
         </div>
 
-        {/* Hero Grid Container */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[75vh]">
+        {/* Hero Content Grid Container */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-6 lg:py-0">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center min-h-[78vh]">
             
-            {/* Left Side: Editorial Content, Main Heading, CTAs & Stats */}
+            {/* Left Side: Editorial Typography, CTAs & Counters */}
             <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center space-y-5 lg:space-y-6 text-left">
               
-              {/* Eyebrow with Neon ++ Badge (Inspired by Reference 2) */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#172017] border border-[#243426] text-xs font-semibold tracking-wider text-gray-300 w-fit">
-                <span className="text-neon font-black font-display text-sm tracking-tighter">++</span>
-                <span className="font-display font-black uppercase text-white tracking-[0.2em] text-[11px]">
-                  FITTRACK PRO FITNESS CLUB
-                </span>
+              {/* Eyebrow: COMMIT TO EXCELLENCE */}
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-neon">
+                <span>COMMIT TO EXCELLENCE</span>
               </div>
 
-              {/* Main Heading with High-Voltage Neon Accents */}
-              <h1 className="font-display font-black uppercase text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl 2xl:text-9xl text-white tracking-tight leading-[0.88] drop-shadow-2xl">
-                BUILD STRENGTH.
+              {/* Main Headline: READY TO REDEFINE YOUR PHYSICAL LIMITS? */}
+              <h1 className="font-display font-black uppercase text-4xl sm:text-5xl lg:text-6xl xl:text-6xl text-white tracking-tight leading-[0.96] max-w-xl">
+                READY TO <span className="text-neon italic">REDEFINE</span>
                 <br />
-                <span className="text-neon text-neon-glow font-black">TRANSFORM</span> YOUR BODY.
+                YOUR PHYSICAL LIMITS?
               </h1>
 
-              {/* Supporting Text */}
-              <p className="text-sm sm:text-base lg:text-lg text-gym-muted max-w-xl font-normal leading-relaxed">
-                Push beyond your limits with expert coaching, premium gym facilities and personalized training programs designed to help you become stronger.
+              {/* Supporting Subtitle Paragraph */}
+              <p className="text-sm sm:text-base text-[#AEB5B2] max-w-lg font-normal leading-relaxed">
+                Join hundreds of dedicated athletes. Register in 60 seconds, choose your membership tier, and access elite training facilities today.
               </p>
 
-              {/* Two CTA Buttons Inspired by Reference 1 & 2 */}
+              {/* CTA Buttons Row (Neon Pill + Schedule a Club Tour) */}
               <div className="flex flex-wrap items-center gap-4 pt-1">
-                <Link to="/register" className="group">
-                  <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs sm:text-sm uppercase tracking-wider px-7 sm:px-8 py-4 rounded-full shadow-neon-glow flex items-center gap-2 transition-all duration-200 hover:scale-[1.02]">
-                    START TRAINING
-                    <ArrowRight className="w-4 h-4 stroke-[2.8] transition-transform group-hover:translate-x-1" />
+                <Link to="/register">
+                  <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs sm:text-sm uppercase tracking-wider px-7 sm:px-8 py-3.5 rounded-full shadow-neon-glow flex items-center gap-2 transition-all duration-200 hover:scale-[1.02]">
+                    JOIN FITTRACK PRO NOW
+                    <ArrowRight className="w-4 h-4 stroke-[2.8]" />
                   </button>
                 </Link>
 
-                <Link to="/plans" className="group">
-                  <button className="border border-white/60 hover:border-neon hover:text-neon text-white font-display font-black text-xs sm:text-sm uppercase tracking-wider px-7 sm:px-8 py-4 rounded-full transition-all duration-200 bg-[#172017]/70 backdrop-blur-sm flex items-center gap-2">
-                    EXPLORE MEMBERSHIPS
-                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 stroke-[2.5]" />
+                <Link to="/contact">
+                  <button className="border border-white/20 hover:border-neon hover:text-neon text-white font-display font-bold text-xs sm:text-sm uppercase tracking-wider px-6 sm:px-7 py-3.5 rounded-full transition-all duration-200 bg-[#22292A]/60 backdrop-blur-sm flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-neon text-[10px]">
+                      ▶
+                    </span>
+                    SCHEDULE A CLUB TOUR
                   </button>
                 </Link>
               </div>
 
-              {/* Compact Statistics Row Inspired by Reference 1 & 2 */}
-              <div className="pt-6 border-t border-[#243426] grid grid-cols-3 sm:grid-cols-4 gap-4 max-w-lg">
-                {stats.map((item, idx) => (
-                  <div key={idx} className="flex flex-col">
-                    <span className="font-display text-2xl sm:text-3xl font-black text-white tracking-tight">
-                      {item.value}
+              {/* Compact Statistics Row with Icons */}
+              <div className="pt-6 sm:pt-8 border-t border-[#333e40]/70 grid grid-cols-3 gap-4 sm:gap-6 max-w-lg">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center text-neon shrink-0">
+                    <Users className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="font-display text-2xl sm:text-3xl font-black text-white tracking-tight block">
+                      1,200+
                     </span>
-                    <span className="font-display text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neon mt-0.5">
-                      {item.label}
+                    <span className="text-[11px] text-[#AEB5B2] font-semibold tracking-wide">
+                      Active Members
                     </span>
                   </div>
-                ))}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center text-neon shrink-0">
+                    <Dumbbell className="w-5 h-5 -rotate-45" />
+                  </div>
+                  <div>
+                    <span className="font-display text-2xl sm:text-3xl font-black text-white tracking-tight block">
+                      12+
+                    </span>
+                    <span className="text-[11px] text-[#AEB5B2] font-semibold tracking-wide">
+                      Expert Trainers
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center text-neon shrink-0">
+                    <Award className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="font-display text-2xl sm:text-3xl font-black text-white tracking-tight block">
+                      35+
+                    </span>
+                    <span className="text-[11px] text-[#AEB5B2] font-semibold tracking-wide">
+                      Training Programs
+                    </span>
+                  </div>
+                </div>
               </div>
 
             </div>
 
-            {/* Right Side: Athlete Centerpiece, Neon Orbit Lines & Floating Cards */}
-            <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center lg:justify-end min-h-[480px] sm:min-h-[580px] lg:min-h-[640px]">
+            {/* Right Side: Standing Muscular Athlete + Neon Orbit Ribbon + Rotating Badge */}
+            <div className="lg:col-span-6 xl:col-span-6 relative flex items-end justify-center lg:justify-end min-h-[500px] sm:min-h-[600px] lg:min-h-[680px]">
               
-              {/* Neon Orbit Lines SVG Ribbon (Inspired by Reference 2) */}
+              {/* Neon Orbit Lines SVG Ribbon */}
               <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center">
-                <svg className="w-full h-full max-w-[580px] max-h-[660px]" viewBox="0 0 600 680" fill="none">
+                <svg className="w-full h-full max-w-[640px] max-h-[720px]" viewBox="0 0 640 720" fill="none">
                   {/* Glowing Blurred Underlayer */}
                   <path
-                    d="M 520,60 C 440,40 280,100 290,220 C 300,340 480,290 450,440 C 420,590 200,530 310,650"
-                    stroke="#B7FF00"
-                    strokeWidth="7"
+                    d="M 640,150 C 530,165 375,220 390,345 C 405,475 580,410 540,570 C 500,710 350,670 425,750"
+                    stroke="#C6FF00"
+                    strokeWidth="8"
                     strokeLinecap="round"
                     className="filter blur-[8px] opacity-60"
                   />
                   {/* Crisp Foreground Neon Orbit */}
                   <path
-                    d="M 520,60 C 440,40 280,100 290,220 C 300,340 480,290 450,440 C 420,590 200,530 310,650"
-                    stroke="#B7FF00"
+                    d="M 640,150 C 530,165 375,220 390,345 C 405,475 580,410 540,570 C 500,710 350,670 425,750"
+                    stroke="#C6FF00"
                     strokeWidth="3.5"
                     strokeLinecap="round"
-                    className="drop-shadow-[0_0_12px_#B7FF00]"
+                    className="drop-shadow-[0_0_12px_#C6FF00]"
                   />
                 </svg>
               </div>
 
-              {/* Circular Athletic Stamp Badge from Reference 2 */}
-              <div className="absolute top-4 right-4 sm:top-10 sm:right-8 z-20 pointer-events-none">
+              {/* Circular Athletic Stamp Badge */}
+              <div className="absolute top-2 right-2 sm:top-6 sm:right-6 z-20 pointer-events-none">
                 <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
                   <svg className="w-full h-full animate-spinSlow" viewBox="0 0 100 100">
                     <defs>
@@ -277,7 +306,7 @@ export default function Home() {
                         d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
                       />
                     </defs>
-                    <text fontSize="8.2" fontWeight="900" fill="#B7FF00" letterSpacing="2.2">
+                    <text fontSize="8.2" fontWeight="900" fill="#C6FF00" letterSpacing="2.2">
                       <textPath href="#circlePath">
                         WORKOUT • GYM • FITTRACK • POWER •
                       </textPath>
@@ -289,94 +318,13 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Muscular Athlete Performing Dumbbell Exercise */}
-              <div className="relative z-10 w-full max-w-[440px] sm:max-w-[480px] lg:max-w-[500px] h-[480px] sm:h-[580px] lg:h-[640px] flex items-end justify-center">
+              {/* Standing Muscular Athlete Holding Dumbbells in Both Hands */}
+              <div className="relative z-10 w-full max-w-[480px] sm:max-w-[520px] lg:max-w-[560px] h-[500px] sm:h-[600px] lg:h-[680px] flex items-end justify-center">
                 <img
-                  src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=1200&auto=format&fit=crop"
-                  alt="FitTrack Pro Athletic Bodybuilder"
-                  className="w-full h-full object-cover object-top scale-105 filter contrast-[1.12] brightness-[1.05] drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)] [mask-image:linear-gradient(to_bottom,black_82%,transparent_100%)]"
+                  src="/athlete-prowess.png"
+                  alt="FitTrack Pro Standing Muscular Bodybuilder"
+                  className="w-full h-full object-contain object-bottom filter contrast-[1.08] brightness-[1.02] drop-shadow-[0_20px_45px_rgba(0,0,0,0.85)]"
                 />
-              </div>
-
-              {/* ======================================================== */}
-              {/* FLOATING FITNESS CARDS (FROM REFERENCE 1) */}
-              {/* ======================================================== */}
-              
-              {/* Floating Card 1: WEEKLY GOAL Progress Ring */}
-              <div className="absolute top-1/3 -left-4 sm:left-4 z-30 bg-[#172017]/92 backdrop-blur-md border border-neon/40 p-3.5 sm:p-4 rounded-2xl shadow-card-dark animate-floatSlow max-w-[155px]">
-                <div className="flex items-center gap-3">
-                  {/* SVG Circular Progress Ring */}
-                  <div className="relative w-12 h-12 flex items-center justify-center shrink-0">
-                    <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                      <path
-                        className="text-gray-700"
-                        strokeWidth="3.5"
-                        stroke="currentColor"
-                        fill="none"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      />
-                      <path
-                        className="text-neon drop-shadow-[0_0_8px_#B7FF00]"
-                        strokeDasharray="85, 100"
-                        strokeWidth="3.5"
-                        strokeLinecap="round"
-                        stroke="currentColor"
-                        fill="none"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      />
-                    </svg>
-                    <span className="absolute font-display font-black text-xs text-white">85%</span>
-                  </div>
-                  <div>
-                    <span className="font-display font-black text-[11px] uppercase tracking-wider text-neon block">
-                      WEEKLY GOAL
-                    </span>
-                    <span className="text-[9px] text-gym-muted font-medium block">
-                      4 of 5 Sessions
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Card 2: LIVE SESSIONS Schedule */}
-              <div className="absolute bottom-16 sm:bottom-20 -left-2 sm:left-10 z-30 bg-[#172017]/95 backdrop-blur-md border border-emerald-500/40 p-4 rounded-2xl shadow-card-dark animate-floatDelay max-w-[210px] hidden sm:block">
-                <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-[#243426]">
-                  <Clock className="w-3.5 h-3.5 text-neon" />
-                  <span className="font-display font-black text-[11px] uppercase tracking-wider text-white">
-                    LIVE SESSIONS
-                  </span>
-                </div>
-                <div className="space-y-2 text-xs">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="flex items-center gap-1.5 text-gray-300 text-[11px] font-medium">
-                      <span className="w-2 h-2 rounded-full bg-neon animate-pulse" />
-                      Power Clean
-                    </span>
-                    <span className="text-[10px] font-mono text-neon font-bold">10:00 AM</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="flex items-center gap-1.5 text-gray-300 text-[11px] font-medium">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                      Recovery Drill
-                    </span>
-                    <span className="text-[10px] font-mono text-emerald-400 font-bold">11:15 AM</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Card 3: AI / COACH INSIGHT (Bottom Banner) */}
-              <div className="absolute -bottom-4 right-2 sm:right-6 z-30 bg-[#172017]/95 backdrop-blur-md border border-neon/30 p-3.5 sm:p-4 rounded-2xl shadow-card-dark max-w-xs sm:max-w-sm flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-neon/15 border border-neon/30 flex items-center justify-center text-neon shrink-0">
-                  <Activity className="w-5 h-5" />
-                </div>
-                <div>
-                  <h5 className="font-display font-black text-[11px] uppercase tracking-wider text-neon">
-                    COACH INSIGHT
-                  </h5>
-                  <p className="text-[10px] sm:text-[11px] text-gray-300 leading-tight mt-0.5">
-                    Recovery is optimal. Progressive overload recommended: +5% compound load today.
-                  </p>
-                </div>
               </div>
 
             </div>
@@ -386,18 +334,18 @@ export default function Home() {
       </section>
 
       {/* ======================================================== */}
-      {/* 2. BRIGHT NEON-LIME SCROLLING BRAND STRIP (FROM REFERENCE 2) */}
+      {/* 2. BRIGHT NEON-LIME SCROLLING BRAND STRIP (FROM BLUEPRINT) */}
       {/* ======================================================== */}
       <div className="relative z-20 w-full bg-neon py-3.5 overflow-hidden shadow-neon-strong border-y border-black">
         <div className="flex whitespace-nowrap animate-marquee">
           {[...Array(4)].map((_, groupIdx) => (
-            <div key={groupIdx} className="flex items-center space-x-8 shrink-0 px-4">
+            <div key={groupIdx} className="flex items-center space-x-6 shrink-0 px-4">
               {marqueeItems.map((item, itemIdx) => (
-                <div key={itemIdx} className="flex items-center space-x-8">
+                <div key={itemIdx} className="flex items-center space-x-6">
                   <span className="font-display font-black text-lg sm:text-xl uppercase tracking-wider text-black">
                     {item}
                   </span>
-                  <span className="text-black font-black text-sm">✦</span>
+                  <span className="text-black font-black text-base">//</span>
                 </div>
               ))}
             </div>
@@ -406,89 +354,69 @@ export default function Home() {
       </div>
 
       {/* ======================================================== */}
-      {/* 3. ABOUT THE GYM – DUAL IMAGE & EDITORIAL MANIFESTO */}
+      {/* 3. ABOUT FITTRACK PRO PREVIEW (FROM BLUEPRINT) */}
       {/* ======================================================== */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Left: Atmospheric Photography Collage */}
-          <div className="relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-[#243426]">
-              <img
-                src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=80"
-                alt="FitTrack Pro Training Culture"
-                className="w-full h-[480px] object-cover hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#111413] via-transparent to-transparent opacity-80" />
-            </div>
-
-            {/* Overlaid Feature Card */}
-            <div className="absolute -bottom-8 -right-6 bg-[#172017]/95 backdrop-blur-md border border-neon/40 p-5 rounded-2xl shadow-2xl max-w-xs hidden sm:block">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-neon/20 text-neon flex items-center justify-center shrink-0">
-                  <Trophy className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-display text-sm font-black uppercase text-white">Competition Caliber</h4>
-                  <p className="text-[11px] text-gym-muted mt-0.5">Olympic platforms, calibrated steel plates, and custom dumbbell runs to 70kg.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Editorial Copy */}
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#172017] border border-neon/30 text-neon text-xs font-bold uppercase tracking-widest">
-              <Sparkles className="w-3.5 h-3.5" />
-              The FitTrack Pro Philosophy
+          {/* Left Column: Text & Features */}
+          <div className="lg:col-span-6 space-y-6">
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-neon">
+              <span>ABOUT FITTRACK PRO</span>
             </div>
 
             <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white leading-[1.0]">
-              Built for <span className="text-neon text-neon-glow">Relentless</span> Athletes
+              MORE THAN A GYM.<br />
+              <span className="text-white">A FITNESS COMMUNITY.</span>
             </h2>
 
-            <p className="text-sm sm:text-base text-gym-muted leading-relaxed">
-              We engineered FitTrack Pro as the antidote to generic, crowded commercial fitness clubs. Every square foot is optimized for biomechanical progression, power output, and metabolic conditioning.
+            <p className="text-sm sm:text-base text-[#AEB5B2] leading-relaxed">
+              We provide a world-class training environment, expert coaching and modern facilities to help you achieve your fitness goals. Every square foot is engineered for optimal performance, joint health, and progressive overload.
             </p>
 
-            <div className="space-y-4 pt-2">
-              <div className="flex items-start gap-3">
-                <div className="p-1 rounded bg-neon/10 text-neon mt-1">
-                  <CheckCircle2 className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="font-display text-sm font-black uppercase text-white">Full Physiological Tracking</h4>
-                  <p className="text-xs text-gym-muted mt-0.5">Bi-weekly biometric audits tracking lean tissue accrual, waist reduction, and strength milestones.</p>
-                </div>
+            {/* 3 Feature Pills */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#22292A] border border-[#333e40]">
+                <Users className="w-4 h-4 text-neon shrink-0" />
+                <span className="text-xs font-bold text-white uppercase tracking-wider">Expert Coaches</span>
               </div>
-
-              <div className="flex items-start gap-3">
-                <div className="p-1 rounded bg-neon/10 text-neon mt-1">
-                  <CheckCircle2 className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="font-display text-sm font-black uppercase text-white">Verified Accounting & Transparency</h4>
-                  <p className="text-xs text-gym-muted mt-0.5">Instant verifiable cash receipts, multi-channel online bank proofs, and zero unrecorded financial handovers.</p>
-                </div>
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#22292A] border border-[#333e40]">
+                <Dumbbell className="w-4 h-4 text-neon shrink-0" />
+                <span className="text-xs font-bold text-white uppercase tracking-wider">Modern Equipment</span>
               </div>
-
-              <div className="flex items-start gap-3">
-                <div className="p-1 rounded bg-neon/10 text-neon mt-1">
-                  <CheckCircle2 className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="font-display text-sm font-black uppercase text-white">Zero Turnstile Congestion</h4>
-                  <p className="text-xs text-gym-muted mt-0.5">High-speed biometric and QR check-ins that validate subscription status in milliseconds.</p>
-                </div>
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-[#22292A] border border-[#333e40]">
+                <Calendar className="w-4 h-4 text-neon shrink-0" />
+                <span className="text-xs font-bold text-white uppercase tracking-wider">Personalized Plans</span>
               </div>
             </div>
 
             <div className="pt-4">
               <Link to="/about">
-                <button className="bg-[#172017] hover:bg-[#1f2b20] border border-[#243426] hover:border-neon text-white hover:text-neon px-6 py-3 rounded-full font-display uppercase tracking-wider text-xs font-bold flex items-center gap-2 transition-all">
-                  Read Our Full Story
-                  <ArrowRight className="w-4 h-4" />
+                <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs sm:text-sm uppercase tracking-wider px-7 py-3.5 rounded-full shadow-neon-glow flex items-center gap-2 transition-all">
+                  Learn More
+                  <ArrowRight className="w-4 h-4 stroke-[2.8]" />
                 </button>
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: Gym Interior Photo with Play Overlay */}
+          <div className="lg:col-span-6 relative">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-[#333e40] group">
+              <img
+                src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1200&q=80"
+                alt="FitTrack Pro Community Training"
+                className="w-full h-[400px] sm:h-[460px] object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#191D20]/90 via-[#191D20]/40 to-transparent" />
+              
+              {/* Glowing Play Button Overlay */}
+              <Link
+                to="/facilities"
+                className="absolute inset-0 m-auto w-16 h-16 rounded-full bg-neon/90 hover:bg-neon flex items-center justify-center text-black shadow-neon-strong transition-all duration-300 hover:scale-110"
+                aria-label="Watch Facility Tour"
+              >
+                <Play className="w-7 h-7 fill-black ml-1" />
               </Link>
             </div>
           </div>
@@ -497,273 +425,230 @@ export default function Home() {
       </section>
 
       {/* ======================================================== */}
-      {/* 4. TRAINING ZONES & FACILITY HIGHLIGHTS */}
+      {/* 4. OUR FACILITIES SECTION (FROM BLUEPRINT) */}
       {/* ======================================================== */}
-      <section className="py-24 bg-[#172017]/50 border-y border-[#243426]">
+      <section className="py-24 bg-[#111613] border-y border-[#333e40]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-            <div>
-              <span className="font-display text-xs font-bold uppercase tracking-widest text-neon">
-                Engineered Performance Arenas
-              </span>
-              <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
-                World-Class Facility Zones
-              </h2>
-            </div>
-            <Link to="/facilities">
-              <button className="px-5 py-2.5 rounded-full border border-gray-600 hover:border-neon text-xs font-display font-bold uppercase tracking-wider text-white hover:text-neon flex items-center gap-2 transition-colors">
-                View All Zones
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </Link>
+          
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-neon">
+              OUR FACILITIES
+            </span>
+            <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
+              TRAIN WITH THE BEST EQUIPMENT
+            </h2>
+            <p className="text-xs sm:text-sm text-[#AEB5B2] mt-3">
+              Everything you need for strength, cardio, and total body fitness.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {facilities.map((fac, idx) => (
-              <div
-                key={idx}
-                className="group relative rounded-3xl overflow-hidden bg-[#172017] border border-[#243426] hover:border-neon/50 transition-all duration-300 flex flex-col"
-              >
-                <div className="relative h-56 overflow-hidden">
-                  <img
-                    src={fac.image}
-                    alt={fac.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#172017] via-transparent to-transparent" />
-                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/80 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-neon border border-neon/30">
-                    {fac.badge}
-                  </span>
-                </div>
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-display text-lg font-black uppercase text-white group-hover:text-neon transition-colors">
-                      {fac.title}
-                    </h3>
-                    <p className="text-xs text-gym-muted mt-2 leading-relaxed">{fac.desc}</p>
+            {facilities.map((fac) => {
+              const Icon = fac.icon;
+              return (
+                <Link
+                  key={fac.id}
+                  to="/facilities"
+                  className="group relative rounded-2xl overflow-hidden bg-[#22292A] border border-[#333e40] hover:border-neon transition-all duration-300 flex flex-col shadow-lg"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={fac.image}
+                      alt={fac.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#22292A] via-[#22292A]/30 to-transparent" />
                   </div>
-                  <div className="mt-5 pt-3 border-t border-[#243426] flex items-center text-xs text-neon font-semibold">
-                    <span>Inspect Specs</span>
-                    <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Icon className="w-4 h-4 text-neon" />
+                        <h3 className="font-display text-lg font-black uppercase text-white group-hover:text-neon transition-colors">
+                          {fac.title}
+                        </h3>
+                      </div>
+                      <p className="text-xs text-[#AEB5B2] leading-relaxed line-clamp-2">
+                        {fac.desc}
+                      </p>
+                    </div>
+                    <div className="mt-4 pt-3 border-t border-[#333e40] flex items-center justify-between text-xs text-neon font-bold uppercase tracking-wider">
+                      <span>Explore Zone</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </Link>
+              );
+            })}
           </div>
+
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* 5. MEMBERSHIP TIERS (LOADED LIVE FROM ATLAS DB) */}
+      {/* 5. MEMBERSHIP PLANS WITH ATHLETE INTEGRATION (FROM BLUEPRINT) */}
       {/* ======================================================== */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="font-display text-xs font-bold uppercase tracking-widest text-neon">
-            Transparent Pricing Structure
+        
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-neon">
+            MEMBERSHIP PLANS
           </span>
           <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
-            Choose Your Membership
+            CHOOSE YOUR FITNESS PLAN
           </h2>
-          <p className="text-xs sm:text-sm text-gym-muted mt-3">
-            All tiers include turnstile access, mobile member dashboard, workout programming, and biometric tracking.
+          <p className="text-xs sm:text-sm text-[#AEB5B2] mt-3">
+            Flexible memberships for every goal and fitness level.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-          {plans.map((p, idx) => {
-            const isFeatured = idx === 1;
-            return (
-              <div
-                key={p._id || idx}
-                className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${
-                  isFeatured
-                    ? 'bg-gradient-to-b from-[#172017] to-[#111413] border-2 border-neon shadow-neon-strong scale-105 z-10'
-                    : 'bg-[#172017] border border-[#243426] hover:border-neon/50'
-                }`}
-              >
-                {isFeatured && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-neon text-black text-[11px] font-black uppercase tracking-widest shadow-md">
-                    Most Popular Choice
-                  </div>
-                )}
-
-                <div>
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-display text-2xl font-black uppercase text-white">{p.name}</h3>
-                    <span className="text-xs text-gym-muted font-medium">{p.durationMonths} Months</span>
-                  </div>
-                  <p className="text-xs text-gym-muted mt-1">{p.description}</p>
-
-                  <div className="my-6 pt-4 border-t border-[#243426]">
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-xs uppercase text-gym-muted font-semibold">PKR</span>
-                      <span className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
-                        {p.price?.toLocaleString()}
-                      </span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          {/* Left: 3 Pricing Cards */}
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch">
+            {displayPlans.map((p, idx) => {
+              const isPopular = p.popular || idx === 1;
+              return (
+                <div
+                  key={p._id || idx}
+                  className={`relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 ${
+                    isPopular
+                      ? 'bg-gradient-to-b from-[#22292A] to-[#191D20] border-2 border-neon shadow-neon-strong scale-102 z-10'
+                      : 'bg-[#22292A] border border-[#333e40] hover:border-neon/50'
+                  }`}
+                >
+                  {isPopular && (
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-0.5 rounded-full bg-neon text-black text-[10px] font-black uppercase tracking-widest shadow-md">
+                      Popular
                     </div>
-                    <span className="text-[11px] text-neon font-medium">Billed every {p.durationMonths} month(s)</span>
+                  )}
+
+                  <div>
+                    <h3 className="font-display text-2xl font-black uppercase text-white">{p.name}</h3>
+                    <p className="text-[11px] text-[#AEB5B2] mt-1 line-clamp-2">{p.description}</p>
+
+                    <div className="my-5 pt-3 border-t border-[#333e40]">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-xs uppercase text-neon font-bold">$</span>
+                        <span className="font-display text-4xl font-black text-white tracking-tight">
+                          {p.price}
+                        </span>
+                        <span className="text-[11px] text-[#AEB5B2]">/ month</span>
+                      </div>
+                    </div>
+
+                    <ul className="space-y-2.5 text-xs text-[#AEB5B2]">
+                      {p.features?.map((f, fIdx) => (
+                        <li key={fIdx} className="flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-neon shrink-0" />
+                          <span className="text-gray-300 text-[11px]">{f}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  <ul className="space-y-3 text-xs text-gym-muted">
-                    {p.features?.map((f, fIdx) => (
-                      <li key={fIdx} className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-neon shrink-0" />
-                        <span className="text-gray-300">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="mt-6 pt-4 border-t border-[#333e40]">
+                    <Link to={`/register?planId=${p._id}`}>
+                      <button
+                        className={`w-full font-display uppercase tracking-wider text-xs font-black py-3 rounded-full flex items-center justify-center gap-2 transition-all ${
+                          isPopular
+                            ? 'bg-neon hover:bg-neon-hover text-black shadow-neon-glow'
+                            : 'bg-[#191D20] hover:bg-[#22292A] border border-[#333e40] hover:border-neon text-white hover:text-neon'
+                        }`}
+                      >
+                        Choose Plan
+                        <ArrowRight className="w-3 h-3" />
+                      </button>
+                    </Link>
+                  </div>
                 </div>
+              );
+            })}
+          </div>
 
-                <div className="mt-8 pt-6 border-t border-[#243426]">
-                  <Link to={`/register?planId=${p._id}`}>
-                    <button
-                      className={`w-full font-display uppercase tracking-wider text-xs font-bold py-3.5 rounded-full shadow-md flex items-center justify-center gap-2 transition-all ${
-                        isFeatured
-                          ? 'bg-neon hover:bg-neon-hover text-black shadow-neon-glow'
-                          : 'bg-[#111413] hover:bg-[#172017] border border-[#243426] hover:border-neon text-white hover:text-neon'
-                      }`}
-                    >
-                      Subscribe to {p.name}
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </Link>
+          {/* Right: Athletic Male Bodybuilder/Athlete with Dumbbells & Neon Orbit Graphic */}
+          <div className="lg:col-span-4 relative flex items-center justify-center">
+            <div className="relative w-full max-w-[340px] h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-[#333e40] bg-[#191D20] group">
+              <img
+                src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=900&q=80"
+                alt="FitTrack Pro Muscular Male Athlete"
+                className="w-full h-full object-cover object-top filter contrast-[1.1] brightness-[0.95] group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#191D20] via-transparent to-black/20" />
+
+              {/* Neon Glow & Orbit Rings */}
+              <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full border-2 border-neon/50 pointer-events-none" />
+              <div className="absolute -bottom-8 -left-8 w-44 h-44 rounded-full border border-neon/40 pointer-events-none" />
+
+              {/* Floating Performance Badge */}
+              <div className="absolute bottom-5 left-5 right-5 p-3.5 rounded-2xl bg-[#111613]/90 backdrop-blur-md border border-neon/30 flex items-center justify-between shadow-lg">
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#AEB5B2] block">Performance Goal</span>
+                  <span className="text-xs font-black text-white uppercase tracking-wider">Hypertrophy & Strength</span>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-neon flex items-center justify-center text-black font-black text-xs">
+                  PRO
                 </div>
               </div>
-            );
-          })}
+            </div>
+          </div>
+
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* 6. CERTIFIED MASTER COACHES (LOADED LIVE FROM ATLAS DB) */}
+      {/* 6. MEMBER TESTIMONIALS (FROM BLUEPRINT) */}
       {/* ======================================================== */}
-      <section className="py-24 bg-[#172017]/40 border-t border-[#243426]">
+      <section className="py-24 bg-[#111613] border-y border-[#333e40]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+          
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
             <div>
-              <span className="font-display text-xs font-bold uppercase tracking-widest text-neon">
-                Elite Athletic Mentorship
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-neon">
+                MEMBER TESTIMONIALS
               </span>
               <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
-                Certified Coaching Staff
+                REAL RESULTS, REAL PEOPLE
               </h2>
             </div>
-            <Link to="/trainers">
-              <button className="px-5 py-2.5 rounded-full border border-gray-600 hover:border-neon text-xs font-display font-bold uppercase tracking-wider text-white hover:text-neon flex items-center gap-2 transition-colors">
-                Meet All Coaches
-                <ArrowRight className="w-3.5 h-3.5" />
+            {/* Slider Controls */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setTestimonialIdx((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
+                className="w-10 h-10 rounded-full bg-[#22292A] border border-[#333e40] flex items-center justify-center text-white hover:border-neon hover:text-neon transition-colors"
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft className="w-5 h-5" />
               </button>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {trainers.map((tr, idx) => (
-              <div
-                key={tr._id || idx}
-                className="group bg-[#172017] border border-[#243426] rounded-3xl overflow-hidden hover:border-neon/50 transition-all duration-300"
+              <button
+                onClick={() => setTestimonialIdx((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
+                className="w-10 h-10 rounded-full bg-[#22292A] border border-[#333e40] flex items-center justify-center text-white hover:border-neon hover:text-neon transition-colors"
+                aria-label="Next testimonial"
               >
-                <div className="relative h-72 overflow-hidden bg-[#111413]">
-                  <img
-                    src={
-                      tr.avatar ||
-                      (idx === 0
-                        ? 'https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=800&q=80'
-                        : idx === 1
-                        ? 'https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=800&q=80'
-                        : 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80')
-                    }
-                    alt={tr.name}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#172017] via-transparent to-transparent opacity-90" />
-                  <span className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-neon/15 backdrop-blur-md text-[10px] font-bold text-neon border border-neon/30 uppercase tracking-wider">
-                    {tr.specialization || 'Master Strength Coach'}
-                  </span>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="font-display text-xl font-black uppercase text-white group-hover:text-neon transition-colors">
-                    {tr.name}
-                  </h3>
-                  <p className="text-xs text-gym-muted mt-2 line-clamp-2">
-                    {tr.bio || 'Specialized in compound movement mechanics, hypertrophy protocols, and athletic power development.'}
-                  </p>
-                  <div className="mt-4 pt-3 border-t border-[#243426] flex items-center justify-between text-xs text-gym-muted">
-                    <span>{tr.experienceYears || '5+'} Years Experience</span>
-                    <span className="text-neon font-semibold">{tr.activeClientsCount || '15+'} Active Trainees</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ======================================================== */}
-      {/* 7. WHY CHOOSE FITTRACK PRO (6 PILLARS) */}
-      {/* ======================================================== */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="font-display text-xs font-bold uppercase tracking-widest text-neon">
-            The FitTrack Standard
-          </span>
-          <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
-            Why Train at FitTrack Pro
-          </h2>
-          <p className="text-xs sm:text-sm text-gym-muted mt-3">
-            Combining old-school iron discipline with modern software engineering for an unparalleled training experience.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {whyChooseUs.map((pillar, idx) => {
-            const Icon = pillar.icon;
-            return (
-              <div
-                key={idx}
-                className="p-8 rounded-3xl bg-[#172017] border border-[#243426] hover:border-neon/50 transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-neon/10 border border-neon/30 flex items-center justify-center text-neon mb-5 shadow-neon-glow">
-                  <Icon className="w-6 h-6" />
-                </div>
-                <h3 className="font-display text-lg font-black uppercase text-white">{pillar.title}</h3>
-                <p className="text-xs text-gym-muted mt-2 leading-relaxed">{pillar.desc}</p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ======================================================== */}
-      {/* 8. ATHLETE TESTIMONIALS */}
-      {/* ======================================================== */}
-      <section className="py-24 bg-[#172017]/40 border-y border-[#243426]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="font-display text-xs font-bold uppercase tracking-widest text-neon">
-              Verified Transformations
-            </span>
-            <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
-              Member Testimonials
-            </h2>
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((testi, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-3xl bg-[#172017] border border-[#243426] flex flex-col justify-between"
+                className={`p-6 rounded-3xl bg-[#22292A] border transition-all duration-300 flex flex-col justify-between ${
+                  idx === testimonialIdx ? 'border-neon shadow-neon-glow' : 'border-[#333e40]'
+                }`}
               >
                 <div>
-                  <div className="flex items-center gap-1 text-neon mb-4">
-                    {[...Array(testi.rating)].map((_, rIdx) => (
-                      <Star key={rIdx} className="w-4 h-4 fill-neon text-neon" />
+                  <div className="flex items-center gap-1 text-neon mb-3">
+                    {[...Array(5)].map((_, sIdx) => (
+                      <Star key={sIdx} className="w-3.5 h-3.5 fill-neon text-neon" />
                     ))}
                   </div>
-                  <p className="text-xs text-gray-300 italic leading-relaxed">"{testi.quote}"</p>
+                  <p className="text-xs text-[#AEB5B2] italic leading-relaxed">
+                    "{testi.quote}"
+                  </p>
                 </div>
 
-                <div className="mt-6 pt-5 border-t border-[#243426] flex items-center gap-3">
+                <div className="mt-5 pt-4 border-t border-[#333e40] flex items-center gap-3">
                   <img
                     src={testi.avatar}
                     alt={testi.name}
@@ -777,47 +662,39 @@ export default function Home() {
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* 9. STRONG FINAL CALL TO ACTION */}
+      {/* 7. FINAL CALL TO ACTION (FROM BLUEPRINT) */}
       {/* ======================================================== */}
-      <section className="relative py-28 overflow-hidden">
+      <section className="relative py-28 overflow-hidden bg-[#191D20]">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=2000&auto=format&fit=crop"
-            alt="FitTrack Gym Atmosphere"
-            className="w-full h-full object-cover filter brightness-[0.22]"
+            alt="FitTrack Gym Culture"
+            className="w-full h-full object-cover filter brightness-[0.16]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111413] via-[#111413]/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#191D20] via-[#191D20]/80 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <span className="font-display text-xs font-bold uppercase tracking-[0.25em] text-neon">
-            Commit to Excellence
-          </span>
-          <h2 className="font-display font-black text-4xl sm:text-6xl uppercase tracking-tight text-white leading-tight">
-            Ready to <span className="text-neon text-neon-glow">Redefine</span> Your Physical Limits?
-          </h2>
-          <p className="text-xs sm:text-base text-gray-300 max-w-2xl mx-auto">
-            Join hundreds of dedicated athletes. Register in 60 seconds, choose your membership tier, and access elite training facilities today.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <Link to="/register">
-              <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-sm uppercase tracking-wider px-8 py-4 rounded-full shadow-neon-glow flex items-center gap-2 transition-all">
-                Join FitTrack Pro Now
-                <ArrowRight className="w-4 h-4 stroke-[2.8]" />
-              </button>
-            </Link>
-            <Link to="/contact">
-              <button className="border border-white/70 hover:border-neon hover:text-neon text-white font-display font-black text-sm uppercase tracking-wider px-8 py-4 rounded-full transition-all bg-[#172017]/70">
-                Schedule a Club Tour
-                <ArrowUpRight className="w-4 h-4" />
-              </button>
-            </Link>
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="space-y-3 max-w-2xl text-left">
+            <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white leading-tight">
+              START YOUR FITNESS JOURNEY TODAY
+            </h2>
+            <p className="text-xs sm:text-sm text-[#AEB5B2] leading-relaxed">
+              Join FitTrack Pro and get access to expert trainers, modern facilities and programs designed for real results.
+            </p>
           </div>
+
+          <Link to="/register" className="shrink-0">
+            <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-sm uppercase tracking-wider px-9 py-4 rounded-full shadow-neon-glow flex items-center gap-2 transition-all hover:scale-105">
+              Join Now
+              <ArrowRight className="w-4 h-4 stroke-[2.8]" />
+            </button>
+          </Link>
         </div>
       </section>
 

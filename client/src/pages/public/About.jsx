@@ -26,157 +26,222 @@ export default function About() {
     },
   ];
 
-  const milestones = [
-    { year: '2023', title: 'Facility Groundwork', desc: 'Acquisition of 15,000 sq.ft facility and installation of industrial-grade Eleiko & Hammer Strength equipment.' },
-    { year: '2024', title: 'Smart Platform Launch', desc: 'Deployment of FitTrack Pro digital platform with automated turnstiles and dual online/cash payments.' },
-    { year: '2025', title: '500+ Member Milestone', desc: 'Reached 500+ active transformed athletes with a 99.4% retention and verified review score.' },
-    { year: '2026', title: 'Advanced Recovery Lab', desc: 'Expansion into hydro-recovery, cedar wood contrast saunas, and biometric body fat scanning.' },
-  ];
-
   return (
-    <div className="bg-[#111413] text-white overflow-hidden">
-      {/* 1. HERO BANNER */}
-      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden border-b border-[#243426]">
+    <div className="bg-[#191D20] text-white overflow-hidden">
+      
+      {/* ======================================================== */}
+      {/* 1. HERO BANNER WITH BATTLE ROPES ATHLETE (FROM BLUEPRINT) */}
+      {/* ======================================================== */}
+      <section className="relative pt-32 pb-20 lg:pt-36 lg:pb-24 overflow-hidden border-b border-[#333e40] bg-[#111613]">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=2000&auto=format&fit=crop"
-            alt="About FitTrack Pro"
-            className="w-full h-full object-cover filter brightness-[0.22] contrast-[1.25]"
+            alt="About FitTrack Pro Athletes"
+            className="w-full h-full object-cover object-[70%_center] filter brightness-[0.80] contrast-[1.1]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111413] via-[#111413]/85 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#111613] via-[#111613]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#191D20] via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#172017] border border-neon/30 text-neon text-xs font-bold uppercase tracking-widest">
-            <span className="font-black text-neon">++</span>
-            <span>Our Heritage & Mission</span>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl space-y-3">
+            <h1 className="font-display font-black text-5xl sm:text-6xl lg:text-7xl uppercase tracking-tight text-white leading-none">
+              ABOUT US
+            </h1>
+            {/* Breadcrumb Navigation */}
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#AEB5B2] uppercase tracking-wider">
+              <Link to="/" className="hover:text-neon transition-colors">Home</Link>
+              <span>&gt;</span>
+              <span className="text-neon">About Us</span>
+            </div>
+            <p className="text-sm sm:text-base text-[#AEB5B2] pt-2 leading-relaxed">
+              We are dedicated to building a high-performance training culture where science, calibrated iron, and personalized mentorship converge.
+            </p>
           </div>
-          <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-8xl uppercase tracking-tight text-white leading-[0.9]">
-            More Than a Gym. <br />
-            <span className="text-neon text-neon-glow">A Standard of Excellence.</span>
-          </h1>
-          <p className="mt-6 text-sm sm:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            FitTrack Pro was forged to eliminate the chaos of commercial fitness: broken machines, unverified payments, lost paper workout notebooks, and indifferent staff.
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 2. OUR STORY (FROM BLUEPRINT) */}
+      {/* ======================================================== */}
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          {/* Left: Realistic Gym Interior Photography */}
+          <div className="lg:col-span-6">
+            <div className="relative rounded-3xl overflow-hidden border border-[#333e40] shadow-2xl group">
+              <img
+                src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=1200&auto=format&fit=crop"
+                alt="FitTrack Pro Gym Floor"
+                className="w-full h-[440px] object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#191D20] via-transparent to-transparent opacity-70" />
+            </div>
+          </div>
+
+          {/* Right: Story Content & 3 Stats */}
+          <div className="lg:col-span-6 space-y-6">
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-neon">
+              <span>OUR STORY</span>
+            </div>
+
+            <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white leading-tight">
+              BUILDING A STRONGER, HEALTHIER COMMUNITY
+            </h2>
+
+            <p className="text-sm sm:text-base text-[#AEB5B2] leading-relaxed">
+              FitTrack Pro was created with a simple mission — to make fitness accessible, effective and inspiring for everyone. Whether you are stepping into a gym for the first time or training for competition, our world-class facilities and expert coaches are here to support your journey.
+            </p>
+
+            <p className="text-sm text-[#AEB5B2] leading-relaxed">
+              We eliminated broken equipment, crowded waiting times, and unguided workouts by engineering an integrated ecosystem combining certified master trainers with automated progress metrics.
+            </p>
+
+            {/* 3 Statistics Row matching blueprint */}
+            <div className="grid grid-cols-3 gap-4 pt-4 border-t border-[#333e40]">
+              <div className="flex flex-col">
+                <div className="flex items-center gap-1.5 text-neon mb-1">
+                  <Users className="w-4 h-4" />
+                  <span className="font-display text-2xl sm:text-3xl font-black text-white">1,200+</span>
+                </div>
+                <span className="text-[11px] text-[#AEB5B2] font-semibold">Trusted by Members</span>
+              </div>
+
+              <div className="flex flex-col">
+                <div className="flex items-center gap-1.5 text-neon mb-1">
+                  <Dumbbell className="w-4 h-4 -rotate-45" />
+                  <span className="font-display text-2xl sm:text-3xl font-black text-white">12+</span>
+                </div>
+                <span className="text-[11px] text-[#AEB5B2] font-semibold">Professional Trainers</span>
+              </div>
+
+              <div className="flex flex-col">
+                <div className="flex items-center gap-1.5 text-neon mb-1">
+                  <Trophy className="w-4 h-4" />
+                  <span className="font-display text-2xl sm:text-3xl font-black text-white">15,000+</span>
+                </div>
+                <span className="text-[11px] text-[#AEB5B2] font-semibold">Modern Facilities (Sq. Ft)</span>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <Link to="/facilities">
+                <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs uppercase tracking-wider px-7 py-3.5 rounded-full shadow-neon-glow flex items-center gap-2 transition-all">
+                  Explore Facilities
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </Link>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 3. MISSION AND VISION */}
+      {/* ======================================================== */}
+      <section className="py-20 bg-[#111613] border-y border-[#333e40]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            {/* Mission Card */}
+            <div className="p-8 sm:p-10 rounded-3xl bg-[#22292A] border border-[#333e40] relative overflow-hidden group hover:border-neon transition-colors">
+              <div className="w-12 h-12 rounded-2xl bg-neon/10 border border-neon/30 flex items-center justify-center text-neon mb-6">
+                <Target className="w-6 h-6" />
+              </div>
+              <h3 className="font-display text-2xl font-black uppercase text-white mb-3">
+                Our Mission
+              </h3>
+              <p className="text-sm text-[#AEB5B2] leading-relaxed">
+                To empower individuals of all athletic backgrounds to unlock their fullest physical and mental potential through evidence-based training protocols, competition-grade equipment, and uncompromised coaching standards.
+              </p>
+            </div>
+
+            {/* Vision Card */}
+            <div className="p-8 sm:p-10 rounded-3xl bg-[#22292A] border border-[#333e40] relative overflow-hidden group hover:border-neon transition-colors">
+              <div className="w-12 h-12 rounded-2xl bg-neon/10 border border-neon/30 flex items-center justify-center text-neon mb-6">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <h3 className="font-display text-2xl font-black uppercase text-white mb-3">
+                Our Vision
+              </h3>
+              <p className="text-sm text-[#AEB5B2] leading-relaxed">
+                To redefine the gym landscape by establishing the premier standard for athletic facilities — where every workout is tracked with digital precision, every member receives individualized attention, and healthy lifestyles flourish permanently.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 4. WHY CHOOSE FITTRACK PRO PILLARS */}
+      {/* ======================================================== */}
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-neon">
+            THE FITTRACK STANDARD
+          </span>
+          <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
+            WHY TRAIN AT FITTRACK PRO
+          </h2>
+          <p className="text-xs sm:text-sm text-[#AEB5B2] mt-3">
+            Built on science, heavy calibrated iron, and digital transparency.
           </p>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-1/2 h-1 bg-gradient-to-r from-neon via-emerald-400 to-transparent z-20" />
-      </section>
-
-      {/* 2. DUAL MANIFESTO SECTION */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6">
-            <span className="font-display text-xs font-bold uppercase tracking-widest text-neon">
-              The FitTrack Philosophy
-            </span>
-            <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white leading-tight">
-              Built on Science, Hard Iron & Digital Precision.
-            </h2>
-            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-              We believe real progress requires three components: world-class hardware that doesn't hold you back, qualified coaching that guides your recovery, and transparent software that tracks every rep and transaction.
-            </p>
-            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-              Our gym operates on an integrated ecosystem where every member receives an assigned workout plan, digital biometric charts, and automated expiry alerts so training momentum is never interrupted.
-            </p>
-
-            <div className="mt-8 grid grid-cols-2 gap-6 border-t border-[#243426] pt-6">
-              <div>
-                <div className="font-display text-4xl sm:text-5xl font-black text-white">15,000+</div>
-                <div className="font-display text-xs text-neon mt-1 uppercase font-bold tracking-wider">Square Feet Floor Space</div>
-              </div>
-              <div>
-                <div className="font-display text-4xl sm:text-5xl font-black text-white">100%</div>
-                <div className="font-display text-xs text-neon mt-1 uppercase font-bold tracking-wider">Verified Digital Receipts</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="rounded-3xl overflow-hidden border border-[#243426] shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=1200&auto=format&fit=crop"
-                alt="Olympic Lifting at FitTrack"
-                className="w-full h-[480px] object-cover hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-            <div className="absolute -bottom-6 -left-6 bg-[#172017]/95 backdrop-blur-md border border-neon/40 p-5 rounded-2xl shadow-2xl max-w-xs hidden sm:block">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-neon/20 text-neon flex items-center justify-center shrink-0">
-                  <Trophy className="w-5 h-5" />
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {values.map((v, idx) => {
+            const Icon = v.icon;
+            return (
+              <div
+                key={idx}
+                className="p-6 rounded-2xl bg-[#22292A] border border-[#333e40] hover:border-neon/60 transition-all flex flex-col justify-between"
+              >
                 <div>
-                  <h4 className="font-display text-sm font-black uppercase text-white">Zero Compromise</h4>
-                  <p className="text-[11px] text-gray-400 mt-0.5">Every barbell, rack, and platform meets international federation specifications.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. FOUR CORE VALUES */}
-      <section className="py-24 bg-[#172017]/40 border-y border-[#243426]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="font-display text-xs font-bold uppercase tracking-widest text-neon">
-              Our Non-Negotiables
-            </span>
-            <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
-              Core Cultural Pillars
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((v, idx) => {
-              const Icon = v.icon;
-              return (
-                <div key={idx} className="p-8 rounded-3xl bg-[#172017] border border-[#243426] hover:border-neon/50 transition-all">
-                  <div className="w-12 h-12 rounded-xl bg-neon/10 border border-neon/30 flex items-center justify-center text-neon mb-5 shadow-neon-glow">
-                    <Icon className="w-6 h-6" />
+                  <div className="w-10 h-10 rounded-xl bg-neon/10 border border-neon/30 flex items-center justify-center text-neon mb-4">
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="font-display text-lg font-black uppercase text-white">{v.title}</h3>
-                  <p className="text-xs text-gray-400 mt-2 leading-relaxed">{v.desc}</p>
+                  <h3 className="font-display text-lg font-black uppercase text-white mb-2">
+                    {v.title}
+                  </h3>
+                  <p className="text-xs text-[#AEB5B2] leading-relaxed">
+                    {v.desc}
+                  </p>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 5. CALL TO ACTION */}
+      {/* ======================================================== */}
+      <section className="relative py-24 bg-[#111613] border-t border-[#333e40]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4">
+          <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white">
+            READY TO JOIN OUR COMMUNITY?
+          </h2>
+          <p className="text-xs sm:text-sm text-[#AEB5B2] max-w-xl mx-auto">
+            Choose your membership tier today and begin training in our world-class facilities with certified coaching staff.
+          </p>
+          <div className="pt-4 flex flex-wrap justify-center gap-4">
+            <Link to="/register">
+              <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs uppercase tracking-wider px-8 py-3.5 rounded-full shadow-neon-glow flex items-center gap-2 transition-all">
+                Join FitTrack Pro Now
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </Link>
+            <Link to="/plans">
+              <button className="border border-white/30 hover:border-neon hover:text-neon text-white font-display font-bold text-xs uppercase tracking-wider px-7 py-3.5 rounded-full transition-all bg-[#22292A]">
+                View Membership Plans
+              </button>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* 4. EVOLUTION TIMELINE */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="font-display text-xs font-bold uppercase tracking-widest text-neon">
-            Continuous Progression
-          </span>
-          <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
-            FitTrack Evolution
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {milestones.map((m, idx) => (
-            <div key={idx} className="p-6 rounded-3xl bg-[#172017] border border-[#243426] relative flex flex-col justify-between">
-              <div>
-                <span className="font-display text-3xl font-black text-neon">{m.year}</span>
-                <h4 className="font-display text-base font-black uppercase text-white mt-2">{m.title}</h4>
-                <p className="text-xs text-gray-400 mt-2 leading-relaxed">{m.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <Link to="/register">
-            <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs sm:text-sm uppercase tracking-wider px-8 py-4 rounded-full inline-flex items-center gap-2 shadow-neon-glow transition-all">
-              Become Part of Our Community
-              <ArrowUpRight className="w-4 h-4 stroke-[2.8]" />
-            </button>
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }

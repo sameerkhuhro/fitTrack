@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Award, Mail, Phone, Calendar, Dumbbell, ShieldCheck, Star, Sparkles, CheckCircle2, ArrowUpRight } from 'lucide-react';
+import { Dumbbell, ShieldCheck, Star, Award, Instagram, Facebook, Linkedin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -8,111 +8,183 @@ export default function Trainers() {
   const [trainers, setTrainers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Blueprint Default Expert Trainers
+  const defaultTrainers = [
+    {
+      _id: 'tr-1',
+      name: 'Ahmed Raza',
+      specialization: 'Strength & Conditioning',
+      experienceYears: '6+ Years Experience',
+      photo: 'https://images.unsplash.com/photo-1567013127542-490d757e51fc?q=80&w=800&auto=format&fit=crop',
+      bio: 'Former national powerlifting competitor specializing in compound mechanics, linear periodization, and maximal strength development.',
+    },
+    {
+      _id: 'tr-2',
+      name: 'Sara Malik',
+      specialization: 'Fitness & Weight Loss',
+      experienceYears: '5+ Years Experience',
+      photo: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=800&auto=format&fit=crop',
+      bio: 'Certified clinical exercise physiologist and fat-loss specialist focusing on metabolic conditioning and lifestyle body recomposition.',
+    },
+    {
+      _id: 'tr-3',
+      name: 'Bilal Khan',
+      specialization: 'Body Building',
+      experienceYears: '8+ Years Experience',
+      photo: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=800&auto=format&fit=crop',
+      bio: 'Master hypertrophy coach with 8+ years coaching competitive bodybuilders on progressive volume accumulation and pose prep.',
+    },
+    {
+      _id: 'tr-4',
+      name: 'Ayesha Noor',
+      specialization: 'Functional Training',
+      experienceYears: '4+ Years Experience',
+      photo: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop',
+      bio: 'CrossFit Level-2 certified coach specializing in agility, high-density kettlebell protocols, and mobility restoration.',
+    },
+  ];
+
   useEffect(() => {
     api.get('/trainers')
       .then((res) => {
-        if (res.data.success) {
-          setTrainers(res.data.data);
+        if (res.data.success && res.data.data.length > 0) {
+          // Merge with default photos and details if backend trainers are present
+          const merged = res.data.data.map((tr, idx) => ({
+            ...tr,
+            photo: tr.avatar || defaultTrainers[idx % defaultTrainers.length].photo,
+            experienceYears: `${tr.experienceYears || (idx + 4)}+ Years Experience`,
+            specialization: tr.specialization || defaultTrainers[idx % defaultTrainers.length].specialization,
+          }));
+          setTrainers(merged);
+        } else {
+          setTrainers(defaultTrainers);
         }
       })
-      .catch((err) => console.error(err))
+      .catch(() => setTrainers(defaultTrainers))
       .finally(() => setLoading(false));
   }, []);
 
-  const defaultTrainerImages = [
-    'https://images.unsplash.com/photo-1567013127542-490d757e51fc?q=80&w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=800&auto=format&fit=crop',
-  ];
+  const displayTrainers = trainers.length > 0 ? trainers : defaultTrainers;
 
   return (
-    <div className="bg-[#111413] text-white overflow-hidden">
-      {/* 1. HERO BANNER */}
-      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden border-b border-[#243426]">
+    <div className="bg-[#191D20] text-white overflow-hidden">
+      
+      {/* ======================================================== */}
+      {/* 1. HERO BANNER (FROM BLUEPRINT) */}
+      {/* ======================================================== */}
+      <section className="relative pt-32 pb-20 lg:pt-36 lg:pb-24 overflow-hidden border-b border-[#333e40] bg-[#111613]">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=2000&auto=format&fit=crop"
-            alt="FitTrack Certified Coaching Staff"
-            className="w-full h-full object-cover filter brightness-[0.22] contrast-[1.25]"
+            alt="FitTrack Pro Expert Trainers"
+            className="w-full h-full object-cover object-[center_35%] filter brightness-[0.78] contrast-[1.1]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111413] via-[#111413]/85 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#111613] via-[#111613]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#191D20] via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#172017] border border-neon/30 text-neon text-xs font-bold uppercase tracking-widest">
-            <span className="font-black text-neon">++</span>
-            <span>Master Fitness Specialists</span>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl space-y-3">
+            <h1 className="font-display font-black text-5xl sm:text-6xl lg:text-7xl uppercase tracking-tight text-white leading-none">
+              OUR EXPERT TRAINERS
+            </h1>
+            {/* Breadcrumb Navigation */}
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#AEB5B2] uppercase tracking-wider">
+              <Link to="/" className="hover:text-neon transition-colors">Home</Link>
+              <span>&gt;</span>
+              <span className="text-neon">Trainers</span>
+            </div>
+            <p className="text-sm sm:text-base text-[#AEB5B2] pt-2 leading-relaxed">
+              Meet the professionals behind your progress. Certified master coaches dedicated to prescribing scientific, personalized training.
+            </p>
           </div>
-          <h1 className="font-display font-black text-5xl sm:text-7xl lg:text-8xl uppercase tracking-tight text-white leading-[0.9]">
-            Our Certified <br />
-            <span className="text-neon text-neon-glow">Coaching Staff.</span>
-          </h1>
-          <p className="mt-6 text-sm sm:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Every coach at FitTrack Pro holds international certifications and is dedicated to prescribing personalized, biomechanically sound workout routines.
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 2. TRAINER CARDS GRID (FROM BLUEPRINT) */}
+      {/* ======================================================== */}
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-neon">
+            MASTER COACHING STAFF
+          </span>
+          <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white mt-1">
+            DEDICATED TO YOUR PROGRESS
+          </h2>
+          <p className="text-xs sm:text-sm text-[#AEB5B2] mt-3">
+            Every member has the option to be assigned directly to one of our certified coaches for personalized workout logging and bi-weekly audits.
           </p>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-1/2 h-1 bg-gradient-to-r from-neon via-emerald-400 to-transparent z-20" />
-      </section>
-
-      {/* 2. TRAINER ROSTER (DYNAMIC ATLAS DATA) */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {loading ? (
-          <LoadingSpinner text="Loading coach profiles from Atlas..." />
+          <div className="py-20 flex justify-center">
+            <LoadingSpinner size="lg" />
+          </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {trainers.map((tr, idx) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {displayTrainers.map((tr, idx) => (
               <div
-                key={tr._id}
-                className="group rounded-3xl overflow-hidden bg-[#172017] border border-[#243426] hover:border-neon/50 transition-all duration-300 flex flex-col justify-between"
+                key={tr._id || idx}
+                className="group rounded-3xl overflow-hidden bg-[#22292A] border border-[#333e40] hover:border-neon transition-all duration-300 flex flex-col shadow-xl"
               >
-                <div>
-                  <div className="relative h-80 overflow-hidden bg-[#111413]">
-                    <img
-                      src={tr.avatar || defaultTrainerImages[idx % defaultTrainerImages.length]}
-                      alt={tr.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#172017] via-transparent to-transparent opacity-90" />
-                    <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-neon/15 backdrop-blur-md text-[10px] font-bold text-neon border border-neon/30 uppercase tracking-wider">
-                      {tr.specialization || 'Master Strength Coach'}
-                    </span>
-                  </div>
-
-                  <div className="p-7">
-                    <h3 className="font-display text-2xl font-black uppercase text-white group-hover:text-neon transition-colors">
-                      {tr.name}
-                    </h3>
-                    <p className="text-xs text-gray-400 mt-2 leading-relaxed">
-                      {tr.bio || 'Specialized in compound movement mechanics, hypertrophy protocols, and athletic power development.'}
-                    </p>
-
-                    <div className="mt-6 pt-5 border-t border-[#243426] space-y-2 text-xs">
-                      <div className="flex items-center justify-between text-gray-300">
-                        <span className="text-gray-400">Coaching Experience</span>
-                        <span className="font-display font-bold uppercase">{tr.experienceYears || '5+'} Years</span>
-                      </div>
-                      <div className="flex items-center justify-between text-gray-300">
-                        <span className="text-gray-400">Active Roster</span>
-                        <span className="font-display font-bold uppercase text-neon">{tr.activeClientsCount || '15+'} Athletes</span>
-                      </div>
-                      <div className="flex items-center justify-between text-gray-300">
-                        <span className="text-gray-400">Accreditations</span>
-                        <span className="font-display font-bold uppercase text-white">NASM, ISSA, CSCS</span>
-                      </div>
-                    </div>
-                  </div>
+                {/* Photo with Gradient Mask */}
+                <div className="relative h-80 overflow-hidden bg-[#111613]">
+                  <img
+                    src={tr.photo || tr.avatar}
+                    alt={tr.name}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#22292A] via-[#22292A]/30 to-transparent" />
                 </div>
 
-                <div className="px-7 pb-7">
-                  <Link to="/register">
-                    <button className="w-full py-3 px-4 rounded-full bg-[#111413] border border-[#243426] hover:border-neon font-display text-xs font-black uppercase tracking-wider text-white hover:text-neon transition-all flex items-center justify-center gap-1.5">
-                      Request Coach Assignment
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
-                  </Link>
+                {/* Profile Information */}
+                <div className="p-6 flex-1 flex flex-col justify-between text-center">
+                  <div>
+                    <h3 className="font-display text-xl font-black uppercase text-white group-hover:text-neon transition-colors">
+                      {tr.name}
+                    </h3>
+                    <p className="text-xs font-bold text-neon uppercase tracking-wider mt-1">
+                      {tr.specialization}
+                    </p>
+                    <span className="text-[11px] text-[#AEB5B2] font-semibold block mt-1">
+                      {tr.experienceYears}
+                    </span>
+                    <p className="text-xs text-[#AEB5B2] mt-3 line-clamp-3 leading-relaxed text-left">
+                      {tr.bio}
+                    </p>
+                  </div>
+
+                  {/* Social Media Links matching blueprint */}
+                  <div className="mt-5 pt-4 border-t border-[#333e40] flex items-center justify-center gap-3">
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-8 h-8 rounded-full bg-[#191D20] border border-[#333e40] flex items-center justify-center text-gray-400 hover:text-black hover:bg-neon hover:border-neon transition-all"
+                      aria-label={`${tr.name} Instagram`}
+                    >
+                      <Instagram className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href="https://facebook.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-8 h-8 rounded-full bg-[#191D20] border border-[#333e40] flex items-center justify-center text-gray-400 hover:text-black hover:bg-neon hover:border-neon transition-all"
+                      aria-label={`${tr.name} Facebook`}
+                    >
+                      <Facebook className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href="https://linkedin.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-8 h-8 rounded-full bg-[#191D20] border border-[#333e40] flex items-center justify-center text-gray-400 hover:text-black hover:bg-neon hover:border-neon transition-all"
+                      aria-label={`${tr.name} LinkedIn`}
+                    >
+                      <Linkedin className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
@@ -120,64 +192,72 @@ export default function Trainers() {
         )}
       </section>
 
-      {/* 3. COACHING PROTOCOL */}
-      <section className="py-24 bg-[#172017]/40 border-t border-[#243426]">
+      {/* ======================================================== */}
+      {/* 3. COACHING PHILOSOPHY & REVIEWS */}
+      {/* ======================================================== */}
+      <section className="py-20 bg-[#111613] border-t border-[#333e40]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-6">
-              <span className="font-display text-xs font-bold uppercase tracking-widest text-neon">
-                The FitTrack Protocol
-              </span>
-              <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white leading-tight">
-                How Our Coaching System Operates
-              </h2>
-              <p className="text-sm text-gray-300 leading-relaxed">
-                When you enroll at FitTrack Pro, you aren't handed a generic template. Your coach conducts a movement screen, builds custom split programming in your athlete dashboard, and reviews weekly measurements.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-7 rounded-2xl bg-[#22292A] border border-[#333e40]">
+              <Award className="w-6 h-6 text-neon mb-3" />
+              <h4 className="font-display text-lg font-black uppercase text-white mb-2">
+                Internationally Certified
+              </h4>
+              <p className="text-xs text-[#AEB5B2] leading-relaxed">
+                Our coaches hold NSCA-CSCS, ACE, and ISSA certifications, guaranteeing scientific biomechanics and progressive overload.
               </p>
-
-              <div className="space-y-4 pt-2">
-                <div className="flex items-start gap-3">
-                  <div className="p-1 rounded bg-neon/10 text-neon mt-1">
-                    <CheckCircle2 className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="font-display text-sm font-black uppercase text-white">Movement Screening & Biometrics</h4>
-                    <p className="text-xs text-gray-400 mt-0.5">Assessing joint mobility, squat depth, and initial body metrics before prescribing load.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="p-1 rounded bg-neon/10 text-neon mt-1">
-                    <CheckCircle2 className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="font-display text-sm font-black uppercase text-white">In-App Workout Plan Configuration</h4>
-                    <p className="text-xs text-gray-400 mt-0.5">Custom exercises, target sets, reps, and rest intervals viewable on your mobile terminal.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="p-1 rounded bg-neon/10 text-neon mt-1">
-                    <CheckCircle2 className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="font-display text-sm font-black uppercase text-white">Bi-Weekly Progressive Overload Audit</h4>
-                    <p className="text-xs text-gray-400 mt-0.5">Systematic adjustments to volume and intensity to prevent plateaus and optimize recovery.</p>
-                  </div>
-                </div>
-              </div>
             </div>
 
-            <div className="rounded-3xl overflow-hidden border border-[#243426] shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop"
-                alt="Coaching in action"
-                className="w-full h-[460px] object-cover"
-              />
+            <div className="p-7 rounded-2xl bg-[#22292A] border border-[#333e40]">
+              <Dumbbell className="w-6 h-6 text-neon mb-3" />
+              <h4 className="font-display text-lg font-black uppercase text-white mb-2">
+                1-on-1 Assigned Oversight
+              </h4>
+              <p className="text-xs text-[#AEB5B2] leading-relaxed">
+                Every member can be paired with an assigned coach in the mobile portal to receive weekly workout updates and guidance.
+              </p>
+            </div>
+
+            <div className="p-7 rounded-2xl bg-[#22292A] border border-[#333e40]">
+              <ShieldCheck className="w-6 h-6 text-neon mb-3" />
+              <h4 className="font-display text-lg font-black uppercase text-white mb-2">
+                Nutritional Periodization
+              </h4>
+              <p className="text-xs text-[#AEB5B2] leading-relaxed">
+                Complement your training with custom macronutrient benchmarks and supplement advice aligned with your body composition goals.
+              </p>
             </div>
           </div>
         </div>
       </section>
+
+      {/* ======================================================== */}
+      {/* 4. CTA */}
+      {/* ======================================================== */}
+      <section className="py-24 bg-[#191D20] border-t border-[#333e40]">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-4">
+          <h2 className="font-display font-black text-3xl sm:text-5xl uppercase tracking-tight text-white">
+            READY TO TRAIN WITH A MASTER COACH?
+          </h2>
+          <p className="text-xs sm:text-sm text-[#AEB5B2] max-w-xl mx-auto">
+            Enroll today in our Pro or Elite membership tier to receive dedicated 1-on-1 trainer guidance and digital progress monitoring.
+          </p>
+          <div className="pt-4 flex flex-wrap justify-center gap-4">
+            <Link to="/register">
+              <button className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs uppercase tracking-wider px-8 py-3.5 rounded-full shadow-neon-glow flex items-center gap-2 transition-all">
+                Enroll with a Coach
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </Link>
+            <Link to="/contact">
+              <button className="border border-white/30 hover:border-neon hover:text-neon text-white font-display font-bold text-xs uppercase tracking-wider px-7 py-3.5 rounded-full transition-all bg-[#22292A]">
+                Ask Coach a Question
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

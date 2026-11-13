@@ -156,7 +156,7 @@ export default function Register() {
               <ShieldCheck className="w-3.5 h-3.5 text-gym-primary" />
               Verified Encrypted Registration
             </span>
-            <span className="text-gym-primary font-mono">PBL Verified</span>
+            <span className="text-gym-primary font-mono">Enterprise Verified</span>
           </div>
         </div>
 

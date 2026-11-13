@@ -8,6 +8,7 @@ import PublicLayout from './layouts/PublicLayout';
 import AdminLayout from './layouts/AdminLayout';
 import TrainerLayout from './layouts/TrainerLayout';
 import MemberLayout from './layouts/MemberLayout';
+import ScrollToTop from './components/common/ScrollToTop';
 
 // Public Pages
 import Home from './pages/public/Home';
@@ -60,13 +61,15 @@ import MemberProfile from './pages/member/MemberProfile';
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <ScrollToTop />
         <Routes>
           {/* Public Website Routes */}
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="plans" element={<Plans />} />
+            <Route path="memberships" element={<Navigate to="/plans" replace />} />
             <Route path="trainers" element={<Trainers />} />
             <Route path="facilities" element={<Facilities />} />
             <Route path="contact" element={<Contact />} />

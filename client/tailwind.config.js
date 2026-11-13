@@ -9,25 +9,26 @@ export default {
     extend: {
       colors: {
         neon: {
-          DEFAULT: '#B7FF00',
-          hover: '#a0e000',
-          dark: '#85bb00',
-          glow: 'rgba(183, 255, 0, 0.4)',
+          DEFAULT: '#C6FF00',
+          hover: '#b2ea00',
+          dark: '#99c900',
+          glow: 'rgba(198, 255, 0, 0.4)',
         },
         gym: {
-          bg: '#111413',
-          surface: '#172017',
-          surfaceLight: '#1f2b20',
-          surfaceHover: '#263628',
-          border: '#243426',
-          borderLight: '#324a35',
-          primary: '#B7FF00', // Neon Lime from references
-          primaryHover: '#a0e000',
+          bg: '#191D20',
+          dark: '#111613',
+          surface: '#22292A',
+          surfaceLight: '#2c3537',
+          surfaceHover: '#364245',
+          border: '#333e40',
+          borderLight: '#435154',
+          primary: '#C6FF00', // Neon Lime from references
+          primaryHover: '#b2ea00',
           emerald: '#10B981', // Secondary Accent
           emeraldDark: '#047857',
-          accent: '#B7FF00',
+          accent: '#C6FF00',
           text: '#FFFFFF',
-          muted: '#A5ACA7',
+          muted: '#AEB5B2',
           mutedDark: '#6B7280',
           danger: '#EF4444',
           dangerHover: '#DC2626',
@@ -38,9 +39,10 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        display: ['"Barlow Condensed"', '"Oswald"', 'sans-serif'],
-        heading: ['"Oswald"', '"Barlow Condensed"', 'sans-serif'],
+        sans: ['Inter', 'Montserrat', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['"Bebas Neue"', '"Barlow Condensed"', '"Oswald"', 'sans-serif'],
+        heading: ['"Bebas Neue"', '"Oswald"', '"Barlow Condensed"', 'sans-serif'],
+        body: ['Inter', 'Montserrat', 'sans-serif'],
       },
       boxShadow: {
         'neon-glow': '0 0 30px rgba(183, 255, 0, 0.35)',

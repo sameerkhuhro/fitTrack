@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { ShieldCheck, Calendar, Clock, CheckCircle2, AlertCircle, ArrowRight, RefreshCw, Plus } from 'lucide-react';
 import api from '../../services/api';
 import Card from '../../components/common/Card';

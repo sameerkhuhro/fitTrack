@@ -42,24 +42,24 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#111413]/95 backdrop-blur-md border-b border-[#243426] shadow-2xl py-3.5'
-          : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent py-5'
+          ? 'bg-[#191D20]/95 backdrop-blur-md border-b border-[#333e40] shadow-2xl py-3.5'
+          : 'bg-gradient-to-b from-[#191D20]/90 via-[#191D20]/40 to-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Brand Logo with Neon-Lime Accent */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-neon flex items-center justify-center text-black font-black font-display shadow-neon-glow group-hover:scale-105 transition-transform">
+          {/* Brand Logo matching reference blueprint */}
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-lg bg-neon flex items-center justify-center text-black font-black font-display shadow-neon-glow group-hover:scale-105 transition-transform">
               <Dumbbell className="w-5 h-5 -rotate-45 stroke-[2.8]" />
             </div>
             <div className="flex flex-col">
               <span className="font-display text-2xl font-black uppercase tracking-tight text-white leading-none">
-                FitTrack <span className="text-neon font-black">Pro</span>
+                FITTRACK <span className="text-neon">PRO</span>
               </span>
-              <span className="text-[9px] tracking-[0.25em] uppercase font-bold text-gym-muted -mt-0.5">
-                Fitness Club
+              <span className="text-[9px] tracking-[0.22em] uppercase font-bold text-[#AEB5B2] leading-none mt-1">
+                FITNESS CLUB
               </span>
             </div>
           </Link>
@@ -82,7 +82,7 @@ export default function Navbar() {
                   <>
                     <span>{link.name}</span>
                     {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-neon shadow-[0_0_8px_#B7FF00] inline-block" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-neon shadow-[0_0_8px_#C6FF00] inline-block" />
                     )}
                   </>
                 )}
@@ -134,7 +134,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#172017]/98 backdrop-blur-xl border-b border-[#243426] px-6 pt-4 pb-8 space-y-3 mt-3 animate-in slide-in-from-top-4">
+        <div className="lg:hidden bg-[#191D20]/98 backdrop-blur-xl border-b border-[#333e40] px-6 pt-4 pb-8 space-y-3 mt-3 animate-in slide-in-from-top-4">
           {navLinks.map((link) => (
             <NavLink
               key={link.name}

@@ -49,7 +49,7 @@ export default function Login() {
     }
   };
 
-  // Quick fill helper for University PBL demonstrations & fast testing
+  // Quick fill helper for commercial demonstrations & fast evaluation
   const fillAndLogin = async (role) => {
     setError('');
     setActiveRole(role);
@@ -204,7 +204,7 @@ export default function Login() {
                 <Zap className="w-3.5 h-3.5 fill-gym-primary" />
                 1-Click Fast Demonstration Login
               </span>
-              <span className="text-[10px] text-gym-muted font-mono">PBL Live Sandbox</span>
+              <span className="text-[10px] text-gym-muted font-mono">Commercial Demo Access</span>
             </div>
 
             <div className="grid grid-cols-3 gap-2">

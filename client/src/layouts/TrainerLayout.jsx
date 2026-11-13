@@ -177,8 +177,24 @@ export default function TrainerLayout() {
           </div>
         </header>
 
-        <main className="flex-1 p-4 sm:p-8 overflow-y-auto">
-          <Outlet />
+        <main className="flex-1 p-4 sm:p-8 overflow-y-auto flex flex-col justify-between">
+          <div className="flex-1">
+            <Outlet />
+          </div>
+          <footer className="mt-8 pt-4 border-t border-gym-border/50 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-gym-muted">
+            <p>&copy; {new Date().getFullYear()} FitTrack Pro Fitness Club. All Rights Reserved.</p>
+            <p>
+              Developed by{' '}
+              <a
+                href="https://www.linkedin.com/in/sameer-khuhro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gym-primary font-semibold hover:underline"
+              >
+                Sameer Khuhro
+              </a>
+            </p>
+          </footer>
         </main>
       </div>
 
