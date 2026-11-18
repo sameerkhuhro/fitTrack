@@ -1,16 +1,27 @@
 import axios from 'axios';
 
+// Default production backend URL fallback
+const PRODUCTION_API_ORIGIN = 'https://fit-track-ten-pi.vercel.app';
+
 // Resolve and normalize the base API URL
 const getBaseURL = () => {
-  const envUrl = import.meta.env.VITE_API_URL;
+  let envUrl = import.meta.env.VITE_API_URL;
 
-  // In local development or when VITE_API_URL is unset, default to relative /api/v1 (handled by Vite proxy)
+  // In local development or when VITE_API_URL is unset, default according to environment
   if (!envUrl || !envUrl.trim()) {
-    return '/api/v1';
+    if (import.meta.env.DEV) {
+      return '/api/v1';
+    }
+    // Safe production fallback if VITE_API_URL was omitted in Vercel settings
+    return `${PRODUCTION_API_ORIGIN}/api/v1`;
   }
 
-  // Strip whitespace and any trailing slashes
-  const cleanUrl = envUrl.trim().replace(/\/+$/, '');
+  // Strip wrapping quotes if any, trim whitespace, and remove trailing slashes
+  let cleanUrl = envUrl.trim().replace(/^["']|["']$/g, '').replace(/\/+$/, '');
+
+  if (!cleanUrl) {
+    return import.meta.env.DEV ? '/api/v1' : `${PRODUCTION_API_ORIGIN}/api/v1`;
+  }
 
   // If already ending with /api/v1, use directly
   if (cleanUrl.endsWith('/api/v1')) {
@@ -33,9 +44,16 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to attach JWT token
+// Request interceptor to attach JWT token and deduplicate paths
 api.interceptors.request.use(
   (config) => {
+    // Deduplicate /api/v1 if accidentally included by the caller
+    if (config.url && config.url.startsWith('/api/v1/')) {
+      config.url = config.url.replace(/^\/api\/v1/, '');
+    } else if (config.url === '/api/v1') {
+      config.url = '/';
+    }
+
     const token = localStorage.getItem('fittrack_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
