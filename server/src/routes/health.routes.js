@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getDBStatus } = require('../config/db');
 
-router.get('/health', (req, res) => {
+router.get(['/', '/health'], (req, res) => {
   const dbStatus = getDBStatus();
   
   const healthData = {

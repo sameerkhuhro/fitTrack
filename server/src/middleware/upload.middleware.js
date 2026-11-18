@@ -2,10 +2,17 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const uploadDir = path.resolve(__dirname, '../../uploads');
+// In serverless environments like Vercel, the local filesystem is read-only except /tmp
+const uploadDir = process.env.VERCEL
+  ? path.join('/tmp', 'uploads')
+  : path.resolve(__dirname, '../../uploads');
 
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+try {
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+} catch (err) {
+  console.warn('[Upload Middleware] Could not initialize upload directory:', err.message);
 }
 
 const storage = multer.diskStorage({

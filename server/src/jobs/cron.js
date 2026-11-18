@@ -71,6 +71,12 @@ const checkMembershipExpiries = async () => {
 };
 
 const initCronJobs = () => {
+  // In serverless environments (Vercel), background node-cron schedules cannot run reliably
+  if (process.env.VERCEL) {
+    console.log('[FitTrack Cron] Running in Vercel serverless environment. Persistent node-cron scheduler skipped.');
+    return;
+  }
+
   // Run daily at midnight: 00:00
   cron.schedule('0 0 * * *', () => {
     console.log('[FitTrack Cron] Executing daily membership expiry & reminder check...');
@@ -80,5 +86,6 @@ const initCronJobs = () => {
   console.log('[FitTrack Cron] Scheduled notification tasks initialized.');
 };
 
+initCronJobs.checkMembershipExpiries = checkMembershipExpiries;
 module.exports = initCronJobs;
 

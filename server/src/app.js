@@ -31,21 +31,44 @@ app.use(helmet({
 }));
 
 // CORS Configuration
-const allowedOrigins = [
-  process.env.CLIENT_URL || 'http://localhost:5173',
+const configuredOrigins = (process.env.CLIENT_URL || '')
+  .split(',')
+  .map((url) => url.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
+const defaultOrigins = [
+  'http://localhost:5173',
   'http://localhost:3000',
   'http://127.0.0.1:5173',
   'http://localhost:80',
-  'http://localhost'
+  'http://localhost',
 ];
+
+const allowedOrigins = [...new Set([...configuredOrigins, ...defaultOrigins])];
 
 app.use(cors({
   origin: function (origin, callback) {
+    // Allow non-browser requests (Postman, curl, mobile, server-to-server)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+
+    const normalizedOrigin = origin.replace(/\/$/, '');
+
+    // Allow explicitly configured origins or development mode
+    if (allowedOrigins.includes(normalizedOrigin) || process.env.NODE_ENV !== 'production') {
       return callback(null, true);
     }
-    return callback(new Error('Blocked by CORS policy'));
+
+    // Allow all Vercel deployments (*.vercel.app)
+    try {
+      const hostname = new URL(origin).hostname;
+      if (hostname.endsWith('.vercel.app')) {
+        return callback(null, true);
+      }
+    } catch (e) {
+      // Invalid URL format
+    }
+
+    callback(null, false);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
@@ -61,9 +84,48 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-// Static folder for file uploads
-const uploadDir = path.resolve(__dirname, '..', process.env.UPLOAD_PATH || 'uploads');
+// Static folder for file uploads (supports /tmp in serverless environments)
+const uploadDir = process.env.VERCEL
+  ? path.join('/tmp', 'uploads')
+  : path.resolve(__dirname, '..', process.env.UPLOAD_PATH || 'uploads');
 app.use('/uploads', express.static(uploadDir));
+
+// Database connection assurance for serverless invocations
+const { connectDB } = require('./config/db');
+
+app.use(async (req, res, next) => {
+  // Bypass DB check for root, health and static routes so health checks stay fast and never fail
+  if (req.path === '/' || req.path === '/api/v1' || req.path === '/api/v1/health' || req.path.startsWith('/uploads')) {
+    return next();
+  }
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('[Database Middleware Error]', err.message);
+    return res.status(503).json({
+      success: false,
+      message: 'Database connection currently unavailable. Please verify MONGODB_URI.',
+      error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+  }
+});
+
+// Root entrypoint
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'FitTrack Pro Backend API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/v1/health',
+      auth: '/api/v1/auth',
+      plans: '/api/v1/plans',
+      trainers: '/api/v1/trainers'
+    },
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
 
 // Rate Limiting for Auth
 const authLimiter = rateLimit({

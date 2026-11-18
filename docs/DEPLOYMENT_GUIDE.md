@@ -173,3 +173,32 @@ docker compose up -d --no-deps server client
 docker system prune -f
 ```
 
+---
+
+## 6. Vercel Serverless Backend Deployment
+
+FitTrack Pro's Express backend is engineered to run seamlessly as a standalone serverless backend on Vercel.
+
+### 6.1 Vercel Project Configuration
+When importing the `sameerkhuhro/fitTrack` repository into Vercel as a new project:
+- **Framework Preset**: `Express` (or `Other`)
+- **Root Directory**: `server`
+- **Build Command**: Leave empty (None)
+- **Output Directory**: Leave empty (None)
+- **Install Command**: `npm install`
+
+### 6.2 Required Environment Variables in Vercel Dashboard
+Add the following under **Project Settings &rarr; Environment Variables**:
+
+| Variable | Description | Example / Recommended Value |
+| :--- | :--- | :--- |
+| `NODE_ENV` | Production runtime flag | `production` |
+| `MONGODB_URI` | Remote MongoDB Atlas connection string | `mongodb+srv://<user>:<password>@cluster.mongodb.net/fittrack?retryWrites=true&w=majority&authSource=admin` |
+| `JWT_SECRET` | Secure random string for signing JWT tokens | `your_production_grade_jwt_secret_here` |
+| `JWT_EXPIRES_IN` | Token expiration window | `7d` |
+| `CLIENT_URL` | URL of your deployed frontend SPA | `https://your-frontend.vercel.app` |
+
+> [!IMPORTANT]
+> **MongoDB Atlas Network Access**: Vercel serverless functions execute from dynamic IP pools. In your MongoDB Atlas dashboard under **Network Access**, ensure you have added `0.0.0.0/0` (Allow Access from Anywhere) to avoid connection timeouts.
+
+
