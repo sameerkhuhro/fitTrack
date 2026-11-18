@@ -13,6 +13,7 @@ const {
 // Public routes
 router.post('/register', registerValidator, validate, authController.register);
 router.post('/login', loginValidator, validate, authController.login);
+router.post('/demo-login', authController.demoLogin);
 
 // Protected routes
 router.get('/me', protect, authController.getMe);

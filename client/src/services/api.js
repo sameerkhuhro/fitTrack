@@ -52,6 +52,7 @@ export const ENDPOINTS = {
   HEALTH: '/health',
   AUTH: {
     LOGIN: '/auth/login',
+    DEMO_LOGIN: '/auth/demo-login',
     REGISTER: '/auth/register',
     ME: '/auth/me',
     LOGOUT: '/auth/logout',

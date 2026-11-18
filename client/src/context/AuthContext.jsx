@@ -4,11 +4,18 @@ import api from '../services/api';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(() => localStorage.getItem('fittrack_token'));
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('fittrack_user');
-    return saved ? JSON.parse(saved) : null;
+    const storedToken = localStorage.getItem('fittrack_token');
+    if (!saved || !storedToken) return null;
+    try {
+      const parsed = JSON.parse(saved);
+      return (parsed && parsed.role) ? parsed : null;
+    } catch {
+      return null;
+    }
   });
-  const [token, setToken] = useState(() => localStorage.getItem('fittrack_token'));
   const [loading, setLoading] = useState(true);
 
   // Check current session on mount
@@ -18,9 +25,11 @@ export const AuthProvider = ({ children }) => {
       if (storedToken) {
         try {
           const res = await api.get('/auth/me');
-          if (res.data.success) {
+          if (res.data.success && res.data.user) {
             setUser(res.data.user);
             localStorage.setItem('fittrack_user', JSON.stringify(res.data.user));
+          } else {
+            throw new Error('Session invalid');
           }
         } catch (err) {
           localStorage.removeItem('fittrack_token');
@@ -28,6 +37,10 @@ export const AuthProvider = ({ children }) => {
           setUser(null);
           setToken(null);
         }
+      } else {
+        localStorage.removeItem('fittrack_user');
+        setUser(null);
+        setToken(null);
       }
       setLoading(false);
     };
@@ -46,6 +59,19 @@ export const AuthProvider = ({ children }) => {
       return newUser;
     }
     throw new Error(res.data.message || 'Login failed');
+  };
+
+  const demoLogin = async (role) => {
+    const res = await api.post('/auth/demo-login', { role });
+    if (res.data.success) {
+      const { token: newToken, user: newUser } = res.data;
+      localStorage.setItem('fittrack_token', newToken);
+      localStorage.setItem('fittrack_user', JSON.stringify(newUser));
+      setToken(newToken);
+      setUser(newUser);
+      return newUser;
+    }
+    throw new Error(res.data.message || 'Demo login failed');
   };
 
   const register = async (userData) => {
@@ -107,6 +133,7 @@ export const AuthProvider = ({ children }) => {
     isTrainer: user?.role === 'trainer',
     isMember: user?.role === 'member',
     login,
+    demoLogin,
     register,
     logout,
     changePassword,

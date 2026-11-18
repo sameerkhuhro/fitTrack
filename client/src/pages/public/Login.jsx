@@ -10,6 +10,7 @@ import {
   EyeOff,
   Sparkles,
   ShieldCheck,
+  Zap,
   Activity,
   Award,
 } from 'lucide-react';
@@ -21,9 +22,10 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [quickLoginRole, setQuickLoginRole] = useState(null);
   const [error, setError] = useState('');
 
-  const { login } = useAuth();
+  const { login, demoLogin } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -44,6 +46,33 @@ export default function Login() {
       setError(err.response?.data?.message || err.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleQuickLogin = async (role) => {
+    setError('');
+    setQuickLoginRole(role);
+
+    try {
+      const user = await demoLogin(role);
+      if (user.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (user.role === 'trainer') {
+        navigate('/trainer/dashboard');
+      } else {
+        navigate('/member/dashboard');
+      }
+    } catch (err) {
+      // Graceful fallback: pre-fill role email
+      const emailMap = {
+        admin: 'admin@fittrack.com',
+        trainer: 'hamza.trainer@fittrack.com',
+        member: 'ali.member@fittrack.com',
+      };
+      setEmail(emailMap[role] || '');
+      setError(err.response?.data?.message || `Selected ${role.toUpperCase()} role (${emailMap[role]}). Enter your password to sign in.`);
+    } finally {
+      setQuickLoginRole(null);
     }
   };
 
@@ -137,8 +166,95 @@ export default function Login() {
               Portal Access
             </h3>
             <p className="text-xs text-gym-muted mt-1">
-              Enter your credentials to access your dedicated terminal
+              Select your role for 1-click access or enter your credentials below
             </p>
+          </div>
+
+          {/* Quick Role-Based Login Options */}
+          <div className="mb-6 p-4 rounded-2xl bg-gym-bg/80 border border-gym-border">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-gym-primary flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 fill-gym-primary" />
+                Quick Role-Based Login
+              </span>
+              <span className="text-[10px] text-gym-muted font-mono">1-Click Access</span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
+              {/* Admin Login Option */}
+              <button
+                type="button"
+                disabled={loading || !!quickLoginRole}
+                onClick={() => handleQuickLogin('admin')}
+                className={`p-3 rounded-xl text-left border transition-all ${
+                  quickLoginRole === 'admin'
+                    ? 'border-gym-primary bg-gym-primary/10 text-gym-text shadow-sm shadow-gym-primary/20'
+                    : 'border-gym-border bg-gym-surface hover:border-gym-primary/60 text-gym-muted hover:text-gym-text'
+                }`}
+              >
+                <div className="text-xs font-bold text-gym-text flex items-center justify-between">
+                  Admin
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                </div>
+                <div className="text-[10px] text-gym-muted mt-0.5 truncate">Executive Suite</div>
+                <div className="text-[9px] text-gym-primary font-semibold mt-1">
+                  {quickLoginRole === 'admin' ? 'Signing in...' : 'Quick Login →'}
+                </div>
+              </button>
+
+              {/* Trainer Login Option */}
+              <button
+                type="button"
+                disabled={loading || !!quickLoginRole}
+                onClick={() => handleQuickLogin('trainer')}
+                className={`p-3 rounded-xl text-left border transition-all ${
+                  quickLoginRole === 'trainer'
+                    ? 'border-gym-primary bg-gym-primary/10 text-gym-text shadow-sm shadow-gym-primary/20'
+                    : 'border-gym-border bg-gym-surface hover:border-gym-primary/60 text-gym-muted hover:text-gym-text'
+                }`}
+              >
+                <div className="text-xs font-bold text-gym-text flex items-center justify-between">
+                  Trainer
+                  <span className="w-2 h-2 rounded-full bg-teal-400" />
+                </div>
+                <div className="text-[10px] text-gym-muted mt-0.5 truncate">Coach Roster</div>
+                <div className="text-[9px] text-gym-primary font-semibold mt-1">
+                  {quickLoginRole === 'trainer' ? 'Signing in...' : 'Quick Login →'}
+                </div>
+              </button>
+
+              {/* Member Login Option */}
+              <button
+                type="button"
+                disabled={loading || !!quickLoginRole}
+                onClick={() => handleQuickLogin('member')}
+                className={`p-3 rounded-xl text-left border transition-all ${
+                  quickLoginRole === 'member'
+                    ? 'border-gym-primary bg-gym-primary/10 text-gym-text shadow-sm shadow-gym-primary/20'
+                    : 'border-gym-border bg-gym-surface hover:border-gym-primary/60 text-gym-muted hover:text-gym-text'
+                }`}
+              >
+                <div className="text-xs font-bold text-gym-text flex items-center justify-between">
+                  Member
+                  <span className="w-2 h-2 rounded-full bg-emerald-300" />
+                </div>
+                <div className="text-[10px] text-gym-muted mt-0.5 truncate">Athlete Hub</div>
+                <div className="text-[9px] text-gym-primary font-semibold mt-1">
+                  {quickLoginRole === 'member' ? 'Signing in...' : 'Quick Login →'}
+                </div>
+              </button>
+            </div>
+            <p className="text-[10px] text-gym-muted text-center mt-2.5">
+              Click an option above to sign in with that role, or enter credentials below.
+            </p>
+          </div>
+
+          <div className="relative flex items-center justify-center my-2 mb-5">
+            <div className="border-t border-gym-border w-full" />
+            <span className="bg-gym-surface px-3 text-[10px] font-bold uppercase tracking-wider text-gym-muted">
+              Or Manual Sign In
+            </span>
+            <div className="border-t border-gym-border w-full" />
           </div>
 
           {/* Error Banner */}

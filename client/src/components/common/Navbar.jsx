@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Dumbbell, Menu, X, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Dumbbell, Menu, X, ArrowRight, ArrowUpRight, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import Button from './Button';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,27 +98,37 @@ export default function Navbar() {
           {/* Right Action: Login / Dashboard Neon Button */}
           <div className="hidden md:flex items-center gap-3">
             {isAuthenticated ? (
-              <button
-                onClick={() => navigate(getDashboardPath())}
-                className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs uppercase tracking-wider px-5 py-2.5 rounded-full shadow-neon-glow flex items-center gap-1.5 transition-all"
-              >
-                Dashboard
-                <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
-              </button>
+              <>
+                <button
+                  onClick={() => navigate(getDashboardPath())}
+                  className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs uppercase tracking-wider px-5 py-2.5 rounded-full shadow-neon-glow flex items-center gap-1.5 transition-all"
+                >
+                  Dashboard
+                  <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-300 hover:text-rose-400 transition-colors flex items-center gap-1.5"
+                  title="Sign out of portal"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  Log Out
+                </button>
+              </>
             ) : (
               <>
                 <Link
-                  to="/login"
-                  className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:text-neon transition-colors"
-                >
-                  Log In
-                </Link>
-                <Link
                   to="/register"
-                  className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs uppercase tracking-wider px-5 py-2.5 rounded-full shadow-neon-glow flex items-center gap-1.5 transition-all"
+                  className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-gray-300 hover:text-white transition-colors"
                 >
                   Join Now
-                  <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                </Link>
+                <Link
+                  to="/login"
+                  className="bg-neon hover:bg-neon-hover text-black font-display font-black text-xs uppercase tracking-wider px-5 py-2.5 rounded-full shadow-neon-glow flex items-center gap-1.5 transition-all"
+                >
+                  Log In
+                  <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
                 </Link>
               </>
             )}
@@ -154,27 +169,40 @@ export default function Navbar() {
 
           <div className="pt-4 border-t border-[#243426] flex flex-col gap-2.5">
             {isAuthenticated ? (
-              <button
-                className="w-full bg-neon text-black py-3 rounded-full font-display font-black uppercase tracking-wider text-xs shadow-neon-glow flex items-center justify-center gap-2"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  navigate(getDashboardPath());
-                }}
-              >
-                Go to Dashboard
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              <>
+                <button
+                  className="w-full bg-neon text-black py-3 rounded-full font-display font-black uppercase tracking-wider text-xs shadow-neon-glow flex items-center justify-center gap-2"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    navigate(getDashboardPath());
+                  }}
+                >
+                  Go to Dashboard
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  className="w-full py-2.5 rounded-full border border-gray-600 font-display font-bold uppercase tracking-wider text-xs text-gray-300 hover:text-rose-400 flex items-center justify-center gap-2"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleLogout();
+                  }}
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  Log Out
+                </button>
+              </>
             ) : (
               <>
                 <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                  <button className="w-full py-2.5 rounded-full border border-gray-600 font-display font-bold uppercase tracking-wider text-xs text-white">
+                  <button className="w-full py-3 rounded-full bg-neon text-black font-display font-black uppercase tracking-wider text-xs shadow-neon-glow flex items-center justify-center gap-2">
                     Log In
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </Link>
                 <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
-                  <button className="w-full py-3 rounded-full bg-neon text-black font-display font-black uppercase tracking-wider text-xs shadow-neon-glow flex items-center justify-center gap-2">
+                  <button className="w-full py-2.5 rounded-full border border-gray-600 font-display font-bold uppercase tracking-wider text-xs text-white">
                     Join Now
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                    <ArrowUpRight className="w-3.5 h-3.5 inline ml-1" />
                   </button>
                 </Link>
               </>
