@@ -119,7 +119,8 @@ export default function AdminTrainers() {
           icon={Plus}
           onClick={() => {
             setErrorMsg('');
-            setFormData({ name: '', email: '', phone: '', specialization: '', monthlySalary: '', tempPassword: 'Trainer@FitTrack2026!' });
+            const initialTemp = 'FitTrack_' + Math.random().toString(36).substring(2, 8).toUpperCase() + '!';
+            setFormData({ name: '', email: '', phone: '', specialization: '', monthlySalary: '', tempPassword: initialTemp });
             setShowAddModal(true);
           }}
         >

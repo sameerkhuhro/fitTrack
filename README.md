@@ -148,10 +148,8 @@ Populate the database with initial plans, trainers, and an administrator account
 npm run seed
 ```
 
-*Default Seed Credentials:*
-- **Admin**: `admin@fittrack.com` / `Admin@FitTrack2026!`
-- **Trainer**: `ahmed@fittrack.com` / `Trainer@FitTrack2026!`
-- **Member**: `ali@example.com` / `Member@FitTrack2026!`
+*Seed Accounts:*
+Configured via `INITIAL_ADMIN_PASSWORD` and `INITIAL_ADMIN_EMAIL` in your `.env` file (defaults to `admin@fittrack.com`). Change all administrative passwords immediately upon initial installation.
 
 ### 5. Start Development Servers
 From the root directory, start both the Express API and Vite frontend concurrently:

@@ -34,7 +34,7 @@ All protected endpoints require an HTTP `Authorization` header formatted as:
 ```json
 {
   "email": "admin@fittrack.com",
-  "password": "Admin@FitTrack2026!"
+  "password": "<configured_password>"
 }
 ```
 - **Response**: `200 OK` with JWT token and role identifier (`admin`, `trainer`, `member`).

@@ -10,7 +10,6 @@ import {
   EyeOff,
   Sparkles,
   ShieldCheck,
-  Zap,
   Activity,
   Award,
 } from 'lucide-react';
@@ -21,7 +20,6 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [activeRole, setActiveRole] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -46,60 +44,6 @@ export default function Login() {
       setError(err.response?.data?.message || err.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
-    }
-  };
-
-  // Quick fill helper for commercial demonstrations & fast evaluation
-  const fillAndLogin = async (role) => {
-    setError('');
-    setActiveRole(role);
-    let targetEmail = '';
-    let targetPassword = '';
-
-    if (role === 'admin') {
-      targetEmail = 'admin@fittrack.com';
-      targetPassword = 'Admin@FitTrack2026!';
-    } else if (role === 'trainer') {
-      targetEmail = 'hamza.trainer@fittrack.com';
-      targetPassword = 'Trainer@FitTrack2026!';
-    } else if (role === 'member') {
-      targetEmail = 'ali.member@fittrack.com';
-      targetPassword = 'Member@FitTrack2026!';
-    }
-
-    setEmail(targetEmail);
-    setPassword(targetPassword);
-
-    // Immediate login attempt with selected credentials
-    setLoading(true);
-    try {
-      const user = await login(targetEmail, targetPassword);
-      if (user.role === 'admin') {
-        navigate('/admin/dashboard');
-      } else if (user.role === 'trainer') {
-        navigate('/trainer/dashboard');
-      } else {
-        navigate('/member/dashboard');
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Login failed.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fillCredentialsOnly = (role) => {
-    setError('');
-    setActiveRole(role);
-    if (role === 'admin') {
-      setEmail('admin@fittrack.com');
-      setPassword('Admin@FitTrack2026!');
-    } else if (role === 'trainer') {
-      setEmail('hamza.trainer@fittrack.com');
-      setPassword('Trainer@FitTrack2026!');
-    } else if (role === 'member') {
-      setEmail('ali.member@fittrack.com');
-      setPassword('Member@FitTrack2026!');
     }
   };
 
@@ -193,71 +137,7 @@ export default function Login() {
               Portal Access
             </h3>
             <p className="text-xs text-gym-muted mt-1">
-              Select your role or enter credentials to access your dedicated terminal
-            </p>
-          </div>
-
-          {/* 1-Click Fast Fill Demonstration Matrix */}
-          <div className="mb-6 p-4 rounded-2xl bg-gym-bg/80 border border-gym-border">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-gym-primary flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 fill-gym-primary" />
-                1-Click Fast Demonstration Login
-              </span>
-              <span className="text-[10px] text-gym-muted font-mono">Commercial Demo Access</span>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => fillAndLogin('admin')}
-                className={`px-3 py-2.5 rounded-xl text-left border transition-all ${
-                  activeRole === 'admin'
-                    ? 'border-gym-primary bg-gym-primary/10 text-gym-text shadow-sm shadow-gym-primary/20'
-                    : 'border-gym-border bg-gym-surface hover:border-gym-primary/60 text-gym-muted hover:text-gym-text'
-                }`}
-              >
-                <div className="text-xs font-bold text-gym-text flex items-center justify-between">
-                  Admin
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                </div>
-                <div className="text-[10px] text-gym-muted mt-0.5 truncate">Executive Suite</div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => fillAndLogin('trainer')}
-                className={`px-3 py-2.5 rounded-xl text-left border transition-all ${
-                  activeRole === 'trainer'
-                    ? 'border-gym-primary bg-gym-primary/10 text-gym-text shadow-sm shadow-gym-primary/20'
-                    : 'border-gym-border bg-gym-surface hover:border-gym-primary/60 text-gym-muted hover:text-gym-text'
-                }`}
-              >
-                <div className="text-xs font-bold text-gym-text flex items-center justify-between">
-                  Trainer
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
-                </div>
-                <div className="text-[10px] text-gym-muted mt-0.5 truncate">Coach Roster</div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => fillAndLogin('member')}
-                className={`px-3 py-2.5 rounded-xl text-left border transition-all ${
-                  activeRole === 'member'
-                    ? 'border-gym-primary bg-gym-primary/10 text-gym-text shadow-sm shadow-gym-primary/20'
-                    : 'border-gym-border bg-gym-surface hover:border-gym-primary/60 text-gym-muted hover:text-gym-text'
-                }`}
-              >
-                <div className="text-xs font-bold text-gym-text flex items-center justify-between">
-                  Member
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-300" />
-                </div>
-                <div className="text-[10px] text-gym-muted mt-0.5 truncate">Athlete Hub</div>
-              </button>
-            </div>
-            <p className="text-[10px] text-gym-muted text-center mt-2">
-              Clicking any card automatically populates seed credentials and signs you in.
+              Enter your credentials to access your dedicated terminal
             </p>
           </div>
 

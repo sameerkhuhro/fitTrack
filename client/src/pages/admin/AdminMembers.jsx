@@ -76,7 +76,7 @@ export default function AdminMembers() {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        password: formData.password || 'Member@FitTrack2026!',
+        password: formData.password || undefined,
         assignedTrainer: formData.assignedTrainer || null,
         emergencyContact: {
           name: formData.emergencyName,
